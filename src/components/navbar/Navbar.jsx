@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import './Navbar.css';
+import Logo from '../logo/LOgo';
+import { useNavigate } from 'react-router-dom';
 
 function Navbar() {
+    const navigate = useNavigate()
     const [isOpen, setIsOpen] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);
 
@@ -45,16 +48,16 @@ function Navbar() {
         <nav className={`gym-glass-nav-container fixed w-full z-50  top-0 ${isScrolled ? 'scrolled' : ''}`}>
             <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex justify-between h-16 items-center">
-                    <div className="flex-shrink-0">
-                        <span className="gym-glass-nav-logo heading-3d text-4xl font-bold text-[#FFD700] bolkit ">AuraFits</span>
+                    <div onClick={()=>navigate('/')} className="flex-shrink-0">
+                        <Logo />
                     </div>
                     <div className="hidden md:flex md:items-center md:space-x-8">
-                        <a href="#home" className="gym-glass-nav-link text-white text-lg font-medium hover:text-[#FFD700] metamorphous-regular">Home</a>
-                        <a href="#about" className="gym-glass-nav-link text-white text-lg font-medium hover:text-[#FFD700] metamorphous-regular">About Us</a>
-                        <a href="#bookings" className="gym-glass-nav-link text-white text-lg font-medium hover:text-[#FFD700] metamorphous-regular">My Bookings</a>
-                        <a href="#bookings" className="gym-glass-nav-link text-white text-lg font-medium hover:text-[#FFD700] metamorphous-regular">Trainers</a>
-                        <a href="#facilities" className="gym-glass-nav-link text-white text-lg font-medium hover:text-[#FFD700] metamorphous-regular">Facilities</a>
-                        <a href="#contact" className="gym-glass-nav-link text-white text-lg font-medium hover:text-[#FFD700] metamorphous-regular">Contact</a>
+                        <a onClick={()=>navigate('/')} className="gym-glass-nav-link cursor-pointer text-white text-md font-medium hover:text-[#FFD700] metamorphous-regular">Home</a>
+                        <a onClick={()=>navigate('/about')} className="gym-glass-nav-link cursor-pointer text-white text-md font-medium hover:text-[#FFD700] metamorphous-regular">About Us</a>
+                        <a onClick={()=>navigate('/trainers')} className="gym-glass-nav-link cursor-pointer text-white text-md font-medium hover:text-[#FFD700] metamorphous-regular">Trainers</a>
+                        <a onClick={()=>navigate('/memberships')} className="gym-glass-nav-link cursor-pointer text-white text-md font-medium hover:text-[#FFD700] metamorphous-regular">Memberships</a>
+                        <a onClick={()=>navigate('/')} className="gym-glass-nav-link cursor-pointer text-white text-md font-medium hover:text-[#FFD700] metamorphous-regular">Facilities</a>
+                        <a onClick={()=>navigate('/')} className="gym-glass-nav-link cursor-pointer text-white text-md font-medium hover:text-[#FFD700] metamorphous-regular">Contact</a>
                     </div>
                     <div className="md:hidden flex items-center">
                         <button
@@ -73,11 +76,11 @@ function Navbar() {
             </div>
             <div className={`md:hidden gym-glass-nav-mobile-menu ${isOpen ? 'gym-glass-nav-mobile-open' : 'gym-glass-nav-mobile-closed'}`}>
                 <div className="px-2 pt-2 pb-3 sm:px-3 bg-[#000] bg-opacity-90 backdrop-blur-md flex">
-                    <a href="#home" className="gym-glass-nav-mobile-link block px-3 py-2 rounded-md text-sm metamorphous-regular font-medium text-white hover:bg-black hover:text-[#FFD700]">Home</a>
-                    <a href="#about" className="gym-glass-nav-mobile-link block px-3 py-2 rounded-md text-sm metamorphous-regular font-medium text-white hover:bg-black hover:text-[#FFD700]">About Us</a>
-                    <a href="#bookings" className="gym-glass-nav-mobile-link block px-3 py-2 rounded-md text-sm metamorphous-regular font-medium text-white hover:bg-black hover:text-[#FFD700]">My Bookings</a>
-                    <a href="#facilities" className="gym-glass-nav-mobile-link block px-3 py-2 rounded-md text-sm metamorphous-regular font-medium text-white hover:bg-black hover:text-[#FFD700]">Trainers</a>
-                    <a href="#contact" className="gym-glass-nav-mobile-link block px-3 py-2 rounded-md text-sm metamorphous-regular font-medium text-white hover:bg-black hover:text-[#FFD700]">Contact Us</a>
+                    <a onClick={()=>navigate('/')} className="gym-glass-nav-mobile-link block px-3 py-2 rounded-md text-sm metamorphous-regular font-medium text-white hover:bg-black hover:text-[#FFD700]">Home</a>
+                    <a onClick={()=>navigate('/about')} className="gym-glass-nav-mobile-link block px-3 py-2 rounded-md text-sm metamorphous-regular font-medium text-white hover:bg-black hover:text-[#FFD700]">About Us</a>
+                    <a onClick={()=>navigate('/trainers')} className="gym-glass-nav-mobile-link block px-3 py-2 rounded-md text-sm metamorphous-regular font-medium text-white hover:bg-black hover:text-[#FFD700]">Trainers</a>
+                    <a onClick={()=>navigate('/memberships')} className="gym-glass-nav-mobile-link block px-3 py-2 rounded-md text-sm metamorphous-regular font-medium text-white hover:bg-black hover:text-[#FFD700]">Memberships</a>
+                    <a onClick={()=>navigate('/')} className="gym-glass-nav-mobile-link block px-3 py-2 rounded-md text-sm metamorphous-regular font-medium text-white hover:bg-black hover:text-[#FFD700]">Contact Us</a>
                 </div>
             </div>
         </nav>

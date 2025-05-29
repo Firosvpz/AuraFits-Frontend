@@ -1,0 +1,951 @@
+"use client"
+
+import type React from "react"
+
+import { useState, useEffect, useRef } from "react"
+import { motion } from "framer-motion"
+
+// Advanced 3D Logo with Particle System
+export const Logo3D = () => {
+  const [isHovered, setIsHovered] = useState(false)
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
+  const logoRef = useRef<HTMLDivElement>(null)
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (logoRef.current) {
+      const rect = logoRef.current.getBoundingClientRect()
+      const x = (e.clientX - rect.left - rect.width / 2) / rect.width
+      const y = (e.clientY - rect.top - rect.height / 2) / rect.height
+      setMousePosition({ x: x * 20, y: y * 20 })
+    }
+  }
+
+  return (
+    <motion.div
+      ref={logoRef}
+      className="cursor-pointer select-none relative"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      onMouseMove={handleMouseMove}
+      style={{
+        perspective: "1000px",
+        transformStyle: "preserve-3d",
+      }}
+      whileHover={{ scale: 1.05 }}
+      transition={{ type: "spring", stiffness: 300, damping: 30 }}
+    >
+      <motion.div
+        className="relative"
+        animate={{
+          rotateX: mousePosition.y,
+          rotateY: mousePosition.x,
+        }}
+        transition={{ type: "spring", stiffness: 100, damping: 20 }}
+        style={{
+          transformStyle: "preserve-3d",
+        }}
+      >
+        {/* Particle Background */}
+        <div className="absolute inset-0 overflow-hidden">
+          {[...Array(20)].map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute w-1 h-1 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full"
+              initial={{
+                x: Math.random() * 200,
+                y: Math.random() * 100,
+                opacity: 0,
+              }}
+              animate={
+                isHovered
+                  ? {
+                      x: Math.random() * 200,
+                      y: Math.random() * 100,
+                      opacity: [0, 1, 0],
+                      scale: [0, 1, 0],
+                    }
+                  : { opacity: 0 }
+              }
+              transition={{
+                duration: 2,
+                repeat: Number.POSITIVE_INFINITY,
+                delay: i * 0.1,
+              }}
+            />
+          ))}
+        </div>
+
+        {/* Main Logo Container */}
+        <div className="flex items-center gap-4 relative z-10">
+          {/* 3D Icon */}
+          <motion.div
+            className="relative"
+            animate={isHovered ? { rotateZ: 360 } : { rotateZ: 0 }}
+            transition={{ duration: 2, ease: "easeInOut" }}
+          >
+            <svg
+              width="60"
+              height="60"
+              viewBox="0 0 100 100"
+              className="drop-shadow-2xl"
+              style={{
+                filter: isHovered
+                  ? "drop-shadow(0 0 30px rgba(255, 215, 0, 0.8))"
+                  : "drop-shadow(0 10px 20px rgba(0, 0, 0, 0.3))",
+              }}
+            >
+              <defs>
+                <linearGradient id="advanced3D" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stopColor="#FFD700" />
+                  <stop offset="25%" stopColor="#FFA500" />
+                  <stop offset="50%" stopColor="#FF8C00" />
+                  <stop offset="75%" stopColor="#FFD700" />
+                  <stop offset="100%" stopColor="#FFF500" />
+                </linearGradient>
+                <linearGradient id="highlight3D" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stopColor="#FFFFFF" opacity="0.8" />
+                  <stop offset="100%" stopColor="#FFD700" opacity="0.4" />
+                </linearGradient>
+                <filter id="glow3D">
+                  <feGaussianBlur stdDeviation="4" result="coloredBlur" />
+                  <feMerge>
+                    <feMergeNode in="coloredBlur" />
+                    <feMergeNode in="SourceGraphic" />
+                  </feMerge>
+                </filter>
+              </defs>
+
+              {/* 3D Dumbbell with depth */}
+              <g filter="url(#glow3D)">
+                {/* Shadow layer */}
+                <g transform="translate(2, 2)" opacity="0.3">
+                  <rect x="15" y="35" width="18" height="30" rx="6" fill="#000" />
+                  <rect x="67" y="35" width="18" height="30" rx="6" fill="#000" />
+                  <rect x="33" y="45" width="34" height="10" rx="5" fill="#000" />
+                </g>
+
+                {/* Main structure */}
+                <rect x="15" y="35" width="18" height="30" rx="6" fill="url(#advanced3D)" />
+                <rect x="67" y="35" width="18" height="30" rx="6" fill="url(#advanced3D)" />
+                <rect x="33" y="45" width="34" height="10" rx="5" fill="url(#advanced3D)" />
+
+                {/* Highlights */}
+                <rect x="17" y="37" width="14" height="8" rx="4" fill="url(#highlight3D)" />
+                <rect x="69" y="37" width="14" height="8" rx="4" fill="url(#highlight3D)" />
+                <rect x="35" y="46" width="30" height="4" rx="2" fill="url(#highlight3D)" />
+
+                {/* Connection points */}
+                <rect x="31" y="42" width="6" height="16" rx="3" fill="url(#advanced3D)" />
+                <rect x="63" y="42" width="6" height="16" rx="3" fill="url(#advanced3D)" />
+              </g>
+
+              {/* Animated energy rings */}
+              <motion.circle
+                cx="50"
+                cy="50"
+                r="35"
+                fill="none"
+                stroke="url(#advanced3D)"
+                strokeWidth="2"
+                opacity="0.6"
+                initial={{ scale: 0, opacity: 0 }}
+                animate={
+                  isHovered
+                    ? {
+                        scale: [1, 1.2, 1],
+                        opacity: [0.6, 0.2, 0.6],
+                      }
+                    : { scale: 1, opacity: 0 }
+                }
+                transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY }}
+              />
+              <motion.circle
+                cx="50"
+                cy="50"
+                r="45"
+                fill="none"
+                stroke="url(#advanced3D)"
+                strokeWidth="1"
+                opacity="0.4"
+                initial={{ scale: 0, opacity: 0 }}
+                animate={
+                  isHovered
+                    ? {
+                        scale: [1, 1.3, 1],
+                        opacity: [0.4, 0.1, 0.4],
+                      }
+                    : { scale: 1, opacity: 0 }
+                }
+                transition={{ duration: 2.5, repeat: Number.POSITIVE_INFINITY, delay: 0.5 }}
+              />
+            </svg>
+          </motion.div>
+
+          {/* Advanced Typography */}
+          <div className="relative">
+            <motion.div
+              className="flex items-baseline"
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+            >
+              <motion.span
+                className="font-black text-4xl lg:text-5xl relative"
+                style={{
+                  fontFamily: '"Inter", sans-serif',
+                  background: isHovered
+                    ? "linear-gradient(45deg, #FFD700, #FFA500, #FF8C00, #FFD700)"
+                    : "linear-gradient(45deg, #FFD700, #FFA500)",
+                  backgroundSize: "300% 300%",
+                  backgroundClip: "text",
+                  WebkitBackgroundClip: "text",
+                  color: "transparent",
+                  letterSpacing: "-0.02em",
+                }}
+                animate={
+                  isHovered
+                    ? {
+                        backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
+                      }
+                    : {}
+                }
+                transition={{ duration: 3, repeat: Number.POSITIVE_INFINITY }}
+              >
+                Aura
+                {/* Glitch effect overlay */}
+                <motion.span
+                  className="absolute inset-0 text-red-500 opacity-0"
+                  animate={
+                    isHovered
+                      ? {
+                          opacity: [0, 0.3, 0],
+                          x: [0, 2, -2, 0],
+                        }
+                      : {}
+                  }
+                  transition={{ duration: 0.2, repeat: Number.POSITIVE_INFINITY, repeatDelay: 2 }}
+                >
+                  Aura
+                </motion.span>
+              </motion.span>
+
+              <motion.span
+                className="font-black text-4xl lg:text-5xl relative ml-1"
+                style={{
+                  fontFamily: '"Inter", sans-serif',
+                  background: isHovered
+                    ? "linear-gradient(45deg, #FF8C00, #FFD700, #FFA500, #FF8C00)"
+                    : "linear-gradient(45deg, #FF8C00, #FFD700)",
+                  backgroundSize: "300% 300%",
+                  backgroundClip: "text",
+                  WebkitBackgroundClip: "text",
+                  color: "transparent",
+                  letterSpacing: "-0.02em",
+                }}
+                animate={
+                  isHovered
+                    ? {
+                        backgroundPosition: ["100% 50%", "0% 50%", "100% 50%"],
+                      }
+                    : {}
+                }
+                transition={{ duration: 3, repeat: Number.POSITIVE_INFINITY, delay: 0.5 }}
+              >
+                Fits
+              </motion.span>
+            </motion.div>
+
+            {/* Animated underline */}
+            <motion.div
+              className="h-1 bg-gradient-to-r from-yellow-400 via-orange-500 to-yellow-400 rounded-full mt-1"
+              initial={{ width: 0, opacity: 0 }}
+              animate={
+                isHovered
+                  ? {
+                      width: "100%",
+                      opacity: 1,
+                      backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
+                    }
+                  : { width: 0, opacity: 0 }
+              }
+              transition={{ duration: 0.5, ease: "easeOut" }}
+              style={{ backgroundSize: "200% 200%" }}
+            />
+
+            {/* Floating text effects */}
+            <motion.div
+              className="absolute -top-2 -right-2 text-xs font-bold text-yellow-400 opacity-0"
+              animate={
+                isHovered
+                  ? {
+                      opacity: [0, 1, 0],
+                      y: [0, -10, -20],
+                      scale: [0.8, 1, 0.8],
+                    }
+                  : { opacity: 0 }
+              }
+              transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY }}
+            >
+              ✨
+            </motion.div>
+          </div>
+        </div>
+
+        {/* Holographic overlay */}
+        <motion.div
+          className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-0 -skew-x-12"
+          animate={
+            isHovered
+              ? {
+                  x: [-100, 300],
+                  opacity: [0, 0.3, 0],
+                }
+              : {}
+          }
+          transition={{ duration: 1.5, ease: "easeInOut" }}
+        />
+      </motion.div>
+    </motion.div>
+  )
+}
+
+// Glassmorphism Logo with Neural Network Effect
+export const LogoGlass = () => {
+  const [isHovered, setIsHovered] = useState(false)
+  const [nodes] = useState(() =>
+    Array.from({ length: 8 }, (_, i) => ({
+      id: i,
+      x: Math.random() * 200,
+      y: Math.random() * 80,
+      connections: Array.from({ length: Math.floor(Math.random() * 3) + 1 }, () =>
+        Math.floor(Math.random() * 8),
+      ).filter((id) => id !== i),
+    })),
+  )
+
+  return (
+    <motion.div
+      className="cursor-pointer select-none relative"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      whileHover={{ scale: 1.02 }}
+      transition={{ type: "spring", stiffness: 400, damping: 25 }}
+    >
+      <div
+        className="relative p-6 rounded-3xl backdrop-blur-xl border border-white/20 shadow-2xl"
+        style={{
+          background: isHovered
+            ? "linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(255, 140, 0, 0.1), rgba(255, 215, 0, 0.1))"
+            : "linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05))",
+          boxShadow: isHovered
+            ? "0 25px 50px rgba(255, 215, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.3)"
+            : "0 25px 50px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2)",
+        }}
+      >
+        {/* Neural Network Background */}
+        <div className="absolute inset-0 overflow-hidden rounded-3xl">
+          <svg className="absolute inset-0 w-full h-full">
+            {nodes.map((node) =>
+              node.connections.map((targetId) => {
+                const target = nodes[targetId]
+                return (
+                  <motion.line
+                    key={`${node.id}-${targetId}`}
+                    x1={node.x}
+                    y1={node.y}
+                    x2={target.x}
+                    y2={target.y}
+                    stroke="url(#neuralGradient)"
+                    strokeWidth="1"
+                    opacity="0.3"
+                    initial={{ pathLength: 0 }}
+                    animate={
+                      isHovered
+                        ? {
+                            pathLength: [0, 1, 0],
+                            opacity: [0.3, 0.8, 0.3],
+                          }
+                        : { pathLength: 0.3, opacity: 0.3 }
+                    }
+                    transition={{
+                      duration: 2,
+                      repeat: Number.POSITIVE_INFINITY,
+                      delay: node.id * 0.2,
+                    }}
+                  />
+                )
+              }),
+            )}
+            {nodes.map((node) => (
+              <motion.circle
+                key={node.id}
+                cx={node.x}
+                cy={node.y}
+                r="3"
+                fill="url(#nodeGradient)"
+                initial={{ scale: 0 }}
+                animate={
+                  isHovered
+                    ? {
+                        scale: [1, 1.5, 1],
+                        opacity: [0.6, 1, 0.6],
+                      }
+                    : { scale: 1, opacity: 0.6 }
+                }
+                transition={{
+                  duration: 1.5,
+                  repeat: Number.POSITIVE_INFINITY,
+                  delay: node.id * 0.1,
+                }}
+              />
+            ))}
+            <defs>
+              <linearGradient id="neuralGradient">
+                <stop offset="0%" stopColor="#FFD700" />
+                <stop offset="100%" stopColor="#FF8C00" />
+              </linearGradient>
+              <radialGradient id="nodeGradient">
+                <stop offset="0%" stopColor="#FFFFFF" />
+                <stop offset="100%" stopColor="#FFD700" />
+              </radialGradient>
+            </defs>
+          </svg>
+        </div>
+
+        {/* Main Content */}
+        <div className="relative z-10 flex items-center gap-4">
+          {/* Morphing Icon */}
+          <motion.div
+            className="relative"
+            animate={
+              isHovered
+                ? {
+                    rotateY: [0, 180, 360],
+                  }
+                : {}
+            }
+            transition={{ duration: 2, ease: "easeInOut" }}
+            style={{ transformStyle: "preserve-3d" }}
+          >
+            <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-yellow-400 via-orange-500 to-yellow-400 p-3 shadow-lg">
+              <motion.svg
+                viewBox="0 0 24 24"
+                className="w-full h-full text-black"
+                animate={
+                  isHovered
+                    ? {
+                        scale: [1, 1.2, 1],
+                        rotate: [0, 180, 360],
+                      }
+                    : {}
+                }
+                transition={{ duration: 2, ease: "easeInOut" }}
+              >
+                <path
+                  fill="currentColor"
+                  d="M20.57 14.86L22 13.43 20.57 12 17 15.57 8.43 7 12 3.43 10.57 2 9.14 3.43 7.71 2 5.57 4.14 4.14 2.71 2.71 4.14l1.43 1.43L2 7.71l1.43 1.43L2 10.57 3.43 12 7 8.43 15.57 17 12 20.57 13.43 22l1.43-1.43L16.29 22l2.14-2.14 1.43 1.43 1.43-1.43-1.43-1.43L22 16.29z"
+                />
+              </motion.svg>
+            </div>
+          </motion.div>
+
+          {/* Liquid Text Effect */}
+          <div className="relative">
+            <motion.h1
+              className="text-3xl lg:text-4xl font-black tracking-tight"
+              style={{
+                fontFamily: '"Space Grotesk", sans-serif',
+                background: isHovered
+                  ? "linear-gradient(45deg, #FFD700, #FF8C00, #FFD700, #FFA500)"
+                  : "linear-gradient(45deg, #FFFFFF, #FFD700)",
+                backgroundSize: "400% 400%",
+                backgroundClip: "text",
+                WebkitBackgroundClip: "text",
+                color: "transparent",
+                filter: isHovered ? "drop-shadow(0 0 20px rgba(255, 215, 0, 0.5))" : "none",
+              }}
+              animate={
+                isHovered
+                  ? {
+                      backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
+                    }
+                  : {}
+              }
+              transition={{ duration: 3, repeat: Number.POSITIVE_INFINITY }}
+            >
+              <motion.span
+                animate={
+                  isHovered
+                    ? {
+                        y: [0, -2, 0],
+                      }
+                    : {}
+                }
+                transition={{ duration: 0.6, repeat: Number.POSITIVE_INFINITY, delay: 0 }}
+              >
+                A
+              </motion.span>
+              <motion.span
+                animate={
+                  isHovered
+                    ? {
+                        y: [0, -2, 0],
+                      }
+                    : {}
+                }
+                transition={{ duration: 0.6, repeat: Number.POSITIVE_INFINITY, delay: 0.1 }}
+              >
+                u
+              </motion.span>
+              <motion.span
+                animate={
+                  isHovered
+                    ? {
+                        y: [0, -2, 0],
+                      }
+                    : {}
+                }
+                transition={{ duration: 0.6, repeat: Number.POSITIVE_INFINITY, delay: 0.2 }}
+              >
+                r
+              </motion.span>
+              <motion.span
+                animate={
+                  isHovered
+                    ? {
+                        y: [0, -2, 0],
+                      }
+                    : {}
+                }
+                transition={{ duration: 0.6, repeat: Number.POSITIVE_INFINITY, delay: 0.3 }}
+              >
+                a
+              </motion.span>
+              <motion.span
+                className="ml-2"
+                animate={
+                  isHovered
+                    ? {
+                        y: [0, -2, 0],
+                      }
+                    : {}
+                }
+                transition={{ duration: 0.6, repeat: Number.POSITIVE_INFINITY, delay: 0.4 }}
+              >
+                F
+              </motion.span>
+              <motion.span
+                animate={
+                  isHovered
+                    ? {
+                        y: [0, -2, 0],
+                      }
+                    : {}
+                }
+                transition={{ duration: 0.6, repeat: Number.POSITIVE_INFINITY, delay: 0.5 }}
+              >
+                i
+              </motion.span>
+              <motion.span
+                animate={
+                  isHovered
+                    ? {
+                        y: [0, -2, 0],
+                      }
+                    : {}
+                }
+                transition={{ duration: 0.6, repeat: Number.POSITIVE_INFINITY, delay: 0.6 }}
+              >
+                t
+              </motion.span>
+              <motion.span
+                animate={
+                  isHovered
+                    ? {
+                        y: [0, -2, 0],
+                      }
+                    : {}
+                }
+                transition={{ duration: 0.6, repeat: Number.POSITIVE_INFINITY, delay: 0.7 }}
+              >
+                s
+              </motion.span>
+            </motion.h1>
+
+            {/* Liquid underline */}
+            <motion.div
+              className="absolute -bottom-1 left-0 h-1 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full"
+              initial={{ width: 0, scaleY: 1 }}
+              animate={
+                isHovered
+                  ? {
+                      width: "100%",
+                      scaleY: [1, 1.5, 1],
+                    }
+                  : { width: 0, scaleY: 1 }
+              }
+              transition={{ duration: 0.8, ease: "easeOut" }}
+            />
+          </div>
+        </div>
+
+        {/* Floating particles */}
+        <div className="absolute inset-0 pointer-events-none">
+          {[...Array(6)].map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute w-2 h-2 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full"
+              initial={{
+                x: Math.random() * 200,
+                y: Math.random() * 80,
+                opacity: 0,
+                scale: 0,
+              }}
+              animate={
+                isHovered
+                  ? {
+                      y: [null, -20],
+                      opacity: [0, 1, 0],
+                      scale: [0, 1, 0],
+                    }
+                  : { opacity: 0, scale: 0 }
+              }
+              transition={{
+                duration: 2,
+                repeat: Number.POSITIVE_INFINITY,
+                delay: i * 0.3,
+                ease: "easeOut",
+              }}
+            />
+          ))}
+        </div>
+      </div>
+    </motion.div>
+  )
+}
+
+// Cyberpunk Neon Logo
+export const LogoCyberpunk = () => {
+  const [isHovered, setIsHovered] = useState(false)
+  const [glitchActive, setGlitchActive] = useState(false)
+
+  useEffect(() => {
+    if (isHovered) {
+      const interval = setInterval(() => {
+        setGlitchActive(true)
+        setTimeout(() => setGlitchActive(false), 150)
+      }, 2000)
+      return () => clearInterval(interval)
+    }
+  }, [isHovered])
+
+  return (
+    <motion.div
+      className="cursor-pointer select-none relative"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      whileHover={{ scale: 1.05 }}
+      transition={{ type: "spring", stiffness: 300, damping: 30 }}
+    >
+      <div className="relative">
+        {/* Neon glow background */}
+        <motion.div
+          className="absolute inset-0 rounded-2xl"
+          animate={
+            isHovered
+              ? {
+                  boxShadow: [
+                    "0 0 20px rgba(255, 215, 0, 0.5)",
+                    "0 0 40px rgba(255, 215, 0, 0.8)",
+                    "0 0 20px rgba(255, 215, 0, 0.5)",
+                  ],
+                }
+              : {
+                  boxShadow: "0 0 10px rgba(255, 215, 0, 0.3)",
+                }
+          }
+          transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY }}
+        />
+
+        {/* Main container */}
+        <div className="relative bg-black/90 backdrop-blur-sm border border-yellow-400/30 rounded-2xl p-6 overflow-hidden">
+          {/* Scanlines */}
+          <div className="absolute inset-0 pointer-events-none">
+            <div
+              className="absolute inset-0 opacity-10"
+              style={{
+                backgroundImage:
+                  "repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255, 215, 0, 0.3) 2px, rgba(255, 215, 0, 0.3) 4px)",
+              }}
+            />
+          </div>
+
+          {/* Moving scan line */}
+          <motion.div
+            className="absolute left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-yellow-400 to-transparent"
+            animate={
+              isHovered
+                ? {
+                    y: [0, 100, 0],
+                    opacity: [0, 1, 0],
+                  }
+                : { opacity: 0 }
+            }
+            transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
+          />
+
+          <div className="relative z-10 flex items-center gap-4">
+            {/* Cyberpunk Icon */}
+            <motion.div
+              className="relative"
+              animate={
+                glitchActive
+                  ? {
+                      x: [0, -2, 2, 0],
+                      filter: ["hue-rotate(0deg)", "hue-rotate(90deg)", "hue-rotate(180deg)", "hue-rotate(0deg)"],
+                    }
+                  : {}
+              }
+              transition={{ duration: 0.15 }}
+            >
+              <div className="w-16 h-16 relative">
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-lg"
+                  animate={
+                    isHovered
+                      ? {
+                          rotate: [0, 180, 360],
+                          scale: [1, 1.1, 1],
+                        }
+                      : {}
+                  }
+                  transition={{ duration: 3, repeat: Number.POSITIVE_INFINITY }}
+                />
+                <div className="absolute inset-1 bg-black rounded-md flex items-center justify-center">
+                  <motion.svg
+                    viewBox="0 0 24 24"
+                    className="w-8 h-8 text-yellow-400"
+                    animate={
+                      isHovered
+                        ? {
+                            scale: [1, 1.2, 1],
+                            rotate: [0, -10, 10, 0],
+                          }
+                        : {}
+                    }
+                    transition={{ duration: 1, repeat: Number.POSITIVE_INFINITY }}
+                  >
+                    <path
+                      fill="currentColor"
+                      d="M12 2L13.09 8.26L22 9L13.09 9.74L12 16L10.91 9.74L2 9L10.91 8.26L12 2Z"
+                    />
+                  </motion.svg>
+                </div>
+
+                {/* Corner brackets */}
+                <div className="absolute -top-1 -left-1 w-3 h-3 border-l-2 border-t-2 border-yellow-400" />
+                <div className="absolute -top-1 -right-1 w-3 h-3 border-r-2 border-t-2 border-yellow-400" />
+                <div className="absolute -bottom-1 -left-1 w-3 h-3 border-l-2 border-b-2 border-yellow-400" />
+                <div className="absolute -bottom-1 -right-1 w-3 h-3 border-r-2 border-b-2 border-yellow-400" />
+              </div>
+            </motion.div>
+
+            {/* Cyberpunk Text */}
+            <div className="relative">
+              <motion.div
+                className="text-4xl lg:text-5xl font-black tracking-wider"
+                style={{
+                  fontFamily: '"Orbitron", monospace',
+                  textShadow: isHovered
+                    ? "0 0 10px rgba(255, 215, 0, 0.8), 0 0 20px rgba(255, 215, 0, 0.6), 0 0 30px rgba(255, 215, 0, 0.4)"
+                    : "0 0 5px rgba(255, 215, 0, 0.5)",
+                }}
+                animate={
+                  glitchActive
+                    ? {
+                        x: [0, -1, 1, 0],
+                        textShadow: [
+                          "0 0 5px rgba(255, 215, 0, 0.5)",
+                          "2px 0 0 rgba(255, 0, 0, 0.8), -2px 0 0 rgba(0, 255, 255, 0.8)",
+                          "0 0 5px rgba(255, 215, 0, 0.5)",
+                        ],
+                      }
+                    : {}
+                }
+                transition={{ duration: 0.15 }}
+              >
+                <span className="text-yellow-400">AURA</span>
+                <span className="text-orange-400 ml-2">FITS</span>
+
+                {/* Glitch overlay */}
+                {glitchActive && (
+                  <>
+                    <motion.span
+                      className="absolute inset-0 text-red-500"
+                      initial={{ opacity: 0, x: 0 }}
+                      animate={{ opacity: [0, 0.7, 0], x: [-2, 2, -1] }}
+                      transition={{ duration: 0.15 }}
+                    >
+                      AURA FITS
+                    </motion.span>
+                    <motion.span
+                      className="absolute inset-0 text-cyan-400"
+                      initial={{ opacity: 0, x: 0 }}
+                      animate={{ opacity: [0, 0.5, 0], x: [2, -2, 1] }}
+                      transition={{ duration: 0.15, delay: 0.05 }}
+                    >
+                      AURA FITS
+                    </motion.span>
+                  </>
+                )}
+              </motion.div>
+
+              {/* Data stream */}
+              <motion.div
+                className="absolute -bottom-6 left-0 text-xs font-mono text-yellow-400/60 whitespace-nowrap overflow-hidden"
+                animate={
+                  isHovered
+                    ? {
+                        opacity: [0, 1, 1, 0],
+                      }
+                    : { opacity: 0 }
+                }
+                transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY }}
+              >
+                <motion.span
+                  animate={
+                    isHovered
+                      ? {
+                          x: [-100, 200],
+                        }
+                      : {}
+                  }
+                  transition={{ duration: 3, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
+                >
+                  {">"} INITIALIZING_FITNESS_PROTOCOL... 100% COMPLETE
+                </motion.span>
+              </motion.div>
+            </div>
+          </div>
+
+          {/* Circuit pattern */}
+          <div className="absolute top-2 right-2 opacity-30">
+            <svg width="40" height="40" viewBox="0 0 40 40">
+              <path
+                d="M5 5 L35 5 L35 35 L5 35 Z M15 15 L25 15 M20 10 L20 30"
+                stroke="currentColor"
+                strokeWidth="1"
+                fill="none"
+                className="text-yellow-400"
+              />
+              <circle cx="15" cy="15" r="2" fill="currentColor" className="text-yellow-400" />
+              <circle cx="25" cy="15" r="2" fill="currentColor" className="text-yellow-400" />
+              <circle cx="20" cy="25" r="2" fill="currentColor" className="text-yellow-400" />
+            </svg>
+          </div>
+        </div>
+      </div>
+    </motion.div>
+  )
+}
+
+// Main showcase component
+const AdvancedLogoShowcase = () => {
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-800 p-8">
+      <div className="max-w-6xl mx-auto">
+        <motion.h1
+          className="text-5xl font-bold text-white text-center mb-4"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+        >
+          Ultra-Modern AuraFits Logos
+        </motion.h1>
+        <motion.p
+          className="text-gray-400 text-center mb-16 text-lg"
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+        >
+          Next-generation logo designs with advanced animations and effects
+        </motion.p>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-12">
+          {/* 3D Logo */}
+          <motion.div
+            className="bg-black/30 backdrop-blur-sm rounded-2xl p-8 border border-white/10"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.1 }}
+          >
+            <h3 className="text-white text-xl font-semibold mb-6 text-center">3D Interactive</h3>
+            <div className="flex justify-center">
+              <Logo3D />
+            </div>
+            <p className="text-gray-400 text-sm text-center mt-4">3D transforms, particle effects, mouse tracking</p>
+          </motion.div>
+
+          {/* Glassmorphism Logo */}
+          <motion.div
+            className="bg-black/30 backdrop-blur-sm rounded-2xl p-8 border border-white/10"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          >
+            <h3 className="text-white text-xl font-semibold mb-6 text-center">Glassmorphism</h3>
+            <div className="flex justify-center">
+              <LogoGlass />
+            </div>
+            <p className="text-gray-400 text-sm text-center mt-4">Neural networks, glass effects, liquid animations</p>
+          </motion.div>
+
+          {/* Cyberpunk Logo */}
+          <motion.div
+            className="bg-black/30 backdrop-blur-sm rounded-2xl p-8 border border-white/10 lg:col-span-2 xl:col-span-1"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+          >
+            <h3 className="text-white text-xl font-semibold mb-6 text-center">Cyberpunk</h3>
+            <div className="flex justify-center">
+              <LogoCyberpunk />
+            </div>
+            <p className="text-gray-400 text-sm text-center mt-4">Neon effects, glitch animations, scanlines</p>
+          </motion.div>
+        </div>
+
+        {/* Features Grid */}
+        <motion.div
+          className="mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.4 }}
+        >
+          {[
+            { title: "3D Transforms", desc: "Real-time 3D rotation and perspective effects" },
+            { title: "Particle Systems", desc: "Dynamic particle animations and effects" },
+            { title: "Advanced Shaders", desc: "Custom gradients and lighting effects" },
+            { title: "Micro-interactions", desc: "Sophisticated hover and click animations" },
+          ].map((feature, index) => (
+            <div key={index} className="bg-black/50 backdrop-blur-sm rounded-xl p-6 border border-white/10 text-center">
+              <h4 className="text-yellow-400 font-semibold mb-2">{feature.title}</h4>
+              <p className="text-gray-400 text-sm">{feature.desc}</p>
+            </div>
+          ))}
+        </motion.div>
+
+        <motion.div
+          className="mt-12 text-center"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8, delay: 0.6 }}
+        >
+          <p className="text-gray-400 text-sm">Hover over each logo to experience advanced interactive effects</p>
+        </motion.div>
+      </div>
+    </div>
+  )
+}
+
+export default AdvancedLogoShowcase
