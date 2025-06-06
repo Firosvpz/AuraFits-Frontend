@@ -1,0 +1,43 @@
+// Mock data - replace with your actual data fetching
+export const mockPlans = [
+    {
+        id: 1,
+        planName: "Basic Plan",
+        planType: "monthly",
+        price: 29.99,
+        description: "Perfect for small businesses getting started",
+        status: "active",
+        subscribers: 145,
+        createdAt: "2024-01-15",
+    },
+    {
+        id: 2,
+        planName: "Pro Plan",
+        planType: "monthly",
+        price: 79.99,
+        description: "Advanced features for growing companies",
+        status: "active",
+        subscribers: 89,
+        createdAt: "2024-01-10",
+    },
+    {
+        id: 3,
+        planName: "Enterprise Plan",
+        planType: "yearly",
+        price: 999.99,
+        description: "Complete solution for large organizations",
+        status: "active",
+        subscribers: 23,
+        createdAt: "2024-01-05",
+    },
+    {
+        id: 4,
+        planName: "Starter Plan",
+        planType: "monthly",
+        price: 9.99,
+        description: "Basic features for individuals",
+        status: "inactive",
+        subscribers: 67,
+        createdAt: "2024-01-01",
+    },
+]

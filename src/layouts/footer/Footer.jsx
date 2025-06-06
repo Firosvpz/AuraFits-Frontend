@@ -1,4 +1,4 @@
-import Logo from "../../components/logo/LOgo";
+import Logo from "../../components/users/logo/LOgo";
 
 export default function Footer() {
   return (
@@ -46,18 +46,18 @@ export default function Footer() {
       <div className="relative container mx-auto px-8  py-20">
         {/* Premium header section */}
         {/* <div className="text-center mb-16"> */}
-          {/* <div className="inline-flex items-center justify-center p-6  rounded-2xl border border-white/20 backdrop-blur-xl mb-6">
+        {/* <div className="inline-flex items-center justify-center p-6  rounded-2xl border border-white/20 backdrop-blur-xl mb-6">
             <Logo/>
           </div> */}
-          {/* <p className="text-xl text-gray-300 max-w-2xl mx-auto leading-relaxed">
+        {/* <p className="text-xl text-gray-300 max-w-2xl mx-auto leading-relaxed">
             Premium fitness experience with exclusive member benefits
           </p> */}
         {/* </div> */}
 
         {/* Premium content grid */}
         {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16"> */}
-          
-          {/* <div className="group relative">
+
+        {/* <div className="group relative">
             <div className="absolute inset-0 bg-gradient-to-br from-orange-500/20 to-red-500/20 rounded-2xl blur-xl group-hover:blur-2xl transition-all duration-500" />
             <div className="relative p-8 bg-gradient-to-br from-white/10 to-white/5 rounded-2xl border border-white/20 backdrop-blur-xl hover:border-orange-400/30 transition-all duration-500">
               <div className="mb-6">
@@ -77,8 +77,8 @@ export default function Footer() {
             </div>
           </div> */}
 
-          {/* Premium Facilities Card */}
-          {/* <div className="group relative">
+        {/* Premium Facilities Card */}
+        {/* <div className="group relative">
             <div className="absolute inset-0 bg-gradient-to-br from-red-500/20 to-orange-500/20 rounded-2xl blur-xl group-hover:blur-2xl transition-all duration-500" />
             <div className="relative p-8 bg-gradient-to-br from-white/10 to-white/5 rounded-2xl border border-white/20 backdrop-blur-xl hover:border-red-400/30 transition-all duration-500">
               <div className="mb-6">
@@ -96,8 +96,8 @@ export default function Footer() {
             </div>
           </div> */}
 
-          {/* Member Benefits Card */}
-          {/* <div className="group relative md:col-span-2 lg:col-span-1">
+        {/* Member Benefits Card */}
+        {/* <div className="group relative md:col-span-2 lg:col-span-1">
             <div className="absolute inset-0 bg-gradient-to-br from-orange-500/20 to-red-500/20 rounded-2xl blur-xl group-hover:blur-2xl transition-all duration-500" />
             <div className="relative p-8 bg-gradient-to-br from-white/10 to-white/5 rounded-2xl border border-white/20 backdrop-blur-xl hover:border-orange-400/30 transition-all duration-500">
               <div className="mb-6">
@@ -125,25 +125,33 @@ export default function Footer() {
                 <div className="text-3xl font-bold bg-[#FFD700] bg-clip-text text-transparent mb-2">
                   1000+
                 </div>
-                <div className="text-sm text-gray-400 uppercase tracking-wider">Elite Members</div>
+                <div className="text-sm text-gray-400 uppercase tracking-wider">
+                  Elite Members
+                </div>
               </div>
               <div className="text-center">
                 <div className="text-3xl font-bold bg-[#FFD700] bg-clip-text text-transparent mb-2">
                   50+
                 </div>
-                <div className="text-sm text-gray-400 uppercase tracking-wider">Premium Classes</div>
+                <div className="text-sm text-gray-400 uppercase tracking-wider">
+                  Premium Classes
+                </div>
               </div>
               <div className="text-center">
                 <div className="text-3xl font-bold bg-[#FFD700] bg-clip-text text-transparent mb-2">
                   24/7
                 </div>
-                <div className="text-sm text-gray-400 uppercase tracking-wider">VIP Access</div>
+                <div className="text-sm text-gray-400 uppercase tracking-wider">
+                  VIP Access
+                </div>
               </div>
               <div className="text-center">
                 <div className="text-3xl font-bold bg-[#FFD700] bg-clip-text text-transparent mb-2">
                   5★
                 </div>
-                <div className="text-sm text-gray-400 uppercase tracking-wider">Member Rating</div>
+                <div className="text-sm text-gray-400 uppercase tracking-wider">
+                  Member Rating
+                </div>
               </div>
             </div>
           </div>
@@ -154,9 +162,13 @@ export default function Footer() {
           <div className="absolute inset-0  rounded-2xl" />
           <div className="relative flex flex-col md:flex-row justify-between items-center p-6 rounded-2xl border border-white/10 backdrop-blur-xl">
             <div className="flex items-center space-x-6 mb-4 md:mb-0">
-              <div className="text-[#FFD700]">© {new Date().getFullYear()} AuraFits</div>
+              <div className="text-[#FFD700]">
+                © {new Date().getFullYear()} AuraFits
+              </div>
               <div className="hidden md:block w-px h-4 bg-white/20" />
-              <div className="text-sm text-[#FFD700]">Elite Fitness Experience</div>
+              <div className="text-sm text-[#FFD700]">
+                Elite Fitness Experience
+              </div>
             </div>
 
             {/* Premium contact badge */}
@@ -172,5 +184,5 @@ export default function Footer() {
       {/* Premium card shine effect */}
       <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-1000 pointer-events-none" />
     </footer>
-  )
+  );
 }

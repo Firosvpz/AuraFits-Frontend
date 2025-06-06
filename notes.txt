@@ -1,951 +1,1087 @@
 "use client"
 
-import type React from "react"
-
 import { useState, useEffect, useRef } from "react"
-import { motion } from "framer-motion"
+import {
+  Users,
+  Calendar,
+  DollarSign,
+  TrendingUp,
+  Activity,
+  BarChart2,
+  Clock,
+  Search,
+  Grid,
+  Settings,
+  LogOut,
+  Bell,
+  User,
+  Menu,
+  X,
+  ChevronDown,
+  ChevronRight,
+  Zap,
+  Target,
+  Award,
+  Eye,
+  Filter,
+  Download,
+  RefreshCw,
+} from "lucide-react"
 
-// Advanced 3D Logo with Particle System
-export const Logo3D = () => {
-  const [isHovered, setIsHovered] = useState(false)
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
-  const logoRef = useRef<HTMLDivElement>(null)
-
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (logoRef.current) {
-      const rect = logoRef.current.getBoundingClientRect()
-      const x = (e.clientX - rect.left - rect.width / 2) / rect.width
-      const y = (e.clientY - rect.top - rect.height / 2) / rect.height
-      setMousePosition({ x: x * 20, y: y * 20 })
-    }
-  }
-
-  return (
-    <motion.div
-      ref={logoRef}
-      className="cursor-pointer select-none relative"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      onMouseMove={handleMouseMove}
-      style={{
-        perspective: "1000px",
-        transformStyle: "preserve-3d",
-      }}
-      whileHover={{ scale: 1.05 }}
-      transition={{ type: "spring", stiffness: 300, damping: 30 }}
-    >
-      <motion.div
-        className="relative"
-        animate={{
-          rotateX: mousePosition.y,
-          rotateY: mousePosition.x,
-        }}
-        transition={{ type: "spring", stiffness: 100, damping: 20 }}
-        style={{
-          transformStyle: "preserve-3d",
-        }}
-      >
-        {/* Particle Background */}
-        <div className="absolute inset-0 overflow-hidden">
-          {[...Array(20)].map((_, i) => (
-            <motion.div
-              key={i}
-              className="absolute w-1 h-1 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full"
-              initial={{
-                x: Math.random() * 200,
-                y: Math.random() * 100,
-                opacity: 0,
-              }}
-              animate={
-                isHovered
-                  ? {
-                      x: Math.random() * 200,
-                      y: Math.random() * 100,
-                      opacity: [0, 1, 0],
-                      scale: [0, 1, 0],
-                    }
-                  : { opacity: 0 }
-              }
-              transition={{
-                duration: 2,
-                repeat: Number.POSITIVE_INFINITY,
-                delay: i * 0.1,
-              }}
-            />
-          ))}
-        </div>
-
-        {/* Main Logo Container */}
-        <div className="flex items-center gap-4 relative z-10">
-          {/* 3D Icon */}
-          <motion.div
-            className="relative"
-            animate={isHovered ? { rotateZ: 360 } : { rotateZ: 0 }}
-            transition={{ duration: 2, ease: "easeInOut" }}
-          >
-            <svg
-              width="60"
-              height="60"
-              viewBox="0 0 100 100"
-              className="drop-shadow-2xl"
-              style={{
-                filter: isHovered
-                  ? "drop-shadow(0 0 30px rgba(255, 215, 0, 0.8))"
-                  : "drop-shadow(0 10px 20px rgba(0, 0, 0, 0.3))",
-              }}
-            >
-              <defs>
-                <linearGradient id="advanced3D" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stopColor="#FFD700" />
-                  <stop offset="25%" stopColor="#FFA500" />
-                  <stop offset="50%" stopColor="#FF8C00" />
-                  <stop offset="75%" stopColor="#FFD700" />
-                  <stop offset="100%" stopColor="#FFF500" />
-                </linearGradient>
-                <linearGradient id="highlight3D" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stopColor="#FFFFFF" opacity="0.8" />
-                  <stop offset="100%" stopColor="#FFD700" opacity="0.4" />
-                </linearGradient>
-                <filter id="glow3D">
-                  <feGaussianBlur stdDeviation="4" result="coloredBlur" />
-                  <feMerge>
-                    <feMergeNode in="coloredBlur" />
-                    <feMergeNode in="SourceGraphic" />
-                  </feMerge>
-                </filter>
-              </defs>
-
-              {/* 3D Dumbbell with depth */}
-              <g filter="url(#glow3D)">
-                {/* Shadow layer */}
-                <g transform="translate(2, 2)" opacity="0.3">
-                  <rect x="15" y="35" width="18" height="30" rx="6" fill="#000" />
-                  <rect x="67" y="35" width="18" height="30" rx="6" fill="#000" />
-                  <rect x="33" y="45" width="34" height="10" rx="5" fill="#000" />
-                </g>
-
-                {/* Main structure */}
-                <rect x="15" y="35" width="18" height="30" rx="6" fill="url(#advanced3D)" />
-                <rect x="67" y="35" width="18" height="30" rx="6" fill="url(#advanced3D)" />
-                <rect x="33" y="45" width="34" height="10" rx="5" fill="url(#advanced3D)" />
-
-                {/* Highlights */}
-                <rect x="17" y="37" width="14" height="8" rx="4" fill="url(#highlight3D)" />
-                <rect x="69" y="37" width="14" height="8" rx="4" fill="url(#highlight3D)" />
-                <rect x="35" y="46" width="30" height="4" rx="2" fill="url(#highlight3D)" />
-
-                {/* Connection points */}
-                <rect x="31" y="42" width="6" height="16" rx="3" fill="url(#advanced3D)" />
-                <rect x="63" y="42" width="6" height="16" rx="3" fill="url(#advanced3D)" />
-              </g>
-
-              {/* Animated energy rings */}
-              <motion.circle
-                cx="50"
-                cy="50"
-                r="35"
-                fill="none"
-                stroke="url(#advanced3D)"
-                strokeWidth="2"
-                opacity="0.6"
-                initial={{ scale: 0, opacity: 0 }}
-                animate={
-                  isHovered
-                    ? {
-                        scale: [1, 1.2, 1],
-                        opacity: [0.6, 0.2, 0.6],
-                      }
-                    : { scale: 1, opacity: 0 }
-                }
-                transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY }}
-              />
-              <motion.circle
-                cx="50"
-                cy="50"
-                r="45"
-                fill="none"
-                stroke="url(#advanced3D)"
-                strokeWidth="1"
-                opacity="0.4"
-                initial={{ scale: 0, opacity: 0 }}
-                animate={
-                  isHovered
-                    ? {
-                        scale: [1, 1.3, 1],
-                        opacity: [0.4, 0.1, 0.4],
-                      }
-                    : { scale: 1, opacity: 0 }
-                }
-                transition={{ duration: 2.5, repeat: Number.POSITIVE_INFINITY, delay: 0.5 }}
-              />
-            </svg>
-          </motion.div>
-
-          {/* Advanced Typography */}
-          <div className="relative">
-            <motion.div
-              className="flex items-baseline"
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, ease: "easeOut" }}
-            >
-              <motion.span
-                className="font-black text-4xl lg:text-5xl relative"
-                style={{
-                  fontFamily: '"Inter", sans-serif',
-                  background: isHovered
-                    ? "linear-gradient(45deg, #FFD700, #FFA500, #FF8C00, #FFD700)"
-                    : "linear-gradient(45deg, #FFD700, #FFA500)",
-                  backgroundSize: "300% 300%",
-                  backgroundClip: "text",
-                  WebkitBackgroundClip: "text",
-                  color: "transparent",
-                  letterSpacing: "-0.02em",
-                }}
-                animate={
-                  isHovered
-                    ? {
-                        backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
-                      }
-                    : {}
-                }
-                transition={{ duration: 3, repeat: Number.POSITIVE_INFINITY }}
-              >
-                Aura
-                {/* Glitch effect overlay */}
-                <motion.span
-                  className="absolute inset-0 text-red-500 opacity-0"
-                  animate={
-                    isHovered
-                      ? {
-                          opacity: [0, 0.3, 0],
-                          x: [0, 2, -2, 0],
-                        }
-                      : {}
-                  }
-                  transition={{ duration: 0.2, repeat: Number.POSITIVE_INFINITY, repeatDelay: 2 }}
-                >
-                  Aura
-                </motion.span>
-              </motion.span>
-
-              <motion.span
-                className="font-black text-4xl lg:text-5xl relative ml-1"
-                style={{
-                  fontFamily: '"Inter", sans-serif',
-                  background: isHovered
-                    ? "linear-gradient(45deg, #FF8C00, #FFD700, #FFA500, #FF8C00)"
-                    : "linear-gradient(45deg, #FF8C00, #FFD700)",
-                  backgroundSize: "300% 300%",
-                  backgroundClip: "text",
-                  WebkitBackgroundClip: "text",
-                  color: "transparent",
-                  letterSpacing: "-0.02em",
-                }}
-                animate={
-                  isHovered
-                    ? {
-                        backgroundPosition: ["100% 50%", "0% 50%", "100% 50%"],
-                      }
-                    : {}
-                }
-                transition={{ duration: 3, repeat: Number.POSITIVE_INFINITY, delay: 0.5 }}
-              >
-                Fits
-              </motion.span>
-            </motion.div>
-
-            {/* Animated underline */}
-            <motion.div
-              className="h-1 bg-gradient-to-r from-yellow-400 via-orange-500 to-yellow-400 rounded-full mt-1"
-              initial={{ width: 0, opacity: 0 }}
-              animate={
-                isHovered
-                  ? {
-                      width: "100%",
-                      opacity: 1,
-                      backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
-                    }
-                  : { width: 0, opacity: 0 }
-              }
-              transition={{ duration: 0.5, ease: "easeOut" }}
-              style={{ backgroundSize: "200% 200%" }}
-            />
-
-            {/* Floating text effects */}
-            <motion.div
-              className="absolute -top-2 -right-2 text-xs font-bold text-yellow-400 opacity-0"
-              animate={
-                isHovered
-                  ? {
-                      opacity: [0, 1, 0],
-                      y: [0, -10, -20],
-                      scale: [0.8, 1, 0.8],
-                    }
-                  : { opacity: 0 }
-              }
-              transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY }}
-            >
-              ✨
-            </motion.div>
-          </div>
-        </div>
-
-        {/* Holographic overlay */}
-        <motion.div
-          className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-0 -skew-x-12"
-          animate={
-            isHovered
-              ? {
-                  x: [-100, 300],
-                  opacity: [0, 0.3, 0],
-                }
-              : {}
-          }
-          transition={{ duration: 1.5, ease: "easeInOut" }}
-        />
-      </motion.div>
-    </motion.div>
-  )
+// Enhanced mock data with more detailed analytics
+const mockData = {
+  totalUsers: 2847,
+  activeUsers: 1923,
+  newUsersToday: 47,
+  totalBookings: 8934,
+  bookingsToday: 234,
+  revenue: 127890,
+  revenueGrowth: 18.7,
+  userGrowth: 12.4,
+  bookingGrowth: 23.1,
+  conversionRate: 4.2,
+  avgSessionDuration: "12m 34s",
+  peakHours: "6-8 PM",
+  membershipRetention: 89.3,
+  recentBookings: [
+    {
+      id: 1,
+      user: "Emma Thompson",
+      service: "Personal Training",
+      date: "Today, 10:30 AM",
+      status: "confirmed",
+      amount: 120,
+    },
+    { id: 2, user: "Michael Chen", service: "Yoga Class", date: "Today, 2:00 PM", status: "confirmed", amount: 35 },
+    { id: 3, user: "Sarah Johnson", service: "Group HIIT", date: "Today, 5:30 PM", status: "pending", amount: 45 },
+    {
+      id: 4,
+      user: "David Wilson",
+      service: "Swimming Session",
+      date: "Tomorrow, 8:00 AM",
+      status: "confirmed",
+      amount: 60,
+    },
+    {
+      id: 5,
+      user: "Olivia Martinez",
+      service: "Spin Class",
+      date: "Tomorrow, 7:00 PM",
+      status: "cancelled",
+      amount: 40,
+    },
+    { id: 6, user: "James Rodriguez", service: "CrossFit", date: "Tomorrow, 9:00 AM", status: "confirmed", amount: 80 },
+  ],
+  topServices: [
+    { name: "Personal Training", bookings: 342, growth: 18, revenue: 41040, color: "#3B82F6" },
+    { name: "Yoga Classes", bookings: 289, growth: 12, revenue: 10115, color: "#10B981" },
+    { name: "Group HIIT", bookings: 234, growth: 25, revenue: 10530, color: "#F59E0B" },
+    { name: "Spin Classes", bookings: 198, growth: 8, revenue: 7920, color: "#EF4444" },
+    { name: "Swimming Sessions", bookings: 156, growth: -3, revenue: 9360, color: "#8B5CF6" },
+    { name: "CrossFit", bookings: 134, growth: 31, revenue: 10720, color: "#06B6D4" },
+  ],
+  usersByMembership: [
+    { type: "Premium", count: 1124, color: "#FFD700", percentage: 39.5 },
+    { type: "Standard", count: 1289, color: "#3B82F6", percentage: 45.3 },
+    { type: "Basic", count: 434, color: "#10B981", percentage: 15.2 },
+  ],
+  revenueByMonth: [
+    { month: "Jan", revenue: 98500, bookings: 1240 },
+    { month: "Feb", revenue: 105200, bookings: 1356 },
+    { month: "Mar", revenue: 112800, bookings: 1445 },
+    { month: "Apr", revenue: 118900, bookings: 1523 },
+    { month: "May", revenue: 124300, bookings: 1612 },
+    { month: "Jun", revenue: 127890, bookings: 1689 },
+  ],
+  hourlyBookings: [
+    { hour: "6 AM", bookings: 45 },
+    { hour: "7 AM", bookings: 78 },
+    { hour: "8 AM", bookings: 92 },
+    { hour: "9 AM", bookings: 67 },
+    { hour: "10 AM", bookings: 54 },
+    { hour: "11 AM", bookings: 43 },
+    { hour: "12 PM", bookings: 38 },
+    { hour: "1 PM", bookings: 41 },
+    { hour: "2 PM", bookings: 52 },
+    { hour: "3 PM", bookings: 63 },
+    { hour: "4 PM", bookings: 71 },
+    { hour: "5 PM", bookings: 89 },
+    { hour: "6 PM", bookings: 124 },
+    { hour: "7 PM", bookings: 142 },
+    { hour: "8 PM", bookings: 118 },
+    { hour: "9 PM", bookings: 87 },
+  ],
 }
 
-// Glassmorphism Logo with Neural Network Effect
-export const LogoGlass = () => {
-  const [isHovered, setIsHovered] = useState(false)
-  const [nodes] = useState(() =>
-    Array.from({ length: 8 }, (_, i) => ({
-      id: i,
-      x: Math.random() * 200,
-      y: Math.random() * 80,
-      connections: Array.from({ length: Math.floor(Math.random() * 3) + 1 }, () =>
-        Math.floor(Math.random() * 8),
-      ).filter((id) => id !== i),
-    })),
-  )
-
-  return (
-    <motion.div
-      className="cursor-pointer select-none relative"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      whileHover={{ scale: 1.02 }}
-      transition={{ type: "spring", stiffness: 400, damping: 25 }}
-    >
-      <div
-        className="relative p-6 rounded-3xl backdrop-blur-xl border border-white/20 shadow-2xl"
-        style={{
-          background: isHovered
-            ? "linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(255, 140, 0, 0.1), rgba(255, 215, 0, 0.1))"
-            : "linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05))",
-          boxShadow: isHovered
-            ? "0 25px 50px rgba(255, 215, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.3)"
-            : "0 25px 50px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2)",
-        }}
-      >
-        {/* Neural Network Background */}
-        <div className="absolute inset-0 overflow-hidden rounded-3xl">
-          <svg className="absolute inset-0 w-full h-full">
-            {nodes.map((node) =>
-              node.connections.map((targetId) => {
-                const target = nodes[targetId]
-                return (
-                  <motion.line
-                    key={`${node.id}-${targetId}`}
-                    x1={node.x}
-                    y1={node.y}
-                    x2={target.x}
-                    y2={target.y}
-                    stroke="url(#neuralGradient)"
-                    strokeWidth="1"
-                    opacity="0.3"
-                    initial={{ pathLength: 0 }}
-                    animate={
-                      isHovered
-                        ? {
-                            pathLength: [0, 1, 0],
-                            opacity: [0.3, 0.8, 0.3],
-                          }
-                        : { pathLength: 0.3, opacity: 0.3 }
-                    }
-                    transition={{
-                      duration: 2,
-                      repeat: Number.POSITIVE_INFINITY,
-                      delay: node.id * 0.2,
-                    }}
-                  />
-                )
-              }),
-            )}
-            {nodes.map((node) => (
-              <motion.circle
-                key={node.id}
-                cx={node.x}
-                cy={node.y}
-                r="3"
-                fill="url(#nodeGradient)"
-                initial={{ scale: 0 }}
-                animate={
-                  isHovered
-                    ? {
-                        scale: [1, 1.5, 1],
-                        opacity: [0.6, 1, 0.6],
-                      }
-                    : { scale: 1, opacity: 0.6 }
-                }
-                transition={{
-                  duration: 1.5,
-                  repeat: Number.POSITIVE_INFINITY,
-                  delay: node.id * 0.1,
-                }}
-              />
-            ))}
-            <defs>
-              <linearGradient id="neuralGradient">
-                <stop offset="0%" stopColor="#FFD700" />
-                <stop offset="100%" stopColor="#FF8C00" />
-              </linearGradient>
-              <radialGradient id="nodeGradient">
-                <stop offset="0%" stopColor="#FFFFFF" />
-                <stop offset="100%" stopColor="#FFD700" />
-              </radialGradient>
-            </defs>
-          </svg>
-        </div>
-
-        {/* Main Content */}
-        <div className="relative z-10 flex items-center gap-4">
-          {/* Morphing Icon */}
-          <motion.div
-            className="relative"
-            animate={
-              isHovered
-                ? {
-                    rotateY: [0, 180, 360],
-                  }
-                : {}
-            }
-            transition={{ duration: 2, ease: "easeInOut" }}
-            style={{ transformStyle: "preserve-3d" }}
-          >
-            <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-yellow-400 via-orange-500 to-yellow-400 p-3 shadow-lg">
-              <motion.svg
-                viewBox="0 0 24 24"
-                className="w-full h-full text-black"
-                animate={
-                  isHovered
-                    ? {
-                        scale: [1, 1.2, 1],
-                        rotate: [0, 180, 360],
-                      }
-                    : {}
-                }
-                transition={{ duration: 2, ease: "easeInOut" }}
-              >
-                <path
-                  fill="currentColor"
-                  d="M20.57 14.86L22 13.43 20.57 12 17 15.57 8.43 7 12 3.43 10.57 2 9.14 3.43 7.71 2 5.57 4.14 4.14 2.71 2.71 4.14l1.43 1.43L2 7.71l1.43 1.43L2 10.57 3.43 12 7 8.43 15.57 17 12 20.57 13.43 22l1.43-1.43L16.29 22l2.14-2.14 1.43 1.43 1.43-1.43-1.43-1.43L22 16.29z"
-                />
-              </motion.svg>
-            </div>
-          </motion.div>
-
-          {/* Liquid Text Effect */}
-          <div className="relative">
-            <motion.h1
-              className="text-3xl lg:text-4xl font-black tracking-tight"
-              style={{
-                fontFamily: '"Space Grotesk", sans-serif',
-                background: isHovered
-                  ? "linear-gradient(45deg, #FFD700, #FF8C00, #FFD700, #FFA500)"
-                  : "linear-gradient(45deg, #FFFFFF, #FFD700)",
-                backgroundSize: "400% 400%",
-                backgroundClip: "text",
-                WebkitBackgroundClip: "text",
-                color: "transparent",
-                filter: isHovered ? "drop-shadow(0 0 20px rgba(255, 215, 0, 0.5))" : "none",
-              }}
-              animate={
-                isHovered
-                  ? {
-                      backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
-                    }
-                  : {}
-              }
-              transition={{ duration: 3, repeat: Number.POSITIVE_INFINITY }}
-            >
-              <motion.span
-                animate={
-                  isHovered
-                    ? {
-                        y: [0, -2, 0],
-                      }
-                    : {}
-                }
-                transition={{ duration: 0.6, repeat: Number.POSITIVE_INFINITY, delay: 0 }}
-              >
-                A
-              </motion.span>
-              <motion.span
-                animate={
-                  isHovered
-                    ? {
-                        y: [0, -2, 0],
-                      }
-                    : {}
-                }
-                transition={{ duration: 0.6, repeat: Number.POSITIVE_INFINITY, delay: 0.1 }}
-              >
-                u
-              </motion.span>
-              <motion.span
-                animate={
-                  isHovered
-                    ? {
-                        y: [0, -2, 0],
-                      }
-                    : {}
-                }
-                transition={{ duration: 0.6, repeat: Number.POSITIVE_INFINITY, delay: 0.2 }}
-              >
-                r
-              </motion.span>
-              <motion.span
-                animate={
-                  isHovered
-                    ? {
-                        y: [0, -2, 0],
-                      }
-                    : {}
-                }
-                transition={{ duration: 0.6, repeat: Number.POSITIVE_INFINITY, delay: 0.3 }}
-              >
-                a
-              </motion.span>
-              <motion.span
-                className="ml-2"
-                animate={
-                  isHovered
-                    ? {
-                        y: [0, -2, 0],
-                      }
-                    : {}
-                }
-                transition={{ duration: 0.6, repeat: Number.POSITIVE_INFINITY, delay: 0.4 }}
-              >
-                F
-              </motion.span>
-              <motion.span
-                animate={
-                  isHovered
-                    ? {
-                        y: [0, -2, 0],
-                      }
-                    : {}
-                }
-                transition={{ duration: 0.6, repeat: Number.POSITIVE_INFINITY, delay: 0.5 }}
-              >
-                i
-              </motion.span>
-              <motion.span
-                animate={
-                  isHovered
-                    ? {
-                        y: [0, -2, 0],
-                      }
-                    : {}
-                }
-                transition={{ duration: 0.6, repeat: Number.POSITIVE_INFINITY, delay: 0.6 }}
-              >
-                t
-              </motion.span>
-              <motion.span
-                animate={
-                  isHovered
-                    ? {
-                        y: [0, -2, 0],
-                      }
-                    : {}
-                }
-                transition={{ duration: 0.6, repeat: Number.POSITIVE_INFINITY, delay: 0.7 }}
-              >
-                s
-              </motion.span>
-            </motion.h1>
-
-            {/* Liquid underline */}
-            <motion.div
-              className="absolute -bottom-1 left-0 h-1 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full"
-              initial={{ width: 0, scaleY: 1 }}
-              animate={
-                isHovered
-                  ? {
-                      width: "100%",
-                      scaleY: [1, 1.5, 1],
-                    }
-                  : { width: 0, scaleY: 1 }
-              }
-              transition={{ duration: 0.8, ease: "easeOut" }}
-            />
-          </div>
-        </div>
-
-        {/* Floating particles */}
-        <div className="absolute inset-0 pointer-events-none">
-          {[...Array(6)].map((_, i) => (
-            <motion.div
-              key={i}
-              className="absolute w-2 h-2 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full"
-              initial={{
-                x: Math.random() * 200,
-                y: Math.random() * 80,
-                opacity: 0,
-                scale: 0,
-              }}
-              animate={
-                isHovered
-                  ? {
-                      y: [null, -20],
-                      opacity: [0, 1, 0],
-                      scale: [0, 1, 0],
-                    }
-                  : { opacity: 0, scale: 0 }
-              }
-              transition={{
-                duration: 2,
-                repeat: Number.POSITIVE_INFINITY,
-                delay: i * 0.3,
-                ease: "easeOut",
-              }}
-            />
-          ))}
-        </div>
-      </div>
-    </motion.div>
-  )
-}
-
-// Cyberpunk Neon Logo
-export const LogoCyberpunk = () => {
-  const [isHovered, setIsHovered] = useState(false)
-  const [glitchActive, setGlitchActive] = useState(false)
+// Custom animated components
+const AnimatedCard = ({ children, delay = 0, className = "" }) => {
+  const [isVisible, setIsVisible] = useState(false)
+  const cardRef = useRef(null)
 
   useEffect(() => {
-    if (isHovered) {
-      const interval = setInterval(() => {
-        setGlitchActive(true)
-        setTimeout(() => setGlitchActive(false), 150)
-      }, 2000)
-      return () => clearInterval(interval)
-    }
-  }, [isHovered])
+    const timer = setTimeout(() => {
+      setIsVisible(true)
+    }, delay)
+
+    return () => clearTimeout(timer)
+  }, [delay])
 
   return (
-    <motion.div
-      className="cursor-pointer select-none relative"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      whileHover={{ scale: 1.05 }}
-      transition={{ type: "spring", stiffness: 300, damping: 30 }}
+    <div
+      ref={cardRef}
+      className={`transform transition-all duration-700 ease-out ${
+        isVisible ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"
+      } ${className}`}
     >
-      <div className="relative">
-        {/* Neon glow background */}
-        <motion.div
-          className="absolute inset-0 rounded-2xl"
-          animate={
-            isHovered
-              ? {
-                  boxShadow: [
-                    "0 0 20px rgba(255, 215, 0, 0.5)",
-                    "0 0 40px rgba(255, 215, 0, 0.8)",
-                    "0 0 20px rgba(255, 215, 0, 0.5)",
-                  ],
-                }
-              : {
-                  boxShadow: "0 0 10px rgba(255, 215, 0, 0.3)",
-                }
-          }
-          transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY }}
-        />
-
-        {/* Main container */}
-        <div className="relative bg-black/90 backdrop-blur-sm border border-yellow-400/30 rounded-2xl p-6 overflow-hidden">
-          {/* Scanlines */}
-          <div className="absolute inset-0 pointer-events-none">
-            <div
-              className="absolute inset-0 opacity-10"
-              style={{
-                backgroundImage:
-                  "repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255, 215, 0, 0.3) 2px, rgba(255, 215, 0, 0.3) 4px)",
-              }}
-            />
-          </div>
-
-          {/* Moving scan line */}
-          <motion.div
-            className="absolute left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-yellow-400 to-transparent"
-            animate={
-              isHovered
-                ? {
-                    y: [0, 100, 0],
-                    opacity: [0, 1, 0],
-                  }
-                : { opacity: 0 }
-            }
-            transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
-          />
-
-          <div className="relative z-10 flex items-center gap-4">
-            {/* Cyberpunk Icon */}
-            <motion.div
-              className="relative"
-              animate={
-                glitchActive
-                  ? {
-                      x: [0, -2, 2, 0],
-                      filter: ["hue-rotate(0deg)", "hue-rotate(90deg)", "hue-rotate(180deg)", "hue-rotate(0deg)"],
-                    }
-                  : {}
-              }
-              transition={{ duration: 0.15 }}
-            >
-              <div className="w-16 h-16 relative">
-                <motion.div
-                  className="absolute inset-0 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-lg"
-                  animate={
-                    isHovered
-                      ? {
-                          rotate: [0, 180, 360],
-                          scale: [1, 1.1, 1],
-                        }
-                      : {}
-                  }
-                  transition={{ duration: 3, repeat: Number.POSITIVE_INFINITY }}
-                />
-                <div className="absolute inset-1 bg-black rounded-md flex items-center justify-center">
-                  <motion.svg
-                    viewBox="0 0 24 24"
-                    className="w-8 h-8 text-yellow-400"
-                    animate={
-                      isHovered
-                        ? {
-                            scale: [1, 1.2, 1],
-                            rotate: [0, -10, 10, 0],
-                          }
-                        : {}
-                    }
-                    transition={{ duration: 1, repeat: Number.POSITIVE_INFINITY }}
-                  >
-                    <path
-                      fill="currentColor"
-                      d="M12 2L13.09 8.26L22 9L13.09 9.74L12 16L10.91 9.74L2 9L10.91 8.26L12 2Z"
-                    />
-                  </motion.svg>
-                </div>
-
-                {/* Corner brackets */}
-                <div className="absolute -top-1 -left-1 w-3 h-3 border-l-2 border-t-2 border-yellow-400" />
-                <div className="absolute -top-1 -right-1 w-3 h-3 border-r-2 border-t-2 border-yellow-400" />
-                <div className="absolute -bottom-1 -left-1 w-3 h-3 border-l-2 border-b-2 border-yellow-400" />
-                <div className="absolute -bottom-1 -right-1 w-3 h-3 border-r-2 border-b-2 border-yellow-400" />
-              </div>
-            </motion.div>
-
-            {/* Cyberpunk Text */}
-            <div className="relative">
-              <motion.div
-                className="text-4xl lg:text-5xl font-black tracking-wider"
-                style={{
-                  fontFamily: '"Orbitron", monospace',
-                  textShadow: isHovered
-                    ? "0 0 10px rgba(255, 215, 0, 0.8), 0 0 20px rgba(255, 215, 0, 0.6), 0 0 30px rgba(255, 215, 0, 0.4)"
-                    : "0 0 5px rgba(255, 215, 0, 0.5)",
-                }}
-                animate={
-                  glitchActive
-                    ? {
-                        x: [0, -1, 1, 0],
-                        textShadow: [
-                          "0 0 5px rgba(255, 215, 0, 0.5)",
-                          "2px 0 0 rgba(255, 0, 0, 0.8), -2px 0 0 rgba(0, 255, 255, 0.8)",
-                          "0 0 5px rgba(255, 215, 0, 0.5)",
-                        ],
-                      }
-                    : {}
-                }
-                transition={{ duration: 0.15 }}
-              >
-                <span className="text-yellow-400">AURA</span>
-                <span className="text-orange-400 ml-2">FITS</span>
-
-                {/* Glitch overlay */}
-                {glitchActive && (
-                  <>
-                    <motion.span
-                      className="absolute inset-0 text-red-500"
-                      initial={{ opacity: 0, x: 0 }}
-                      animate={{ opacity: [0, 0.7, 0], x: [-2, 2, -1] }}
-                      transition={{ duration: 0.15 }}
-                    >
-                      AURA FITS
-                    </motion.span>
-                    <motion.span
-                      className="absolute inset-0 text-cyan-400"
-                      initial={{ opacity: 0, x: 0 }}
-                      animate={{ opacity: [0, 0.5, 0], x: [2, -2, 1] }}
-                      transition={{ duration: 0.15, delay: 0.05 }}
-                    >
-                      AURA FITS
-                    </motion.span>
-                  </>
-                )}
-              </motion.div>
-
-              {/* Data stream */}
-              <motion.div
-                className="absolute -bottom-6 left-0 text-xs font-mono text-yellow-400/60 whitespace-nowrap overflow-hidden"
-                animate={
-                  isHovered
-                    ? {
-                        opacity: [0, 1, 1, 0],
-                      }
-                    : { opacity: 0 }
-                }
-                transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY }}
-              >
-                <motion.span
-                  animate={
-                    isHovered
-                      ? {
-                          x: [-100, 200],
-                        }
-                      : {}
-                  }
-                  transition={{ duration: 3, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
-                >
-                  {">"} INITIALIZING_FITNESS_PROTOCOL... 100% COMPLETE
-                </motion.span>
-              </motion.div>
-            </div>
-          </div>
-
-          {/* Circuit pattern */}
-          <div className="absolute top-2 right-2 opacity-30">
-            <svg width="40" height="40" viewBox="0 0 40 40">
-              <path
-                d="M5 5 L35 5 L35 35 L5 35 Z M15 15 L25 15 M20 10 L20 30"
-                stroke="currentColor"
-                strokeWidth="1"
-                fill="none"
-                className="text-yellow-400"
-              />
-              <circle cx="15" cy="15" r="2" fill="currentColor" className="text-yellow-400" />
-              <circle cx="25" cy="15" r="2" fill="currentColor" className="text-yellow-400" />
-              <circle cx="20" cy="25" r="2" fill="currentColor" className="text-yellow-400" />
-            </svg>
-          </div>
-        </div>
-      </div>
-    </motion.div>
-  )
-}
-
-// Main showcase component
-const AdvancedLogoShowcase = () => {
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-800 p-8">
-      <div className="max-w-6xl mx-auto">
-        <motion.h1
-          className="text-5xl font-bold text-white text-center mb-4"
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-        >
-          Ultra-Modern AuraFits Logos
-        </motion.h1>
-        <motion.p
-          className="text-gray-400 text-center mb-16 text-lg"
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-        >
-          Next-generation logo designs with advanced animations and effects
-        </motion.p>
-
-        <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-12">
-          {/* 3D Logo */}
-          <motion.div
-            className="bg-black/30 backdrop-blur-sm rounded-2xl p-8 border border-white/10"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.1 }}
-          >
-            <h3 className="text-white text-xl font-semibold mb-6 text-center">3D Interactive</h3>
-            <div className="flex justify-center">
-              <Logo3D />
-            </div>
-            <p className="text-gray-400 text-sm text-center mt-4">3D transforms, particle effects, mouse tracking</p>
-          </motion.div>
-
-          {/* Glassmorphism Logo */}
-          <motion.div
-            className="bg-black/30 backdrop-blur-sm rounded-2xl p-8 border border-white/10"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-          >
-            <h3 className="text-white text-xl font-semibold mb-6 text-center">Glassmorphism</h3>
-            <div className="flex justify-center">
-              <LogoGlass />
-            </div>
-            <p className="text-gray-400 text-sm text-center mt-4">Neural networks, glass effects, liquid animations</p>
-          </motion.div>
-
-          {/* Cyberpunk Logo */}
-          <motion.div
-            className="bg-black/30 backdrop-blur-sm rounded-2xl p-8 border border-white/10 lg:col-span-2 xl:col-span-1"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.3 }}
-          >
-            <h3 className="text-white text-xl font-semibold mb-6 text-center">Cyberpunk</h3>
-            <div className="flex justify-center">
-              <LogoCyberpunk />
-            </div>
-            <p className="text-gray-400 text-sm text-center mt-4">Neon effects, glitch animations, scanlines</p>
-          </motion.div>
-        </div>
-
-        {/* Features Grid */}
-        <motion.div
-          className="mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-        >
-          {[
-            { title: "3D Transforms", desc: "Real-time 3D rotation and perspective effects" },
-            { title: "Particle Systems", desc: "Dynamic particle animations and effects" },
-            { title: "Advanced Shaders", desc: "Custom gradients and lighting effects" },
-            { title: "Micro-interactions", desc: "Sophisticated hover and click animations" },
-          ].map((feature, index) => (
-            <div key={index} className="bg-black/50 backdrop-blur-sm rounded-xl p-6 border border-white/10 text-center">
-              <h4 className="text-yellow-400 font-semibold mb-2">{feature.title}</h4>
-              <p className="text-gray-400 text-sm">{feature.desc}</p>
-            </div>
-          ))}
-        </motion.div>
-
-        <motion.div
-          className="mt-12 text-center"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.6 }}
-        >
-          <p className="text-gray-400 text-sm">Hover over each logo to experience advanced interactive effects</p>
-        </motion.div>
-      </div>
+      {children}
     </div>
   )
 }
 
-export default AdvancedLogoShowcase
+const CountUpNumber = ({ end, duration = 2000, prefix = "", suffix = "" }) => {
+  const [count, setCount] = useState(0)
+  const [isVisible, setIsVisible] = useState(false)
+  const countRef = useRef(null)
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !isVisible) {
+          setIsVisible(true)
+          let start = 0
+          const increment = end / (duration / 16)
+          const timer = setInterval(() => {
+            start += increment
+            if (start >= end) {
+              setCount(end)
+              clearInterval(timer)
+            } else {
+              setCount(Math.floor(start))
+            }
+          }, 16)
+        }
+      },
+      { threshold: 0.1 },
+    )
+
+    if (countRef.current) {
+      observer.observe(countRef.current)
+    }
+
+    return () => observer.disconnect()
+  }, [end, duration, isVisible])
+
+  return (
+    <span ref={countRef}>
+      {prefix}
+      {count.toLocaleString()}
+      {suffix}
+    </span>
+  )
+}
+
+const ProgressBar = ({ percentage, color = "#3B82F6", animated = true }) => {
+  const [width, setWidth] = useState(0)
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setWidth(percentage)
+    }, 300)
+
+    return () => clearTimeout(timer)
+  }, [percentage])
+
+  return (
+    <div className="w-full bg-gray-700 rounded-full h-2 overflow-hidden">
+      <div
+        className={`h-full rounded-full transition-all duration-1000 ease-out ${animated ? "animate-pulse" : ""}`}
+        style={{
+          width: `${width}%`,
+          backgroundColor: color,
+          boxShadow: `0 0 10px ${color}40`,
+        }}
+      />
+    </div>
+  )
+}
+
+const GlowingButton = ({ children, onClick, variant = "primary", className = "", ...props }) => {
+  const variants = {
+    primary: "bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700",
+    secondary: "bg-gradient-to-r from-gray-600 to-gray-700 hover:from-gray-700 hover:to-gray-800",
+    success: "bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700",
+    danger: "bg-gradient-to-r from-red-500 to-pink-600 hover:from-red-600 hover:to-pink-700",
+  }
+
+  return (
+    <button
+      onClick={onClick}
+      className={`
+        relative px-4 py-2 rounded-lg font-medium text-white
+        transform transition-all duration-300 ease-out
+        hover:scale-105 hover:shadow-lg hover:shadow-current/25
+        active:scale-95
+        ${variants[variant]}
+        ${className}
+      `}
+      {...props}
+    >
+      <span className="relative z-10">{children}</span>
+      <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-white/20 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300" />
+    </button>
+  )
+}
+
+const FloatingParticles = () => {
+  return (
+    <div className="fixed inset-0 pointer-events-none overflow-hidden">
+      {[...Array(20)].map((_, i) => (
+        <div
+          key={i}
+          className="absolute w-1 h-1 bg-blue-400 rounded-full opacity-30 animate-float"
+          style={{
+            left: `${Math.random() * 100}%`,
+            top: `${Math.random() * 100}%`,
+            animationDelay: `${Math.random() * 10}s`,
+            animationDuration: `${10 + Math.random() * 20}s`,
+          }}
+        />
+      ))}
+    </div>
+  )
+}
+
+const Dashboard = () => {
+  const [sidebarOpen, setSidebarOpen] = useState(true)
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [activeTab, setActiveTab] = useState("dashboard")
+  const [isLoading, setIsLoading] = useState(true)
+  const [dashboardData, setDashboardData] = useState(mockData)
+  const [refreshing, setRefreshing] = useState(false)
+  const [timeRange, setTimeRange] = useState("month")
+
+  // Chart refs
+  const revenueChartRef = useRef(null)
+  const membershipChartRef = useRef(null)
+  const hourlyChartRef = useRef(null)
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false)
+    }, 1500)
+
+    return () => clearTimeout(timer)
+  }, [])
+
+  // Chart rendering with proper error handling and timing
+  useEffect(() => {
+    if (!isLoading) {
+      // Add a small delay to ensure canvas elements are properly mounted
+      const timer = setTimeout(() => {
+        renderRevenueChart()
+        renderMembershipChart()
+        renderHourlyChart()
+      }, 100)
+
+      return () => clearTimeout(timer)
+    }
+  }, [isLoading, timeRange])
+
+  const renderRevenueChart = () => {
+    const canvas = revenueChartRef.current
+    if (!canvas) {
+      console.log("Revenue canvas not found")
+      return
+    }
+
+    const ctx = canvas.getContext("2d")
+    if (!ctx) {
+      console.log("Canvas context not available")
+      return
+    }
+
+    // Set canvas size properly
+    const rect = canvas.getBoundingClientRect()
+    canvas.width = rect.width * window.devicePixelRatio
+    canvas.height = rect.height * window.devicePixelRatio
+    ctx.scale(window.devicePixelRatio, window.devicePixelRatio)
+
+    const data = dashboardData.revenueByMonth
+    const padding = 40
+    const chartWidth = rect.width - padding * 2
+    const chartHeight = rect.height - padding * 2
+
+    ctx.clearRect(0, 0, rect.width, rect.height)
+
+    if (data.length === 0) return
+
+    const maxRevenue = Math.max(...data.map((d) => d.revenue))
+    const stepX = chartWidth / (data.length - 1)
+
+    // Draw grid lines
+    ctx.strokeStyle = "#374151"
+    ctx.lineWidth = 1
+    for (let i = 0; i <= 5; i++) {
+      const y = padding + (chartHeight / 5) * i
+      ctx.beginPath()
+      ctx.moveTo(padding, y)
+      ctx.lineTo(rect.width - padding, y)
+      ctx.stroke()
+    }
+
+    // Draw revenue line
+    ctx.strokeStyle = "#3B82F6"
+    ctx.lineWidth = 3
+    ctx.beginPath()
+
+    data.forEach((point, index) => {
+      const x = padding + stepX * index
+      const y = rect.height - padding - (point.revenue / maxRevenue) * chartHeight
+
+      if (index === 0) {
+        ctx.moveTo(x, y)
+      } else {
+        ctx.lineTo(x, y)
+      }
+
+      // Draw data points
+      ctx.save()
+      ctx.fillStyle = "#3B82F6"
+      ctx.beginPath()
+      ctx.arc(x, y, 4, 0, 2 * Math.PI)
+      ctx.fill()
+      ctx.restore()
+    })
+
+    ctx.stroke()
+
+    // Draw area under curve
+    ctx.save()
+    ctx.fillStyle = "rgba(59, 130, 246, 0.1)"
+    data.forEach((point, index) => {
+      const x = padding + stepX * index
+      const y = rect.height - padding - (point.revenue / maxRevenue) * chartHeight
+
+      if (index === 0) {
+        ctx.beginPath()
+        ctx.moveTo(x, y)
+      } else {
+        ctx.lineTo(x, y)
+      }
+    })
+
+    ctx.lineTo(rect.width - padding, rect.height - padding)
+    ctx.lineTo(padding, rect.height - padding)
+    ctx.closePath()
+    ctx.fill()
+    ctx.restore()
+
+    // Draw labels
+    ctx.fillStyle = "#9CA3AF"
+    ctx.font = "12px Inter, sans-serif"
+    ctx.textAlign = "center"
+
+    data.forEach((point, index) => {
+      const x = padding + stepX * index
+      ctx.fillText(point.month, x, rect.height - 10)
+    })
+  }
+
+  const renderMembershipChart = () => {
+    const canvas = membershipChartRef.current
+    if (!canvas) {
+      console.log("Membership canvas not found")
+      return
+    }
+
+    const ctx = canvas.getContext("2d")
+    if (!ctx) {
+      console.log("Canvas context not available")
+      return
+    }
+
+    // Set canvas size properly
+    const rect = canvas.getBoundingClientRect()
+    canvas.width = rect.width * window.devicePixelRatio
+    canvas.height = rect.height * window.devicePixelRatio
+    ctx.scale(window.devicePixelRatio, window.devicePixelRatio)
+
+    const data = dashboardData.usersByMembership
+
+    ctx.clearRect(0, 0, rect.width, rect.height)
+
+    const centerX = rect.width / 2
+    const centerY = rect.height / 2
+    const radius = Math.min(centerX, centerY) - 20
+    const innerRadius = radius * 0.6
+
+    let currentAngle = -Math.PI / 2
+
+    data.forEach((segment) => {
+      const sliceAngle = (2 * Math.PI * segment.percentage) / 100
+
+      ctx.fillStyle = segment.color
+      ctx.beginPath()
+      ctx.arc(centerX, centerY, radius, currentAngle, currentAngle + sliceAngle)
+      ctx.arc(centerX, centerY, innerRadius, currentAngle + sliceAngle, currentAngle, true)
+      ctx.closePath()
+      ctx.fill()
+
+      currentAngle += sliceAngle
+    })
+
+    // Draw center circle
+    ctx.fillStyle = "#1F2937"
+    ctx.beginPath()
+    ctx.arc(centerX, centerY, innerRadius, 0, 2 * Math.PI)
+    ctx.fill()
+  }
+
+  const renderHourlyChart = () => {
+    const canvas = hourlyChartRef.current
+    if (!canvas) {
+      console.log("Hourly canvas not found")
+      return
+    }
+
+    const ctx = canvas.getContext("2d")
+    if (!ctx) {
+      console.log("Canvas context not available")
+      return
+    }
+
+    // Set canvas size properly
+    const rect = canvas.getBoundingClientRect()
+    canvas.width = rect.width * window.devicePixelRatio
+    canvas.height = rect.height * window.devicePixelRatio
+    ctx.scale(window.devicePixelRatio, window.devicePixelRatio)
+
+    const data = dashboardData.hourlyBookings
+
+    ctx.clearRect(0, 0, rect.width, rect.height)
+
+    const padding = 30
+    const chartWidth = rect.width - padding * 2
+    const chartHeight = rect.height - padding * 2
+
+    if (data.length === 0) return
+
+    const maxBookings = Math.max(...data.map((d) => d.bookings))
+    const barWidth = chartWidth / data.length - 4
+
+    data.forEach((point, index) => {
+      const x = padding + (chartWidth / data.length) * index + 2
+      const barHeight = (point.bookings / maxBookings) * chartHeight
+      const y = rect.height - padding - barHeight
+
+      // Create gradient for bars
+      const gradient = ctx.createLinearGradient(x, y, x, rect.height - padding)
+      gradient.addColorStop(0, "#10B981")
+      gradient.addColorStop(1, "#059669")
+
+      ctx.fillStyle = gradient
+      ctx.fillRect(x, y, barWidth, barHeight)
+
+      // Draw value labels
+      ctx.fillStyle = "#F9FAFB"
+      ctx.font = "10px Inter, sans-serif"
+      ctx.textAlign = "center"
+      ctx.fillText(point.bookings.toString(), x + barWidth / 2, y - 5)
+    })
+
+    // Draw hour labels
+    ctx.fillStyle = "#6B7280"
+    ctx.font = "10px Inter, sans-serif"
+    ctx.textAlign = "center"
+
+    data.forEach((point, index) => {
+      const x = padding + (chartWidth / data.length) * index + barWidth / 2 + 2
+      ctx.save()
+      ctx.translate(x, rect.height - 5)
+      ctx.rotate(-Math.PI / 6)
+      ctx.fillText(point.hour, 0, 0)
+      ctx.restore()
+    })
+  }
+
+  const handleRefresh = async () => {
+    setRefreshing(true)
+    // Simulate API call
+    await new Promise((resolve) => setTimeout(resolve, 1000))
+    setRefreshing(false)
+  }
+
+  const getStatusColor = (status) => {
+    switch (status) {
+      case "confirmed":
+        return "bg-green-500"
+      case "pending":
+        return "bg-yellow-500"
+      case "cancelled":
+        return "bg-red-500"
+      default:
+        return "bg-gray-500"
+    }
+  }
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-gray-900">
+        <div className="flex flex-col items-center">
+          <div className="relative">
+            <div className="w-20 h-20 border-4 border-t-blue-500 border-r-purple-500 border-b-blue-500 border-l-purple-500 rounded-full animate-spin"></div>
+            <div className="absolute inset-2 w-16 h-16 border-4 border-t-purple-400 border-r-blue-400 border-b-purple-400 border-l-blue-400 rounded-full animate-spin animate-reverse"></div>
+          </div>
+          <div className="mt-6 text-center">
+            <h2 className="text-2xl font-bold text-white mb-2">AuraFits Dashboard</h2>
+            <p className="text-gray-400 animate-pulse">Loading your analytics...</p>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  return (
+    <>
+      <style jsx>{`
+        @keyframes float {
+          0%, 100% { transform: translateY(0px) rotate(0deg); }
+          33% { transform: translateY(-10px) rotate(1deg); }
+          66% { transform: translateY(-5px) rotate(-1deg); }
+        }
+        
+        @keyframes glow {
+          0%, 100% { box-shadow: 0 0 20px rgba(59, 130, 246, 0.3); }
+          50% { box-shadow: 0 0 40px rgba(59, 130, 246, 0.6); }
+        }
+        
+        @keyframes slideInRight {
+          from { transform: translateX(100%); opacity: 0; }
+          to { transform: translateX(0); opacity: 1; }
+        }
+        
+        @keyframes slideInLeft {
+          from { transform: translateX(-100%); opacity: 0; }
+          to { transform: translateX(0); opacity: 1; }
+        }
+        
+        @keyframes fadeInUp {
+          from { transform: translateY(30px); opacity: 0; }
+          to { transform: translateY(0); opacity: 1; }
+        }
+        
+        .animate-float {
+          animation: float 6s ease-in-out infinite;
+        }
+        
+        .animate-glow {
+          animation: glow 2s ease-in-out infinite;
+        }
+        
+        .animate-slideInRight {
+          animation: slideInRight 0.6s ease-out forwards;
+        }
+        
+        .animate-slideInLeft {
+          animation: slideInLeft 0.6s ease-out forwards;
+        }
+        
+        .animate-fadeInUp {
+          animation: fadeInUp 0.8s ease-out forwards;
+        }
+        
+        .animate-reverse {
+          animation-direction: reverse;
+        }
+        
+        .glassmorphism {
+          background: rgba(17, 24, 39, 0.8);
+          backdrop-filter: blur(20px);
+          border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .card-hover {
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .card-hover:hover {
+          transform: translateY(-8px) scale(1.02);
+          box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+      `}</style>
+
+      <div className="flex h-screen bg-gray-900 text-white overflow-hidden">
+        <FloatingParticles />
+
+        {/* Enhanced Sidebar */}
+        <div
+          className={`fixed inset-y-0 left-0 z-40 transition-all duration-500 ease-in-out transform ${
+            sidebarOpen ? "w-72" : "w-20"
+          } ${mobileMenuOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}`}
+        >
+          <div className="h-full glassmorphism border-r border-gray-700">
+            {/* Logo Section */}
+            <div className="flex items-center justify-between h-20 px-6 border-b border-gray-700">
+              <div
+                className={`flex items-center transition-all duration-300 ${sidebarOpen ? "space-x-3" : "justify-center"}`}
+              >
+                <div className="relative">
+                  <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl flex items-center justify-center animate-glow">
+                    <Activity className="w-6 h-6 text-white" />
+                  </div>
+                  <div className="absolute -top-1 -right-1 w-4 h-4 bg-green-400 rounded-full animate-pulse"></div>
+                </div>
+                {sidebarOpen && (
+                  <div className="animate-slideInRight">
+                    <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+                      AuraFits
+                    </h1>
+                    <p className="text-xs text-gray-400">Admin Dashboard</p>
+                  </div>
+                )}
+              </div>
+              <button
+                onClick={() => setSidebarOpen(!sidebarOpen)}
+                className="hidden lg:block p-2 rounded-lg hover:bg-gray-700 transition-colors duration-200"
+              >
+                <ChevronRight
+                  className={`w-5 h-5 transition-transform duration-300 ${sidebarOpen ? "rotate-180" : ""}`}
+                />
+              </button>
+            </div>
+
+            {/* Navigation */}
+            <div className="px-4 py-6">
+              <nav className="space-y-2">
+                {[
+                  { id: "dashboard", name: "Dashboard", icon: Grid, badge: null },
+                  { id: "users", name: "Users", icon: Users, badge: "2.8K" },
+                  { id: "bookings", name: "Bookings", icon: Calendar, badge: "234" },
+                  { id: "services", name: "Services", icon: Activity, badge: null },
+                  { id: "analytics", name: "Analytics", icon: BarChart2, badge: "New" },
+                  { id: "reports", name: "Reports", icon: TrendingUp, badge: null },
+                  { id: "settings", name: "Settings", icon: Settings, badge: null },
+                ].map((item, index) => (
+                  <button
+                    key={item.id}
+                    onClick={() => setActiveTab(item.id)}
+                    className={`
+                      flex items-center w-full px-4 py-3 rounded-xl transition-all duration-300 group
+                      ${
+                        activeTab === item.id
+                          ? "bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg"
+                          : "text-gray-300 hover:bg-gray-700 hover:text-white"
+                      }
+                      ${!sidebarOpen && "justify-center"}
+                    `}
+                    style={{ animationDelay: `${index * 100}ms` }}
+                  >
+                    <item.icon
+                      className={`w-5 h-5 ${sidebarOpen && "mr-3"} transition-transform duration-200 group-hover:scale-110`}
+                    />
+                    {sidebarOpen && (
+                      <div className="flex items-center justify-between w-full">
+                        <span className="font-medium">{item.name}</span>
+                        {item.badge && (
+                          <span className="px-2 py-1 text-xs bg-blue-500 text-white rounded-full animate-pulse">
+                            {item.badge}
+                          </span>
+                        )}
+                      </div>
+                    )}
+                  </button>
+                ))}
+              </nav>
+
+              {/* User Profile */}
+              <div className="mt-8 pt-6 border-t border-gray-700">
+                <div
+                  className={`flex items-center ${sidebarOpen ? "space-x-3" : "justify-center"} p-3 rounded-xl bg-gray-800 hover:bg-gray-700 transition-colors duration-200 cursor-pointer`}
+                >
+                  <div className="relative">
+                    <div className="w-10 h-10 bg-gradient-to-r from-green-400 to-blue-500 rounded-full flex items-center justify-center">
+                      <User className="w-5 h-5 text-white" />
+                    </div>
+                    <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-400 rounded-full border-2 border-gray-800"></div>
+                  </div>
+                  {sidebarOpen && (
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-medium text-white truncate">Admin User</p>
+                      <p className="text-xs text-gray-400 truncate">admin@aurafits.com</p>
+                    </div>
+                  )}
+                </div>
+
+                <button
+                  className={`flex items-center w-full mt-4 px-4 py-3 text-gray-300 hover:text-red-400 hover:bg-gray-800 rounded-xl transition-all duration-200 ${!sidebarOpen && "justify-center"}`}
+                >
+                  <LogOut className={`w-5 h-5 ${sidebarOpen && "mr-3"}`} />
+                  {sidebarOpen && <span>Log out</span>}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Main Content */}
+        <div className={`flex-1 transition-all duration-500 ${sidebarOpen ? "lg:ml-72" : "lg:ml-20"}`}>
+          {/* Enhanced Header */}
+          <header className="h-20 glassmorphism border-b border-gray-700 flex items-center justify-between px-6">
+            <div className="flex items-center space-x-4">
+              <button
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                className="lg:hidden p-2 rounded-lg hover:bg-gray-700 transition-colors duration-200"
+              >
+                {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+              </button>
+
+              <div className="animate-fadeInUp">
+                <h1 className="text-2xl font-bold">Dashboard Overview</h1>
+                <p className="text-sm text-gray-400">Welcome back! Here's what's happening at AuraFits.</p>
+              </div>
+            </div>
+
+            <div className="flex items-center space-x-4">
+              {/* Search */}
+              <div className="relative hidden md:block">
+                <input
+                  type="text"
+                  placeholder="Search anything..."
+                  className="w-64 px-4 py-2 pl-10 bg-gray-800 border border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                />
+                <Search className="absolute left-3 top-2.5 w-5 h-5 text-gray-400" />
+              </div>
+
+              {/* Time Range Selector */}
+              <div className="relative">
+                <select
+                  value={timeRange}
+                  onChange={(e) => setTimeRange(e.target.value)}
+                  className="px-4 py-2 bg-gray-800 border border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 appearance-none cursor-pointer"
+                >
+                  <option value="week">This Week</option>
+                  <option value="month">This Month</option>
+                  <option value="quarter">This Quarter</option>
+                  <option value="year">This Year</option>
+                </select>
+                <ChevronDown className="absolute right-3 top-2.5 w-5 h-5 text-gray-400 pointer-events-none" />
+              </div>
+
+              {/* Action Buttons */}
+              <GlowingButton onClick={handleRefresh} className="p-2">
+                <RefreshCw className={`w-5 h-5 ${refreshing ? "animate-spin" : ""}`} />
+              </GlowingButton>
+
+              <GlowingButton variant="secondary" className="p-2">
+                <Download className="w-5 h-5" />
+              </GlowingButton>
+
+              {/* Notifications */}
+              <button className="relative p-2 text-gray-400 hover:text-white bg-gray-800 rounded-xl hover:bg-gray-700 transition-all duration-200">
+                <Bell className="w-5 h-5" />
+                <span className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white text-xs rounded-full flex items-center justify-center animate-pulse">
+                  3
+                </span>
+              </button>
+            </div>
+          </header>
+
+          {/* Dashboard Content */}
+          <main className="p-6 overflow-y-auto h-[calc(100vh-5rem)]">
+            {/* Stats Cards */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+              <AnimatedCard delay={100} className="card-hover">
+                <div className="p-6 glassmorphism rounded-2xl border border-gray-700">
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="p-3 bg-blue-500 bg-opacity-20 rounded-xl">
+                      <Users className="w-6 h-6 text-blue-400" />
+                    </div>
+                    <div className="text-right">
+                      <div className="flex items-center text-green-400 text-sm">
+                        <TrendingUp className="w-4 h-4 mr-1" />
+                        <CountUpNumber end={dashboardData.userGrowth} suffix="%" />
+                      </div>
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <h3 className="text-2xl font-bold">
+                      <CountUpNumber end={dashboardData.totalUsers} />
+                    </h3>
+                    <p className="text-gray-400">Total Users</p>
+                    <ProgressBar percentage={75} color="#3B82F6" />
+                    <div className="flex justify-between text-sm text-gray-400">
+                      <span>
+                        Active: <CountUpNumber end={dashboardData.activeUsers} />
+                      </span>
+                      <span>
+                        New: <CountUpNumber end={dashboardData.newUsersToday} />
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </AnimatedCard>
+
+              <AnimatedCard delay={200} className="card-hover">
+                <div className="p-6 glassmorphism rounded-2xl border border-gray-700">
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="p-3 bg-purple-500 bg-opacity-20 rounded-xl">
+                      <Calendar className="w-6 h-6 text-purple-400" />
+                    </div>
+                    <div className="text-right">
+                      <div className="flex items-center text-green-400 text-sm">
+                        <TrendingUp className="w-4 h-4 mr-1" />
+                        <CountUpNumber end={dashboardData.bookingGrowth} suffix="%" />
+                      </div>
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <h3 className="text-2xl font-bold">
+                      <CountUpNumber end={dashboardData.totalBookings} />
+                    </h3>
+                    <p className="text-gray-400">Total Bookings</p>
+                    <ProgressBar percentage={85} color="#8B5CF6" />
+                    <div className="flex justify-between text-sm text-gray-400">
+                      <span>
+                        Today: <CountUpNumber end={dashboardData.bookingsToday} />
+                      </span>
+                      <span>Peak: {dashboardData.peakHours}</span>
+                    </div>
+                  </div>
+                </div>
+              </AnimatedCard>
+
+              <AnimatedCard delay={300} className="card-hover">
+                <div className="p-6 glassmorphism rounded-2xl border border-gray-700">
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="p-3 bg-green-500 bg-opacity-20 rounded-xl">
+                      <DollarSign className="w-6 h-6 text-green-400" />
+                    </div>
+                    <div className="text-right">
+                      <div className="flex items-center text-green-400 text-sm">
+                        <TrendingUp className="w-4 h-4 mr-1" />
+                        <CountUpNumber end={dashboardData.revenueGrowth} suffix="%" />
+                      </div>
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <h3 className="text-2xl font-bold">
+                      <CountUpNumber end={dashboardData.revenue} prefix="$" />
+                    </h3>
+                    <p className="text-gray-400">Total Revenue</p>
+                    <ProgressBar percentage={92} color="#10B981" />
+                    <div className="flex justify-between text-sm text-gray-400">
+                      <span>Conversion: {dashboardData.conversionRate}%</span>
+                      <span>Retention: {dashboardData.membershipRetention}%</span>
+                    </div>
+                  </div>
+                </div>
+              </AnimatedCard>
+
+              <AnimatedCard delay={400} className="card-hover">
+                <div className="p-6 glassmorphism rounded-2xl border border-gray-700">
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="p-3 bg-yellow-500 bg-opacity-20 rounded-xl">
+                      <Clock className="w-6 h-6 text-yellow-400" />
+                    </div>
+                    <div className="text-right">
+                      <div className="flex items-center text-blue-400 text-sm">
+                        <Activity className="w-4 h-4 mr-1" />
+                        Live
+                      </div>
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <h3 className="text-2xl font-bold">{dashboardData.avgSessionDuration}</h3>
+                    <p className="text-gray-400">Avg Session</p>
+                    <ProgressBar percentage={68} color="#F59E0B" />
+                    <div className="flex justify-between text-sm text-gray-400">
+                      <span>Peak: {dashboardData.peakHours}</span>
+                      <span>Active Now: 127</span>
+                    </div>
+                  </div>
+                </div>
+              </AnimatedCard>
+            </div>
+
+            {/* Charts Section */}
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+              {/* Revenue Chart */}
+              <AnimatedCard delay={500} className="lg:col-span-2 card-hover">
+                <div className="p-6 glassmorphism rounded-2xl border border-gray-700">
+                  <div className="flex items-center justify-between mb-6">
+                    <div>
+                      <h3 className="text-xl font-bold">Revenue Trend</h3>
+                      <p className="text-gray-400">Monthly revenue growth</p>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <GlowingButton variant="secondary" className="text-xs px-3 py-1">
+                        <Eye className="w-4 h-4 mr-1" />
+                        View Details
+                      </GlowingButton>
+                    </div>
+                  </div>
+                  <div className="h-64 relative">
+                    <canvas ref={revenueChartRef} className="w-full h-full" style={{ width: "100%", height: "100%" }} />
+                  </div>
+                </div>
+              </AnimatedCard>
+
+              {/* Membership Distribution */}
+              <AnimatedCard delay={600} className="card-hover">
+                <div className="p-6 glassmorphism rounded-2xl border border-gray-700">
+                  <div className="flex items-center justify-between mb-6">
+                    <div>
+                      <h3 className="text-xl font-bold">Membership Types</h3>
+                      <p className="text-gray-400">User distribution</p>
+                    </div>
+                  </div>
+                  <div className="flex justify-center mb-6">
+                    <div className="relative w-48 h-48 mx-auto">
+                      <canvas
+                        ref={membershipChartRef}
+                        className="w-full h-full"
+                        style={{ width: "100%", height: "100%" }}
+                      />
+                      <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+                        <p className="text-sm text-gray-400">Total</p>
+                        <p className="text-2xl font-bold">
+                          <CountUpNumber end={dashboardData.totalUsers} />
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="space-y-3">
+                    {dashboardData.usersByMembership.map((item, index) => (
+                      <div key={item.type} className="flex items-center justify-between">
+                        <div className="flex items-center">
+                          <div className="w-3 h-3 mr-3 rounded-full" style={{ backgroundColor: item.color }}></div>
+                          <span className="text-sm font-medium">{item.type}</span>
+                        </div>
+                        <div className="text-right">
+                          <div className="text-sm font-bold">
+                            <CountUpNumber end={item.count} />
+                          </div>
+                          <div className="text-xs text-gray-400">{item.percentage}%</div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </AnimatedCard>
+            </div>
+
+            {/* Bottom Section */}
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              {/* Recent Bookings */}
+              <AnimatedCard delay={700} className="lg:col-span-2 card-hover">
+                <div className="p-6 glassmorphism rounded-2xl border border-gray-700">
+                  <div className="flex items-center justify-between mb-6">
+                    <div>
+                      <h3 className="text-xl font-bold">Recent Bookings</h3>
+                      <p className="text-gray-400">Latest customer activities</p>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <GlowingButton variant="secondary" className="text-xs px-3 py-1">
+                        <Filter className="w-4 h-4 mr-1" />
+                        Filter
+                      </GlowingButton>
+                      <GlowingButton className="text-xs px-3 py-1">View All</GlowingButton>
+                    </div>
+                  </div>
+                  <div className="overflow-x-auto">
+                    <table className="w-full">
+                      <thead>
+                        <tr className="text-left text-gray-400 border-b border-gray-700">
+                          <th className="pb-3 font-medium">Customer</th>
+                          <th className="pb-3 font-medium">Service</th>
+                          <th className="pb-3 font-medium">Date & Time</th>
+                          <th className="pb-3 font-medium">Amount</th>
+                          <th className="pb-3 font-medium">Status</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-gray-700">
+                        {dashboardData.recentBookings.map((booking, index) => (
+                          <tr key={booking.id} className="text-sm hover:bg-gray-800 transition-colors duration-200">
+                            <td className="py-4">
+                              <div className="flex items-center">
+                                <div className="w-8 h-8 bg-gradient-to-r from-blue-400 to-purple-500 rounded-full flex items-center justify-center mr-3">
+                                  <span className="text-xs font-bold text-white">
+                                    {booking.user
+                                      .split(" ")
+                                      .map((n) => n[0])
+                                      .join("")}
+                                  </span>
+                                </div>
+                                <span className="font-medium">{booking.user}</span>
+                              </div>
+                            </td>
+                            <td className="py-4">{booking.service}</td>
+                            <td className="py-4 text-gray-400">{booking.date}</td>
+                            <td className="py-4 font-medium">${booking.amount}</td>
+                            <td className="py-4">
+                              <span
+                                className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
+                                  booking.status === "confirmed"
+                                    ? "bg-green-500 bg-opacity-20 text-green-400"
+                                    : booking.status === "pending"
+                                      ? "bg-yellow-500 bg-opacity-20 text-yellow-400"
+                                      : "bg-red-500 bg-opacity-20 text-red-400"
+                                }`}
+                              >
+                                {booking.status.charAt(0).toUpperCase() + booking.status.slice(1)}
+                              </span>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </AnimatedCard>
+
+              {/* Hourly Bookings */}
+              <AnimatedCard delay={800} className="card-hover">
+                <div className="p-6 glassmorphism rounded-2xl border border-gray-700">
+                  <div className="flex items-center justify-between mb-6">
+                    <div>
+                      <h3 className="text-xl font-bold">Peak Hours</h3>
+                      <p className="text-gray-400">Booking distribution</p>
+                    </div>
+                  </div>
+                  <div className="h-64 relative mb-4">
+                    <canvas ref={hourlyChartRef} className="w-full h-full" style={{ width: "100%", height: "100%" }} />
+                  </div>
+                  <div className="space-y-3">
+                    <div className="flex items-center justify-between p-3 bg-gray-800 rounded-lg">
+                      <div className="flex items-center">
+                        <Zap className="w-5 h-5 text-yellow-400 mr-2" />
+                        <span className="text-sm">Peak Time</span>
+                      </div>
+                      <span className="font-bold text-yellow-400">6-8 PM</span>
+                    </div>
+                    <div className="flex items-center justify-between p-3 bg-gray-800 rounded-lg">
+                      <div className="flex items-center">
+                        <Target className="w-5 h-5 text-green-400 mr-2" />
+                        <span className="text-sm">Avg/Hour</span>
+                      </div>
+                      <span className="font-bold text-green-400">78</span>
+                    </div>
+                    <div className="flex items-center justify-between p-3 bg-gray-800 rounded-lg">
+                      <div className="flex items-center">
+                        <Award className="w-5 h-5 text-blue-400 mr-2" />
+                        <span className="text-sm">Best Day</span>
+                      </div>
+                      <span className="font-bold text-blue-400">Saturday</span>
+                    </div>
+                  </div>
+                </div>
+              </AnimatedCard>
+            </div>
+          </main>
+        </div>
+      </div>
+    </>
+  )
+}
+
+export default Dashboard
