@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
-import { useEffect, useState } from "react"
+import { useEffect, useState } from "react";
 import {
   Search,
   Calendar,
@@ -17,8 +17,8 @@ import {
   X,
   Clock,
   ChevronDown,
-} from "lucide-react"
-import { getBookings, updateBookingStatus } from "../../../api/AdminApi"
+} from "lucide-react";
+import { getBookings, updateBookingStatus } from "../../../api/AdminApi";
 
 // Updated mock data to match API structure
 const mockBookings = [
@@ -58,28 +58,28 @@ const mockBookings = [
     bookingDate: "2025-06-20T09:15:00.000Z",
     status: "cancelled",
   },
-]
+];
 
 const Bookings = () => {
-  const [bookings, setBookings] = useState([])
-  const [filteredBookings, setFilteredBookings] = useState([])
-  const [searchTerm, setSearchTerm] = useState("")
-  const [filterStatus, setFilterStatus] = useState("all")
-  const [filterPlan, setFilterPlan] = useState("all")
-  const [filterDate, setFilterDate] = useState("all")
-  const [sortBy, setSortBy] = useState("bookingDate")
-  const [sortOrder, setSortOrder] = useState("desc")
-  const [isAddModalOpen, setIsAddModalOpen] = useState(false)
-  const [sidebarOpen, setSidebarOpen] = useState(true)
-  const [loading, setLoading] = useState(true)
-  const [selectedBookings, setSelectedBookings] = useState([])
-  const [showFilters, setShowFilters] = useState(false)
-  const [currentPage, setCurrentPage] = useState(1)
-  const [itemsPerPage] = useState(3)
+  const [bookings, setBookings] = useState([]);
+  const [filteredBookings, setFilteredBookings] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filterStatus, setFilterStatus] = useState("all");
+  const [filterPlan, setFilterPlan] = useState("all");
+  const [filterDate, setFilterDate] = useState("all");
+  const [sortBy, setSortBy] = useState("bookingDate");
+  const [sortOrder, setSortOrder] = useState("desc");
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [loading, setLoading] = useState(true);
+  const [selectedBookings, setSelectedBookings] = useState([]);
+  const [showFilters, setShowFilters] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(3);
 
   // New state for status updates
-  const [updatingStatus, setUpdatingStatus] = useState({})
-  const [statusDropdowns, setStatusDropdowns] = useState({})
+  const [updatingStatus, setUpdatingStatus] = useState({});
+  const [statusDropdowns, setStatusDropdowns] = useState({});
 
   // Advanced analytics
   const [analytics, setAnalytics] = useState({
@@ -88,111 +88,132 @@ const Bookings = () => {
     growthRate: 0,
     topPlan: "",
     recentBookings: 0,
-  })
+  });
 
   useEffect(() => {
     const fetchBookings = async () => {
-      setLoading(true)
+      setLoading(true);
       try {
-        const result = await getBookings()
-        console.log("Bookings fetched:", result.data.bookings)
-        const bookingsData = result.data.bookings || mockBookings
-        setBookings(bookingsData)
-        calculateAnalytics(bookingsData)
+        const result = await getBookings();
+        console.log("Bookings fetched:", result.data.bookings);
+        const bookingsData = result.data.bookings || mockBookings;
+        setBookings(bookingsData);
+        calculateAnalytics(bookingsData);
       } catch (error) {
-        console.error("Error fetching bookings:", error)
-        setBookings(mockBookings)
-        calculateAnalytics(mockBookings)
+        console.error("Error fetching bookings:", error);
+        setBookings(mockBookings);
+        calculateAnalytics(mockBookings);
       } finally {
-        setLoading(false)
+        setLoading(false);
       }
-    }
-    fetchBookings()
-  }, [])
+    };
+    fetchBookings();
+  }, []);
 
   // New function to handle status updates
   const handleStatusUpdate = async (bookingId, newStatus) => {
-    setUpdatingStatus((prev) => ({ ...prev, [bookingId]: true }))
+    setUpdatingStatus((prev) => ({ ...prev, [bookingId]: true }));
 
     try {
-      const result = await updateBookingStatus(bookingId, newStatus)
-      console.log("Status updated:", result)
+      const result = await updateBookingStatus(bookingId, newStatus);
+      console.log("Status updated:", result);
 
       // Update local state
       setBookings((prevBookings) =>
-        prevBookings.map((booking) => (booking.id === bookingId ? { ...booking, status: newStatus } : booking)),
-      )
+        prevBookings.map((booking) =>
+          booking.id === bookingId
+            ? { ...booking, status: newStatus }
+            : booking,
+        ),
+      );
 
       // Close dropdown
-      setStatusDropdowns((prev) => ({ ...prev, [bookingId]: false }))
+      setStatusDropdowns((prev) => ({ ...prev, [bookingId]: false }));
 
       // Show success message (you can replace this with a toast notification)
-      console.log(`Booking ${bookingId} status updated to ${newStatus}`)
+      console.log(`Booking ${bookingId} status updated to ${newStatus}`);
     } catch (error) {
-      console.error("Error updating booking status:", error)
+      console.error("Error updating booking status:", error);
       // Show error message (you can replace this with a toast notification)
-      alert("Failed to update booking status. Please try again.")
+      alert("Failed to update booking status. Please try again.");
     } finally {
-      setUpdatingStatus((prev) => ({ ...prev, [bookingId]: false }))
+      setUpdatingStatus((prev) => ({ ...prev, [bookingId]: false }));
     }
-  }
+  };
 
   // New function to handle bulk status updates
   const handleBulkStatusUpdate = async (newStatus) => {
-    const updatePromises = selectedBookings.map((bookingId) => handleStatusUpdate(bookingId, newStatus))
+    const updatePromises = selectedBookings.map((bookingId) =>
+      handleStatusUpdate(bookingId, newStatus),
+    );
 
     try {
-      await Promise.all(updatePromises)
-      setSelectedBookings([])
-      console.log(`Bulk status update to ${newStatus} completed`)
+      await Promise.all(updatePromises);
+      setSelectedBookings([]);
+      console.log(`Bulk status update to ${newStatus} completed`);
     } catch (error) {
-      console.error("Error in bulk status update:", error)
+      console.error("Error in bulk status update:", error);
     }
-  }
+  };
 
   // Toggle status dropdown
   const toggleStatusDropdown = (bookingId) => {
     setStatusDropdowns((prev) => ({
       ...prev,
       [bookingId]: !prev[bookingId],
-    }))
-  }
+    }));
+  };
 
   // Calculate advanced analytics
   const calculateAnalytics = (bookingsData) => {
     const totalRevenue = bookingsData
       .filter((b) => b.status === "confirmed")
-      .reduce((sum, booking) => sum + booking.price, 0)
+      .reduce((sum, booking) => sum + booking.price, 0);
 
     const averageBookingValue =
-      bookingsData.length > 0 ? totalRevenue / bookingsData.filter((b) => b.status === "confirmed").length : 0
+      bookingsData.length > 0
+        ? totalRevenue /
+          bookingsData.filter((b) => b.status === "confirmed").length
+        : 0;
 
     // Calculate growth rate (last 7 days vs previous 7 days)
-    const now = new Date()
-    const last7Days = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000)
-    const previous7Days = new Date(now.getTime() - 14 * 24 * 60 * 60 * 1000)
+    const now = new Date();
+    const last7Days = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+    const previous7Days = new Date(now.getTime() - 14 * 24 * 60 * 60 * 1000);
 
     const recentRevenue = bookingsData
-      .filter((b) => new Date(b.bookingDate) >= last7Days && b.status === "confirmed")
-      .reduce((sum, booking) => sum + booking.price, 0)
+      .filter(
+        (b) => new Date(b.bookingDate) >= last7Days && b.status === "confirmed",
+      )
+      .reduce((sum, booking) => sum + booking.price, 0);
 
     const previousRevenue = bookingsData
       .filter(
         (b) =>
-          new Date(b.bookingDate) >= previous7Days && new Date(b.bookingDate) < last7Days && b.status === "confirmed",
+          new Date(b.bookingDate) >= previous7Days &&
+          new Date(b.bookingDate) < last7Days &&
+          b.status === "confirmed",
       )
-      .reduce((sum, booking) => sum + booking.price, 0)
+      .reduce((sum, booking) => sum + booking.price, 0);
 
-    const growthRate = previousRevenue > 0 ? ((recentRevenue - previousRevenue) / previousRevenue) * 100 : 0
+    const growthRate =
+      previousRevenue > 0
+        ? ((recentRevenue - previousRevenue) / previousRevenue) * 100
+        : 0;
 
     // Find top plan
     const planCounts = bookingsData.reduce((acc, booking) => {
-      acc[booking.planName] = (acc[booking.planName] || 0) + 1
-      return acc
-    }, {})
-    const topPlan = Object.keys(planCounts).reduce((a, b) => (planCounts[a] > planCounts[b] ? a : b), "")
+      acc[booking.planName] = (acc[booking.planName] || 0) + 1;
+      return acc;
+    }, {});
+    const topPlan = Object.keys(planCounts).reduce(
+      (a, b) => (planCounts[a] > planCounts[b] ? a : b),
+      "",
+    );
 
-    const recentBookings = bookingsData.filter((b) => new Date(b.bookingDate) >= last7Days).length
+    const recentBookings = bookingsData.filter(
+      (b) => new Date(b.bookingDate) >= last7Days,
+    ).length;
 
     setAnalytics({
       totalRevenue,
@@ -200,8 +221,8 @@ const Bookings = () => {
       growthRate,
       topPlan,
       recentBookings,
-    })
-  }
+    });
+  };
 
   // Advanced filtering and sorting
   useEffect(() => {
@@ -210,97 +231,113 @@ const Bookings = () => {
         booking.userName.toLowerCase().includes(searchTerm.toLowerCase()) ||
         booking.userEmail.toLowerCase().includes(searchTerm.toLowerCase()) ||
         booking.planName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        booking.id.toLowerCase().includes(searchTerm.toLowerCase())
+        booking.id.toLowerCase().includes(searchTerm.toLowerCase());
 
-      const matchesStatus = filterStatus === "all" || booking.status === filterStatus
-      const matchesPlan = filterPlan === "all" || booking.planName === filterPlan
+      const matchesStatus =
+        filterStatus === "all" || booking.status === filterStatus;
+      const matchesPlan =
+        filterPlan === "all" || booking.planName === filterPlan;
 
-      let matchesDate = true
+      let matchesDate = true;
       if (filterDate !== "all") {
-        const bookingDate = new Date(booking.bookingDate)
-        const today = new Date()
-        const yesterday = new Date(today.getTime() - 24 * 60 * 60 * 1000)
-        const lastWeek = new Date(today.getTime() - 7 * 24 * 60 * 60 * 1000)
-        const lastMonth = new Date(today.getTime() - 30 * 24 * 60 * 60 * 1000)
+        const bookingDate = new Date(booking.bookingDate);
+        const today = new Date();
+        const yesterday = new Date(today.getTime() - 24 * 60 * 60 * 1000);
+        const lastWeek = new Date(today.getTime() - 7 * 24 * 60 * 60 * 1000);
+        const lastMonth = new Date(today.getTime() - 30 * 24 * 60 * 60 * 1000);
 
         switch (filterDate) {
           case "today":
-            matchesDate = bookingDate.toDateString() === today.toDateString()
-            break
+            matchesDate = bookingDate.toDateString() === today.toDateString();
+            break;
           case "yesterday":
-            matchesDate = bookingDate.toDateString() === yesterday.toDateString()
-            break
+            matchesDate =
+              bookingDate.toDateString() === yesterday.toDateString();
+            break;
           case "week":
-            matchesDate = bookingDate >= lastWeek
-            break
+            matchesDate = bookingDate >= lastWeek;
+            break;
           case "month":
-            matchesDate = bookingDate >= lastMonth
-            break
+            matchesDate = bookingDate >= lastMonth;
+            break;
           default:
-            matchesDate = true
+            matchesDate = true;
         }
       }
 
-      return matchesSearch && matchesStatus && matchesPlan && matchesDate
-    })
+      return matchesSearch && matchesStatus && matchesPlan && matchesDate;
+    });
 
     // Sort bookings
     filtered.sort((a, b) => {
-      let aValue = a[sortBy]
-      let bValue = b[sortBy]
+      let aValue = a[sortBy];
+      let bValue = b[sortBy];
 
       if (sortBy === "bookingDate") {
-        aValue = new Date(aValue)
-        bValue = new Date(bValue)
+        aValue = new Date(aValue);
+        bValue = new Date(bValue);
       } else if (sortBy === "price") {
-        aValue = Number(aValue)
-        bValue = Number(bValue)
+        aValue = Number(aValue);
+        bValue = Number(bValue);
       }
 
       if (sortOrder === "asc") {
-        return aValue > bValue ? 1 : -1
+        return aValue > bValue ? 1 : -1;
       } else {
-        return aValue < bValue ? 1 : -1
+        return aValue < bValue ? 1 : -1;
       }
-    })
+    });
 
-    setFilteredBookings(filtered)
-    setCurrentPage(1)
-  }, [bookings, searchTerm, filterStatus, filterPlan, filterDate, sortBy, sortOrder])
+    setFilteredBookings(filtered);
+    setCurrentPage(1);
+  }, [
+    bookings,
+    searchTerm,
+    filterStatus,
+    filterPlan,
+    filterDate,
+    sortBy,
+    sortOrder,
+  ]);
 
   // Pagination
-  const totalPages = Math.ceil(filteredBookings.length / itemsPerPage)
-  const startIndex = (currentPage - 1) * itemsPerPage
-  const paginatedBookings = filteredBookings.slice(startIndex, startIndex + itemsPerPage)
+  const totalPages = Math.ceil(filteredBookings.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const paginatedBookings = filteredBookings.slice(
+    startIndex,
+    startIndex + itemsPerPage,
+  );
 
   const handleSort = (field) => {
     if (sortBy === field) {
-      setSortOrder(sortOrder === "asc" ? "desc" : "asc")
+      setSortOrder(sortOrder === "asc" ? "desc" : "asc");
     } else {
-      setSortBy(field)
-      setSortOrder("desc")
+      setSortBy(field);
+      setSortOrder("desc");
     }
-  }
+  };
 
   const handleSelectBooking = (bookingId) => {
     setSelectedBookings((prev) =>
-      prev.includes(bookingId) ? prev.filter((id) => id !== bookingId) : [...prev, bookingId],
-    )
-  }
+      prev.includes(bookingId)
+        ? prev.filter((id) => id !== bookingId)
+        : [...prev, bookingId],
+    );
+  };
 
   const handleSelectAll = () => {
     if (selectedBookings.length === paginatedBookings.length) {
-      setSelectedBookings([])
+      setSelectedBookings([]);
     } else {
-      setSelectedBookings(paginatedBookings.map((b) => b.id))
+      setSelectedBookings(paginatedBookings.map((b) => b.id));
     }
-  }
+  };
 
   const handleBulkAction = (action) => {
-    console.log(`Bulk ${action} for bookings:`, selectedBookings)
+    console.log(`Bulk ${action} for bookings:`, selectedBookings);
     // Implement bulk actions
-    setSelectedBookings([])
-  }
+    setSelectedBookings([]);
+  };
 
   const exportBookings = () => {
     const csvContent = [
@@ -316,16 +353,16 @@ const Bookings = () => {
       ]),
     ]
       .map((row) => row.join(","))
-      .join("\n")
+      .join("\n");
 
-    const blob = new Blob([csvContent], { type: "text/csv" })
-    const url = window.URL.createObjectURL(blob)
-    const a = document.createElement("a")
-    a.href = url
-    a.download = "bookings.csv"
-    a.click()
-    window.URL.revokeObjectURL(url)
-  }
+    const blob = new Blob([csvContent], { type: "text/csv" });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "bookings.csv";
+    a.click();
+    window.URL.revokeObjectURL(url);
+  };
 
   const formatDate = (dateString) => {
     return new Date(dateString).toLocaleDateString("en-US", {
@@ -334,45 +371,47 @@ const Bookings = () => {
       day: "numeric",
       hour: "2-digit",
       minute: "2-digit",
-    })
-  }
+    });
+  };
 
   const getStatusColor = (status) => {
     switch (status) {
       case "confirmed":
-        return "bg-green-500/20 text-green-400 border-green-500/30"
+        return "bg-green-500/20 text-green-400 border-green-500/30";
       case "pending":
-        return "bg-yellow-500/20 text-yellow-400 border-yellow-500/30"
+        return "bg-yellow-500/20 text-yellow-400 border-yellow-500/30";
       case "cancelled":
-        return "bg-red-500/20 text-red-400 border-red-500/30"
+        return "bg-red-500/20 text-red-400 border-red-500/30";
       case "completed":
-        return "bg-blue-500/20 text-blue-400 border-blue-500/30"
+        return "bg-blue-500/20 text-blue-400 border-blue-500/30";
       default:
-        return "bg-gray-500/20 text-gray-400 border-gray-500/30"
+        return "bg-gray-500/20 text-gray-400 border-gray-500/30";
     }
-  }
+  };
 
   const getStatusIcon = (status) => {
     switch (status) {
       case "confirmed":
-        return <Check className="w-3 h-3" />
+        return <Check className="w-3 h-3" />;
       case "pending":
-        return <Clock className="w-3 h-3" />
+        return <Clock className="w-3 h-3" />;
       case "cancelled":
-        return <X className="w-3 h-3" />
+        return <X className="w-3 h-3" />;
       case "completed":
-        return <Check className="w-3 h-3" />
+        return <Check className="w-3 h-3" />;
       default:
-        return <Clock className="w-3 h-3" />
+        return <Clock className="w-3 h-3" />;
     }
-  }
+  };
 
-  const uniquePlans = [...new Set(bookings.map((booking) => booking.planName))]
-  const statusOptions = ["pending", "confirmed", "cancelled"]
+  const uniquePlans = [...new Set(bookings.map((booking) => booking.planName))];
+  const statusOptions = ["pending", "confirmed", "cancelled"];
 
   if (loading) {
     return (
-      <div className={`flex-1 transition-all duration-500 ${sidebarOpen ? "lg:ml-72" : "lg:ml-20"}`}>
+      <div
+        className={`flex-1 transition-all duration-500 ${sidebarOpen ? "lg:ml-72" : "lg:ml-20"}`}
+      >
         <div className="min-h-screen bg-black text-white p-6 flex items-center justify-center">
           <div className="flex items-center gap-3">
             <RefreshCw className="w-6 h-6 animate-spin" />
@@ -380,11 +419,13 @@ const Bookings = () => {
           </div>
         </div>
       </div>
-    )
+    );
   }
 
   return (
-    <div className={`flex-1 transition-all duration-500 ${sidebarOpen ? "lg:ml-72" : "lg:ml-20"}`}>
+    <div
+      className={`flex-1 transition-all duration-500 ${sidebarOpen ? "lg:ml-72" : "lg:ml-20"}`}
+    >
       <div className="min-h-screen bg-black text-white p-6">
         <div className="max-w-7xl mx-auto space-y-6">
           {/* Enhanced Header */}
@@ -394,7 +435,8 @@ const Bookings = () => {
                 Advanced Bookings Management
               </h1>
               <p className="text-gray-400 mt-1">
-                Manage {bookings.length} bookings with advanced analytics and filtering
+                Manage {bookings.length} bookings with advanced analytics and
+                filtering
               </p>
             </div>
           </div>
@@ -402,33 +444,59 @@ const Bookings = () => {
           {/* Enhanced Stats Cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
             <div className=" border border-gray-800 rounded-lg p-4">
-              <div className="text-sm font-medium text-gray-400 mb-2">Total Bookings</div>
-              <div className="text-2xl font-bold text-white">{bookings.length}</div>
+              <div className="text-sm font-medium text-gray-400 mb-2">
+                Total Bookings
+              </div>
+              <div className="text-2xl font-bold text-white">
+                {bookings.length}
+              </div>
               <div className="text-xs text-gray-500 mt-1">All time</div>
             </div>
             <div className=" border border-gray-800 rounded-lg p-4">
-              <div className="text-sm font-medium text-gray-400 mb-2">Total Revenue</div>
-              <div className="text-2xl font-bold text-green-400">${analytics.totalRevenue.toFixed(2)}</div>
-              <div className="text-xs text-gray-500 mt-1">Confirmed bookings</div>
+              <div className="text-sm font-medium text-gray-400 mb-2">
+                Total Revenue
+              </div>
+              <div className="text-2xl font-bold text-green-400">
+                ${analytics.totalRevenue.toFixed(2)}
+              </div>
+              <div className="text-xs text-gray-500 mt-1">
+                Confirmed bookings
+              </div>
             </div>
             <div className=" border border-gray-800 rounded-lg p-4">
-              <div className="text-sm font-medium text-gray-400 mb-2">Avg. Booking Value</div>
-              <div className="text-2xl font-bold text-blue-400">${analytics.averageBookingValue.toFixed(2)}</div>
-              <div className="text-xs text-gray-500 mt-1">Per confirmed booking</div>
+              <div className="text-sm font-medium text-gray-400 mb-2">
+                Avg. Booking Value
+              </div>
+              <div className="text-2xl font-bold text-blue-400">
+                ${analytics.averageBookingValue.toFixed(2)}
+              </div>
+              <div className="text-xs text-gray-500 mt-1">
+                Per confirmed booking
+              </div>
             </div>
             <div className=" border border-gray-800 rounded-lg p-4">
-              <div className="text-sm font-medium text-gray-400 mb-2">Growth Rate</div>
+              <div className="text-sm font-medium text-gray-400 mb-2">
+                Growth Rate
+              </div>
               <div
                 className={`text-2xl font-bold flex items-center gap-1 ${analytics.growthRate >= 0 ? "text-green-400" : "text-red-400"}`}
               >
-                {analytics.growthRate >= 0 ? <TrendingUp className="w-5 h-5" /> : <TrendingDown className="w-5 h-5" />}
+                {analytics.growthRate >= 0 ? (
+                  <TrendingUp className="w-5 h-5" />
+                ) : (
+                  <TrendingDown className="w-5 h-5" />
+                )}
                 {Math.abs(analytics.growthRate).toFixed(1)}%
               </div>
               <div className="text-xs text-gray-500 mt-1">Last 7 days</div>
             </div>
             <div className=" border border-gray-800 rounded-lg p-4">
-              <div className="text-sm font-medium text-gray-400 mb-2">Top Plan</div>
-              <div className="text-lg font-bold text-purple-400">{analytics.topPlan}</div>
+              <div className="text-sm font-medium text-gray-400 mb-2">
+                Top Plan
+              </div>
+              <div className="text-lg font-bold text-purple-400">
+                {analytics.topPlan}
+              </div>
               <div className="text-xs text-gray-500 mt-1">Most popular</div>
             </div>
           </div>
@@ -495,9 +563,9 @@ const Bookings = () => {
                   <select
                     value={`${sortBy}-${sortOrder}`}
                     onChange={(e) => {
-                      const [field, order] = e.target.value.split("-")
-                      setSortBy(field)
-                      setSortOrder(order)
+                      const [field, order] = e.target.value.split("-");
+                      setSortBy(field);
+                      setSortOrder(order);
                     }}
                     className="px-3 py-2 bg-gray-800 border border-gray-700 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-white/20"
                   >
@@ -515,7 +583,8 @@ const Bookings = () => {
               {selectedBookings.length > 0 && (
                 <div className="mb-4 p-3 bg-blue-900/20 border border-blue-500/30 rounded-lg flex items-center justify-between">
                   <span className="text-blue-400">
-                    {selectedBookings.length} booking{selectedBookings.length > 1 ? "s" : ""} selected
+                    {selectedBookings.length} booking
+                    {selectedBookings.length > 1 ? "s" : ""} selected
                   </span>
                   <div className="flex gap-2">
                     <button
@@ -557,7 +626,11 @@ const Bookings = () => {
                       <th className="text-left p-4">
                         <input
                           type="checkbox"
-                          checked={selectedBookings.length === paginatedBookings.length && paginatedBookings.length > 0}
+                          checked={
+                            selectedBookings.length ===
+                              paginatedBookings.length &&
+                            paginatedBookings.length > 0
+                          }
                           onChange={handleSelectAll}
                           className="rounded border-gray-600 bg-gray-800 text-white focus:ring-white/20"
                         />
@@ -592,12 +665,17 @@ const Bookings = () => {
                       >
                         Status
                       </th>
-                      <th className="text-right p-4 text-gray-300 font-medium">Actions</th>
+                      <th className="text-right p-4 text-gray-300 font-medium">
+                        Actions
+                      </th>
                     </tr>
                   </thead>
                   <tbody>
                     {paginatedBookings.map((booking) => (
-                      <tr key={booking.id} className="border-b border-gray-800 hover:bg-gray-800/30 transition-colors">
+                      <tr
+                        key={booking.id}
+                        className="border-b border-gray-800 hover:bg-gray-800/30 transition-colors"
+                      >
                         <td className="p-4">
                           <input
                             type="checkbox"
@@ -614,11 +692,15 @@ const Bookings = () => {
                               </div>
                               {booking.userName}
                             </div>
-                            <div className="text-sm text-gray-400">{booking.userEmail}</div>
+                            <div className="text-sm text-gray-400">
+                              {booking.userEmail}
+                            </div>
                           </div>
                         </td>
                         <td className="p-4">
-                          <div className="font-medium text-white">{booking.planName}</div>
+                          <div className="font-medium text-white">
+                            {booking.planName}
+                          </div>
                         </td>
                         <td className="p-4">
                           <div className="flex items-center gap-1 text-white font-medium">
@@ -658,9 +740,13 @@ const Bookings = () => {
                                 {statusOptions.map((status) => (
                                   <button
                                     key={status}
-                                    onClick={() => handleStatusUpdate(booking.id, status)}
+                                    onClick={() =>
+                                      handleStatusUpdate(booking.id, status)
+                                    }
                                     className={`w-full text-left px-3 py-2 text-sm hover:bg-gray-700 transition-colors flex items-center gap-2 ${
-                                      booking.status === status ? "bg-gray-700 text-white" : "text-gray-300"
+                                      booking.status === status
+                                        ? "bg-gray-700 text-white"
+                                        : "text-gray-300"
                                     }`}
                                   >
                                     {getStatusIcon(status)}
@@ -694,8 +780,12 @@ const Bookings = () => {
                 {filteredBookings.length === 0 && (
                   <div className="text-center py-12 text-gray-400">
                     <Search className="w-12 h-12 mx-auto mb-4 opacity-50" />
-                    <p className="text-lg font-medium mb-2">No bookings found</p>
-                    <p className="text-sm">Try adjusting your search criteria or filters</p>
+                    <p className="text-lg font-medium mb-2">
+                      No bookings found
+                    </p>
+                    <p className="text-sm">
+                      Try adjusting your search criteria or filters
+                    </p>
                   </div>
                 )}
               </div>
@@ -704,37 +794,48 @@ const Bookings = () => {
               {totalPages > 1 && (
                 <div className="flex items-center justify-between mt-6">
                   <div className="text-sm text-gray-400">
-                    Showing {startIndex + 1} to {Math.min(startIndex + itemsPerPage, filteredBookings.length)} of{" "}
-                    {filteredBookings.length} bookings
+                    Showing {startIndex + 1} to{" "}
+                    {Math.min(
+                      startIndex + itemsPerPage,
+                      filteredBookings.length,
+                    )}{" "}
+                    of {filteredBookings.length} bookings
                   </div>
                   <div className="flex items-center gap-2">
                     <button
-                      onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
+                      onClick={() =>
+                        setCurrentPage(Math.max(1, currentPage - 1))
+                      }
                       disabled={currentPage === 1}
                       className="px-3 py-1 bg-gray-800 border border-gray-700 rounded text-white disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-700 transition-colors"
                     >
                       Previous
                     </button>
                     <div className="flex gap-1">
-                      {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
-                        const page = i + 1
-                        return (
-                          <button
-                            key={page}
-                            onClick={() => setCurrentPage(page)}
-                            className={`px-3 py-1 rounded transition-colors ${
-                              currentPage === page
-                                ? "bg-white text-black"
-                                : "bg-gray-800 border border-gray-700 text-white hover:bg-gray-700"
-                            }`}
-                          >
-                            {page}
-                          </button>
-                        )
-                      })}
+                      {Array.from(
+                        { length: Math.min(5, totalPages) },
+                        (_, i) => {
+                          const page = i + 1;
+                          return (
+                            <button
+                              key={page}
+                              onClick={() => setCurrentPage(page)}
+                              className={`px-3 py-1 rounded transition-colors ${
+                                currentPage === page
+                                  ? "bg-white text-black"
+                                  : "bg-gray-800 border border-gray-700 text-white hover:bg-gray-700"
+                              }`}
+                            >
+                              {page}
+                            </button>
+                          );
+                        },
+                      )}
                     </div>
                     <button
-                      onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
+                      onClick={() =>
+                        setCurrentPage(Math.min(totalPages, currentPage + 1))
+                      }
                       disabled={currentPage === totalPages}
                       className="px-3 py-1 bg-gray-800 border border-gray-700 rounded text-white disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-700 transition-colors"
                     >
@@ -748,7 +849,7 @@ const Bookings = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Bookings
+export default Bookings;

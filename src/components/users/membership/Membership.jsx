@@ -1,48 +1,52 @@
-"use client"
+"use client";
 
-import { useNavigate } from "react-router-dom"
-import { bookingPlan, getMembershipPlans, getBookings } from "../../../api/UserApi"
-import { useEffect, useState } from "react"
-import { BookingConfirmationModal } from "./BookingConfirmationModal"
+import { useNavigate } from "react-router-dom";
+import {
+  bookingPlan,
+  getMembershipPlans,
+  getBookings,
+} from "../../../api/UserApi";
+import { useEffect, useState } from "react";
+import { BookingConfirmationModal } from "./BookingConfirmationModal";
 import { setUserData } from "../../../redux/slices/authSlice";
-import { useSelector } from "react-redux"
-import { toast } from 'react-toastify'
+import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
 const Membership = () => {
-  const navigate = useNavigate()
-  const [plans, setPlans] = useState([])
-  const [bookingStatuses, setBookingStatuses] = useState({})
-  const [isModalOpen, setIsModalOpen] = useState(false)
-  const [selectedPlan, setSelectedPlan] = useState(null)
-  const [isBookingLoading, setIsBookingLoading] = useState(false)
-  // const [user, setUser] = useState(null) 
-  const user = useSelector((state) => state.auth.user)
+  const navigate = useNavigate();
+  const [plans, setPlans] = useState([]);
+  const [bookingStatuses, setBookingStatuses] = useState({});
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedPlan, setSelectedPlan] = useState(null);
+  const [isBookingLoading, setIsBookingLoading] = useState(false);
+  // const [user, setUser] = useState(null)
+  const user = useSelector((state) => state.auth.user);
   // console.log('user', user);
 
-  const token = localStorage.getItem("authToken")
+  const token = localStorage.getItem("authToken");
 
   useEffect(() => {
     const fetchMembershipPlans = async () => {
       try {
-        const response = await getMembershipPlans()
-        const fetchedPlans = response.data.plans
+        const response = await getMembershipPlans();
+        const fetchedPlans = response.data.plans;
 
         const coloredPlans = fetchedPlans.map((plan, index) => {
-          let color
+          let color;
           switch (plan.planName.toLowerCase()) {
             case "standard":
-              color = "142, 252, 204" // Light green
-              break
+              color = "142, 252, 204"; // Light green
+              break;
             case "premium plan":
-              color = "252, 208, 142" // Orange
-              break
+              color = "252, 208, 142"; // Orange
+              break;
             case "pro":
-              color = "252, 142, 239" // Pink
-              break
+              color = "252, 142, 239"; // Pink
+              break;
             case "enterprise":
-              color = "204, 142, 252" // Purple
-              break
+              color = "204, 142, 252"; // Purple
+              break;
             default:
-              color = "200, 200, 200"
+              color = "200, 200, 200";
           }
 
           return {
@@ -50,167 +54,164 @@ const Membership = () => {
             color,
             popular: plan.planName.toLowerCase() === "standard",
             description: Array.isArray(plan.description)
-              ? plan.description.flatMap((desc) => desc.split("\n").map((item) => item.trim()))
+              ? plan.description.flatMap((desc) =>
+                  desc.split("\n").map((item) => item.trim()),
+                )
               : plan.description.split("\n").map((item) => item.trim()),
-          }
-        })
-        setPlans(coloredPlans)
+          };
+        });
+        setPlans(coloredPlans);
       } catch (error) {
-        console.error("Error fetching membership plans:", error)
+        console.error("Error fetching membership plans:", error);
       }
-    }
+    };
 
-    fetchMembershipPlans()
-
-
-  }, [])
+    fetchMembershipPlans();
+  }, []);
 
   useEffect(() => {
-
-
     if (!token) {
       navigate("/");
       return;
     }
 
     try {
-      setUserData(user)
+      setUserData(user);
       // setUser(parsedUser);
     } catch (err) {
       console.error("Invalid user data:", err);
-
     }
   }, []);
 
   const handleBookingClick = (plan) => {
-    setSelectedPlan(plan)
-    setIsModalOpen(true)
-  }
+    setSelectedPlan(plan);
+    setIsModalOpen(true);
+  };
 
   const handleConfirmBooking = async () => {
+    if (!selectedPlan || !token) return;
 
-    if (!selectedPlan || !token) return
-
-    setIsBookingLoading(true)
+    setIsBookingLoading(true);
 
     try {
-
-
-      const response = await bookingPlan(selectedPlan._id, user.id)
-      console.log('response', response);
+      const response = await bookingPlan(selectedPlan._id, user.id);
+      console.log("response", response);
 
       // const data = await response.json()
 
       if (response.status === 200) {
-        const userId = user.id
-        const getBookingsResponse = await getBookings(userId)
+        const userId = user.id;
+        const getBookingsResponse = await getBookings(userId);
 
         const bookingMap = getBookingsResponse.data.bookings;
-        console.log('Booking map:', bookingMap);
+        console.log("Booking map:", bookingMap);
         // Update the status for that specific plan
         setBookingStatuses((prev) => ({
           ...prev,
           ...bookingMap, // Merge all bookings
         }));
 
-
         // Show success message
-        toast.success("Booking request submitted successfully! Waiting for admin approval.")
+        toast.success(
+          "Booking request submitted successfully! Waiting for admin approval.",
+        );
 
         // Close modal
-        setIsModalOpen(false)
-        setSelectedPlan(null)
+        setIsModalOpen(false);
+        setSelectedPlan(null);
       } else {
-        throw new Error("Booking failed")
+        throw new Error("Booking failed");
       }
     } catch (error) {
-      console.error("Booking error:", error)
-      toast.error("Failed to book plan. Please try again.")
+      console.error("Booking error:", error);
+      toast.error("Failed to book plan. Please try again.");
     } finally {
-      setIsBookingLoading(false)
-    }
-  }
-
-  useEffect(() => {
-  const fetchUserBookings = async () => {
-    try {
-      if (user?.id) {
-        const res = await getBookings(user.id);
-        setBookingStatuses(res.data.bookings); // ✅ whole map
-      }
-    } catch (err) {
-      console.error("Failed to fetch user bookings:", err);
+      setIsBookingLoading(false);
     }
   };
 
-  fetchUserBookings();
-}, [user?.id]);
+  useEffect(() => {
+    const fetchUserBookings = async () => {
+      try {
+        if (user?.id) {
+          const res = await getBookings(user.id);
+          setBookingStatuses(res.data.bookings); // ✅ whole map
+        }
+      } catch (err) {
+        console.error("Failed to fetch user bookings:", err);
+      }
+    };
 
+    fetchUserBookings();
+  }, [user?.id]);
 
   const getButtonText = (plan) => {
-    const planId = plan._id
-    const status = bookingStatuses[planId]
+    const planId = plan._id;
+    const status = bookingStatuses[planId];
 
     switch (status) {
       case "pending":
-        return "Pending Approval"
+        return "Pending Approval";
       case "confirmed":
-        return "Booked"
+        return "Booked";
       case "rejected":
       case "cancelled":
-        return "Try Again"
+        return "Try Again";
       default:
-        return plan.popular ? "Choose Plan" : "Get Started"
+        return plan.popular ? "Choose Plan" : "Get Started";
     }
-  }
+  };
 
   const getButtonStyle = (plan) => {
-    const planId = plan._id
-    const status = bookingStatuses[planId]
+    const planId = plan._id;
+    const status = bookingStatuses[planId];
 
     const baseStyle = {
       background: `linear-gradient(135deg, rgba(${plan.color}, 0.15) 0%, rgba(${plan.color}, 0.25) 100%)`,
       border: `1px solid rgba(${plan.color}, 0.4)`,
       color: `rgba(${plan.color}, 1)`,
       boxShadow: `0 4px 12px rgba(${plan.color}, 0.15)`,
-    }
+    };
 
     switch (status) {
       case "pending":
         return {
           ...baseStyle,
-          background: "linear-gradient(135deg, rgba(255, 193, 7, 0.15) 0%, rgba(255, 193, 7, 0.25) 100%)",
+          background:
+            "linear-gradient(135deg, rgba(255, 193, 7, 0.15) 0%, rgba(255, 193, 7, 0.25) 100%)",
           border: "1px solid rgba(255, 193, 7, 0.4)",
           color: "rgba(255, 193, 7, 1)",
           cursor: "not-allowed",
           opacity: 0.8,
-        }
+        };
       case "booked":
         return {
           ...baseStyle,
-          background: "linear-gradient(135deg, rgba(34, 197, 94, 0.15) 0%, rgba(34, 197, 94, 0.25) 100%)",
+          background:
+            "linear-gradient(135deg, rgba(34, 197, 94, 0.15) 0%, rgba(34, 197, 94, 0.25) 100%)",
           border: "1px solid rgba(34, 197, 94, 0.4)",
           color: "rgba(34, 197, 94, 1)",
           cursor: "not-allowed",
           opacity: 0.8,
-        }
+        };
       case "rejected":
         return {
           ...baseStyle,
-          background: "linear-gradient(135deg, rgba(239, 68, 68, 0.15) 0%, rgba(239, 68, 68, 0.25) 100%)",
+          background:
+            "linear-gradient(135deg, rgba(239, 68, 68, 0.15) 0%, rgba(239, 68, 68, 0.25) 100%)",
           border: "1px solid rgba(239, 68, 68, 0.4)",
           color: "rgba(239, 68, 68, 1)",
-        }
+        };
       default:
-        return baseStyle
+        return baseStyle;
     }
-  }
+  };
 
   const isButtonDisabled = (plan) => {
-    const planId = plan._id || plan.id
-    const status = bookingStatuses[planId]
-    return status === "pending" || status === "confirmed" || !user || !token
-  }
+    const planId = plan._id || plan.id;
+    const status = bookingStatuses[planId];
+    return status === "pending" || status === "confirmed" || !user || !token;
+  };
 
   // console.log("plans", plans)
 
@@ -309,7 +310,9 @@ const Membership = () => {
                         >
                           ${plan.price}
                         </span>
-                        <span className="text-lg opacity-70 ml-1">/{plan.planType}</span>
+                        <span className="text-lg opacity-70 ml-1">
+                          /{plan.planType}
+                        </span>
                       </div>
                     </div>
 
@@ -334,7 +337,9 @@ const Membership = () => {
                                 boxShadow: `0 0 4px rgba(${plan.color}, 0.4)`,
                               }}
                             />
-                            <span className="transition-all duration-500 group-hover:translate-x-1">{feature}</span>
+                            <span className="transition-all duration-500 group-hover:translate-x-1">
+                              {feature}
+                            </span>
                           </li>
                         ))}
                       </ul>
@@ -345,22 +350,25 @@ const Membership = () => {
                       <div
                         onClick={() => {
                           if (!isButtonDisabled(plan)) {
-                            handleBookingClick(plan)
+                            handleBookingClick(plan);
                           }
                         }}
-                        className={`inline-block px-6 py-3 rounded-xl font-semibold uppercase tracking-wide transition-all duration-500 group-hover:scale-105 group-hover:shadow-lg ${isButtonDisabled(plan) ? "cursor-not-allowed" : "cursor-pointer"
-                          }`}
+                        className={`inline-block px-6 py-3 rounded-xl font-semibold uppercase tracking-wide transition-all duration-500 group-hover:scale-105 group-hover:shadow-lg ${
+                          isButtonDisabled(plan)
+                            ? "cursor-not-allowed"
+                            : "cursor-pointer"
+                        }`}
                         style={getButtonStyle(plan)}
                         onMouseEnter={(e) => {
                           if (!isButtonDisabled(plan)) {
-                            e.currentTarget.style.background = `linear-gradient(135deg, rgba(${plan.color}, 0.25) 0%, rgba(${plan.color}, 0.35) 100%)`
-                            e.currentTarget.style.boxShadow = `0 6px 20px rgba(${plan.color}, 0.25)`
+                            e.currentTarget.style.background = `linear-gradient(135deg, rgba(${plan.color}, 0.25) 0%, rgba(${plan.color}, 0.35) 100%)`;
+                            e.currentTarget.style.boxShadow = `0 6px 20px rgba(${plan.color}, 0.25)`;
                           }
                         }}
                         onMouseLeave={(e) => {
                           if (!isButtonDisabled(plan)) {
-                            e.currentTarget.style.background = `linear-gradient(135deg, rgba(${plan.color}, 0.15) 0%, rgba(${plan.color}, 0.25) 100%)`
-                            e.currentTarget.style.boxShadow = `0 4px 12px rgba(${plan.color}, 0.15)`
+                            e.currentTarget.style.background = `linear-gradient(135deg, rgba(${plan.color}, 0.15) 0%, rgba(${plan.color}, 0.25) 100%)`;
+                            e.currentTarget.style.boxShadow = `0 4px 12px rgba(${plan.color}, 0.15)`;
                           }
                         }}
                       >
@@ -387,8 +395,8 @@ const Membership = () => {
         <BookingConfirmationModal
           isOpen={isModalOpen}
           onClose={() => {
-            setIsModalOpen(false)
-            setSelectedPlan(null)
+            setIsModalOpen(false);
+            setSelectedPlan(null);
           }}
           onConfirm={handleConfirmBooking}
           plan={selectedPlan}
@@ -452,7 +460,7 @@ const Membership = () => {
         `}</style>
       </div>
     </>
-  )
-}
+  );
+};
 
-export default Membership
+export default Membership;

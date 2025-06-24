@@ -1,13 +1,23 @@
-"use client"
-import { X, Check, Clock, User, CreditCard } from "lucide-react"
+"use client";
+import { X, Check, Clock, User, CreditCard } from "lucide-react";
 
-export function BookingConfirmationModal({ isOpen, onClose, onConfirm, plan, user, isLoading }) {
-  if (!isOpen) return null
+export function BookingConfirmationModal({
+  isOpen,
+  onClose,
+  onConfirm,
+  plan,
+  user,
+  isLoading,
+}) {
+  if (!isOpen) return null;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
       {/* Backdrop */}
-      <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={onClose} />
+      <div
+        className="absolute inset-0 bg-black/70 backdrop-blur-sm"
+        onClick={onClose}
+      />
 
       {/* Modal */}
       <div className="relative bg-gray-900 border border-gray-800 rounded-lg shadow-xl w-full max-w-md mx-4">
@@ -21,14 +31,25 @@ export function BookingConfirmationModal({ isOpen, onClose, onConfirm, plan, use
                 border: `1px solid rgba(${plan?.color || "142, 252, 204"}, 0.3)`,
               }}
             >
-              <Check className="w-4 h-4" style={{ color: `rgba(${plan?.color || "142, 252, 204"}, 1)` }} />
+              <Check
+                className="w-4 h-4"
+                style={{ color: `rgba(${plan?.color || "142, 252, 204"}, 1)` }}
+              />
             </div>
             <div>
-              <h2 className="text-xl font-semibold text-white">Confirm Booking</h2>
-              <p className="text-sm text-gray-400">Review your plan selection</p>
+              <h2 className="text-xl font-semibold text-white">
+                Confirm Booking
+              </h2>
+              <p className="text-sm text-gray-400">
+                Review your plan selection
+              </p>
             </div>
           </div>
-          <button onClick={onClose} className="text-gray-400 hover:text-white transition-colors" disabled={isLoading}>
+          <button
+            onClick={onClose}
+            className="text-gray-400 hover:text-white transition-colors"
+            disabled={isLoading}
+          >
             <X className="w-5 h-5" />
           </button>
         </div>
@@ -51,7 +72,9 @@ export function BookingConfirmationModal({ isOpen, onClose, onConfirm, plan, use
                 {plan?.planName}
               </h3>
               <div className="text-right">
-                <div className="text-2xl font-bold text-white">${plan?.price}</div>
+                <div className="text-2xl font-bold text-white">
+                  ${plan?.price}
+                </div>
                 <div className="text-sm text-gray-400">/{plan?.planType}</div>
               </div>
             </div>
@@ -60,16 +83,23 @@ export function BookingConfirmationModal({ isOpen, onClose, onConfirm, plan, use
             <div className="space-y-2">
               <p className="text-sm text-gray-400 mb-2">Plan includes:</p>
               {plan?.description?.slice(0, 3).map((feature, index) => (
-                <div key={index} className="flex items-center text-sm text-gray-300">
+                <div
+                  key={index}
+                  className="flex items-center text-sm text-gray-300"
+                >
                   <div
                     className="w-1.5 h-1.5 rounded-full mr-2"
-                    style={{ backgroundColor: `rgba(${plan?.color || "142, 252, 204"}, 0.8)` }}
+                    style={{
+                      backgroundColor: `rgba(${plan?.color || "142, 252, 204"}, 0.8)`,
+                    }}
                   />
                   {feature}
                 </div>
               ))}
               {plan?.description?.length > 3 && (
-                <div className="text-sm text-gray-400">+{plan.description.length - 3} more features</div>
+                <div className="text-sm text-gray-400">
+                  +{plan.description.length - 3} more features
+                </div>
               )}
             </div>
           </div>
@@ -79,9 +109,13 @@ export function BookingConfirmationModal({ isOpen, onClose, onConfirm, plan, use
             <div className="bg-gray-800/50 p-4 rounded-lg border border-gray-700">
               <div className="flex items-center gap-3 mb-2">
                 <User className="w-4 h-4 text-gray-400" />
-                <span className="text-sm font-medium text-gray-300">Booking for:</span>
+                <span className="text-sm font-medium text-gray-300">
+                  Booking for:
+                </span>
               </div>
-              <div className="text-white font-medium">{user.name || user.email}</div>
+              <div className="text-white font-medium">
+                {user.name || user.email}
+              </div>
               <div className="text-sm text-gray-400">{user.email}</div>
             </div>
           )}
@@ -90,15 +124,16 @@ export function BookingConfirmationModal({ isOpen, onClose, onConfirm, plan, use
           <div className="bg-yellow-500/10 border border-yellow-500/20 p-4 rounded-lg">
             <div className="flex items-center gap-2 mb-2">
               <Clock className="w-4 h-4 text-yellow-400" />
-              <span className="text-sm font-medium text-yellow-400">Booking Status</span>
+              <span className="text-sm font-medium text-yellow-400">
+                Booking Status
+              </span>
             </div>
             <p className="text-sm text-gray-300">
-              Your booking will be marked as <span className="text-yellow-400 font-medium">pending</span> and requires
-              admin approval before activation.
+              Your booking will be marked as{" "}
+              <span className="text-yellow-400 font-medium">pending</span> and
+              requires admin approval before activation.
             </p>
           </div>
-
-         
         </div>
 
         {/* Actions */}
@@ -125,5 +160,5 @@ export function BookingConfirmationModal({ isOpen, onClose, onConfirm, plan, use
         </div>
       </div>
     </div>
-  )
+  );
 }

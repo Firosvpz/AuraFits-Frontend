@@ -23,30 +23,26 @@ export const adminLogin = async (email, password) => {
 
 export const addPlan = async (planData) => {
   try {
-    const result = await axios.post(
-      `${BASE_URL}/admin/addPlan`,
-      planData,
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
+    const result = await axios.post(`${BASE_URL}/admin/addPlan`, planData, {
+      headers: {
+        "Content-Type": "application/json",
       },
-    );
+    });
     return result;
   } catch (error) {
     console.error("Error adding plan:", error);
     throw error;
   }
-}
+};
 
-export const getPlans = async () => { 
+export const getPlans = async () => {
   try {
-    const result = axios.get(`${BASE_URL}/admin/getPlans`)
+    const result = axios.get(`${BASE_URL}/admin/getPlans`);
     return result;
   } catch (error) {
     console.log(error);
   }
-}
+};
 
 export const getUsers = async () => {
   try {
@@ -61,14 +57,14 @@ export const getUsers = async () => {
 export const getBookings = async () => {
   try {
     const result = await axios.get(`${BASE_URL}/admin/getBookings`);
-    console.log('result', result);
-    
+    console.log("result", result);
+
     return result;
   } catch (error) {
     console.log(error);
     throw error;
   }
-}
+};
 
 export const updateBookingStatus = async (bookingId, status) => {
   try {
@@ -86,4 +82,4 @@ export const updateBookingStatus = async (bookingId, status) => {
     console.error("Error updating booking status:", error);
     throw error;
   }
-}
+};

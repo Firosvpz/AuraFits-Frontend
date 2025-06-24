@@ -22,16 +22,41 @@ const AdminSidebar = () => {
   const [activeTab, setActiveTab] = useState("dashboard");
 
   const navigationItems = [
-    { id: "dashboard", name: "Dashboard", icon: Grid, badge: null, route: "/admin/dashboard" },
-    { id: "users", name: "Users", icon: Users, badge: null, route: "/admin/users" },
-    { id: "bookings", name: "Bookings", icon: Calendar, badge: null, route: "/admin/bookings" },
-    { id: "plans", name: "Plans", icon: Activity, badge: null, route: "/admin/plans" },
-    
+    {
+      id: "dashboard",
+      name: "Dashboard",
+      icon: Grid,
+      badge: null,
+      route: "/admin/dashboard",
+    },
+    {
+      id: "users",
+      name: "Users",
+      icon: Users,
+      badge: null,
+      route: "/admin/users",
+    },
+    {
+      id: "bookings",
+      name: "Bookings",
+      icon: Calendar,
+      badge: null,
+      route: "/admin/bookings",
+    },
+    {
+      id: "plans",
+      name: "Plans",
+      icon: Activity,
+      badge: null,
+      route: "/admin/plans",
+    },
   ];
 
   // Sync active tab with current route
   useEffect(() => {
-    const currentItem = navigationItems.find((item) => location.pathname.startsWith(item.route));
+    const currentItem = navigationItems.find((item) =>
+      location.pathname.startsWith(item.route),
+    );
     setActiveTab(currentItem ? currentItem.id : "dashboard");
   }, [location.pathname]);
 
@@ -131,8 +156,12 @@ const AdminSidebar = () => {
               </div>
               {sidebarOpen && (
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium text-white truncate">Admin User</p>
-                  <p className="text-xs text-gray-400 truncate">admin@aurafits.com</p>
+                  <p className="text-sm font-medium text-white truncate">
+                    Admin User
+                  </p>
+                  <p className="text-xs text-gray-400 truncate">
+                    admin@aurafits.com
+                  </p>
                 </div>
               )}
             </div>

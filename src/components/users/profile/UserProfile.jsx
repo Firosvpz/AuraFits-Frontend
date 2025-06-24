@@ -1,58 +1,69 @@
-"use client"
+"use client";
 
-import { useEffect, useState } from "react"
-import { Mail, Phone, Calendar, Edit, User, MapPin, Dumbbell, Trophy, Target, Zap, Activity } from "lucide-react"
-import { getUserProfile } from "../../../api/UserApi"
-import { useSelector } from "react-redux"
+import { useEffect, useState } from "react";
+import {
+  Mail,
+  Phone,
+  Calendar,
+  Edit,
+  User,
+  MapPin,
+  Dumbbell,
+  Trophy,
+  Target,
+  Zap,
+  Activity,
+} from "lucide-react";
+import { getUserProfile } from "../../../api/UserApi";
+import { useSelector } from "react-redux";
 
 const UserProfile = () => {
-  const [loading, setLoading] = useState(true)
-  const [isVisible, setIsVisible] = useState(false)
-  const [userProfile, setUserProfile] = useState(null) // Added missing state
- const user = useSelector((state) => state.auth.user) 
-//  console.log('userData', user);
- 
+  const [loading, setLoading] = useState(true);
+  const [isVisible, setIsVisible] = useState(false);
+  const [userProfile, setUserProfile] = useState(null); // Added missing state
+  const user = useSelector((state) => state.auth.user);
+  //  console.log('userData', user);
+
   useEffect(() => {
     const fetchUserProfile = async () => {
       if (!user) {
-        setLoading(false)
-        return
+        setLoading(false);
+        return;
       }
 
-      setLoading(true)
+      setLoading(true);
       try {
-        const result = await getUserProfile(user.id)
+        const result = await getUserProfile(user.id);
         // console.log("User profile fetched:", result.data)
-        setUserProfile(result.data) // Store the API response
+        setUserProfile(result.data); // Store the API response
       } catch (error) {
-        console.error("Error fetching user profile:", error)
+        console.error("Error fetching user profile:", error);
         // Fallback to Redux user data if API fails
-        setUserProfile(user)
+        setUserProfile(user);
       } finally {
-        setLoading(false)
-        setTimeout(() => setIsVisible(true), 100)
+        setLoading(false);
+        setTimeout(() => setIsVisible(true), 100);
       }
-    }
+    };
 
-    fetchUserProfile()
-  }, [user]) // Added dependency
+    fetchUserProfile();
+  }, [user]); // Added dependency
 
-//   console.log('userProfile', userProfile);
-  
+  //   console.log('userProfile', userProfile);
 
   const formatDate = (dateString) => {
-    if (!dateString) return "Not specified"
+    if (!dateString) return "Not specified";
     return new Date(dateString).toLocaleDateString("en-US", {
       year: "numeric",
       month: "long",
       day: "numeric",
-    })
-  }
+    });
+  };
 
   // Dynamic field renderer with gym-themed icons
   const renderUserField = (key, value) => {
-    const skipFields = ["password", "isVerified", "__v", "_id", "token"]
-    if (skipFields.includes(key)) return null
+    const skipFields = ["password", "isVerified", "__v", "_id", "token"];
+    if (skipFields.includes(key)) return null;
 
     const getFieldIcon = (fieldKey) => {
       const iconMap = {
@@ -64,34 +75,43 @@ const UserProfile = () => {
         createdAt: Calendar,
         address: MapPin,
         location: MapPin,
-      }
-      return iconMap[fieldKey] || User
-    }
+      };
+      return iconMap[fieldKey] || User;
+    };
 
     const formatFieldName = (fieldKey) => {
       const nameMap = {
         phoneNumber: "Phone Number",
         joinedAt: "Member Since",
         createdAt: "Account Created",
-      }
-      return nameMap[fieldKey] || fieldKey.replace(/([A-Z])/g, " $1").replace(/^./, (str) => str.toUpperCase())
-    }
+      };
+      return (
+        nameMap[fieldKey] ||
+        fieldKey
+          .replace(/([A-Z])/g, " $1")
+          .replace(/^./, (str) => str.toUpperCase())
+      );
+    };
 
     const formatValue = (fieldKey, fieldValue) => {
-      if (!fieldValue) return "Not specified"
+      if (!fieldValue) return "Not specified";
 
-      if (fieldKey.includes("At") || fieldKey.includes("Date") || fieldKey === "joinedAt") {
-        return formatDate(fieldValue)
+      if (
+        fieldKey.includes("At") ||
+        fieldKey.includes("Date") ||
+        fieldKey === "joinedAt"
+      ) {
+        return formatDate(fieldValue);
       }
 
       if (typeof fieldValue === "boolean") {
-        return fieldValue ? "Yes" : "No"
+        return fieldValue ? "Yes" : "No";
       }
 
-      return fieldValue.toString()
-    }
+      return fieldValue.toString();
+    };
 
-    const IconComponent = getFieldIcon(key)
+    const IconComponent = getFieldIcon(key);
 
     return (
       <div
@@ -104,13 +124,17 @@ const UserProfile = () => {
             <IconComponent className="w-6 h-6 text-yellow-400" />
           </div>
           <div className="flex-1">
-            <p className="text-sm font-medium text-gray-400 mb-1">{formatFieldName(key)}</p>
-            <p className="text-white font-semibold">{formatValue(key, value)}</p>
+            <p className="text-sm font-medium text-gray-400 mb-1">
+              {formatFieldName(key)}
+            </p>
+            <p className="text-white font-semibold">
+              {formatValue(key, value)}
+            </p>
           </div>
         </div>
       </div>
-    )
-  }
+    );
+  };
 
   if (loading) {
     return (
@@ -120,7 +144,7 @@ const UserProfile = () => {
           <div className="absolute inset-0 w-16 h-16 border-4 border-transparent border-t-yellow-400/50 rounded-full animate-spin animate-reverse"></div>
         </div>
       </div>
-    )
+    );
   }
 
   if (!user && !userProfile) {
@@ -130,15 +154,17 @@ const UserProfile = () => {
           <div className="w-20 h-20 bg-gradient-to-br from-yellow-500/20 to-yellow-600/10 rounded-full flex items-center justify-center mx-auto mb-4">
             <User className="w-10 h-10 text-yellow-400" />
           </div>
-          <h2 className="text-2xl font-bold text-white mb-2">Profile Not Found</h2>
+          <h2 className="text-2xl font-bold text-white mb-2">
+            Profile Not Found
+          </h2>
           <p className="text-gray-400">Unable to load your AuraFits profile.</p>
         </div>
       </div>
-    )
+    );
   }
 
   // Use userProfile if available, otherwise fallback to user from Redux
-  const displayUser = userProfile.user || user
+  const displayUser = userProfile.user || user;
 
   return (
     <div className="min-h-screen bg-black text-white overflow-hidden">
@@ -167,14 +193,20 @@ const UserProfile = () => {
                 {/* Avatar */}
                 <div className="relative inline-block mb-6">
                   <div className="w-24 h-24 bg-gradient-to-br from-yellow-500 to-yellow-600 rounded-full flex items-center justify-center text-black text-3xl font-bold shadow-2xl transform hover:scale-110 transition-transform duration-300">
-                    {displayUser.name ? displayUser.name.charAt(0).toUpperCase() : "U"}
+                    {displayUser.name
+                      ? displayUser.name.charAt(0).toUpperCase()
+                      : "U"}
                   </div>
                   <div className="absolute -inset-2 bg-gradient-to-r from-yellow-500/50 to-yellow-600/50 rounded-full blur-lg opacity-50 animate-pulse"></div>
                 </div>
 
                 {/* User Info */}
-                <h2 className="text-2xl font-bold text-white mb-2">{displayUser.name || "AuraFits Member"}</h2>
-                <p className="text-yellow-400 font-medium mb-6">{displayUser.email || "member@aurafits.com"}</p>
+                <h2 className="text-2xl font-bold text-white mb-2">
+                  {displayUser.name || "AuraFits Member"}
+                </h2>
+                <p className="text-yellow-400 font-medium mb-6">
+                  {displayUser.email || "member@aurafits.com"}
+                </p>
 
                 {/* Action Button */}
                 {/* <button className="group relative bg-gradient-to-r from-yellow-500 to-yellow-600 text-black px-8 py-3 rounded-xl font-semibold hover:from-yellow-400 hover:to-yellow-500 transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-yellow-500/25">
@@ -189,7 +221,9 @@ const UserProfile = () => {
             {/* Stats Section */}
             <div
               className={`p-6 border-b border-gray-800/50 transform transition-all duration-1000 delay-400 ${
-                isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
+                isVisible
+                  ? "translate-y-0 opacity-100"
+                  : "translate-y-10 opacity-0"
               }`}
             >
               <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
@@ -197,7 +231,9 @@ const UserProfile = () => {
                   <div className="w-12 h-12 bg-gradient-to-br from-yellow-500/20 to-yellow-600/10 rounded-xl flex items-center justify-center mx-auto mb-2 group-hover:scale-110 transition-transform duration-300">
                     <Activity className="w-6 h-6 text-yellow-400" />
                   </div>
-                  <div className="text-2xl font-bold text-white">{displayUser.isVerified ? "Verified" : "Active"}</div>
+                  <div className="text-2xl font-bold text-white">
+                    {displayUser.isVerified ? "Verified" : "Active"}
+                  </div>
                   <div className="text-sm text-gray-400">Status</div>
                 </div>
 
@@ -216,7 +252,10 @@ const UserProfile = () => {
                   <div className="text-2xl font-bold text-white">
                     {displayUser.joinedAt || displayUser.createdAt
                       ? Math.floor(
-                          (new Date() - new Date(displayUser.joinedAt || displayUser.createdAt)) /
+                          (new Date() -
+                            new Date(
+                              displayUser.joinedAt || displayUser.createdAt,
+                            )) /
                             (1000 * 60 * 60 * 24),
                         )
                       : 0}
@@ -237,7 +276,9 @@ const UserProfile = () => {
             {/* Profile Information */}
             <div
               className={`p-6 transform transition-all duration-1000 delay-600 ${
-                isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
+                isVisible
+                  ? "translate-y-0 opacity-100"
+                  : "translate-y-10 opacity-0"
               }`}
             >
               <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-3">
@@ -252,7 +293,9 @@ const UserProfile = () => {
                   <div
                     key={key}
                     className={`transform transition-all duration-500 ${
-                      isVisible ? "translate-x-0 opacity-100" : "translate-x-10 opacity-0"
+                      isVisible
+                        ? "translate-x-0 opacity-100"
+                        : "translate-x-10 opacity-0"
                     }`}
                     style={{ transitionDelay: `${800 + index * 100}ms` }}
                   >
@@ -266,14 +309,16 @@ const UserProfile = () => {
             <div className="bg-black p-6 text-center border-t border-gray-800/50">
               <div className="flex items-center justify-center gap-2 text-gray-400">
                 <Dumbbell className="w-4 h-4 text-yellow-400" />
-                <span className="text-sm">Powered by AuraFits - Transform Your Body, Transform Your Life</span>
+                <span className="text-sm">
+                  Powered by AuraFits - Transform Your Body, Transform Your Life
+                </span>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default UserProfile
+export default UserProfile;

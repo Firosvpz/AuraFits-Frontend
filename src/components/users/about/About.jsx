@@ -11,7 +11,6 @@ import {
 } from "lucide-react";
 import { useLocation, useNavigate } from "react-router-dom";
 
-
 const About = () => {
   const location = useLocation();
   const navigate = useNavigate();

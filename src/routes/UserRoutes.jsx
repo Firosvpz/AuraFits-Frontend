@@ -18,8 +18,7 @@ const UserRoutes = () => {
         <Route path="/memberships" element={<MembershipsPage />} />
         <Route path="/facilities" element={<FacilitiesPage />} />
         <Route path="/contacts" element={<ContactsPage />} />
-        <Route path="/profile" element={<ProfilePage/>} />
-       
+        <Route path="/profile" element={<ProfilePage />} />
       </Routes>
     </>
   );

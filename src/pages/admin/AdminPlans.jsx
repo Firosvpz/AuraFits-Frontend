@@ -1,18 +1,16 @@
-import React from 'react'
-import AdminSidebar from '../../components/admin/sidebar/AdminSidebar'
-import MembershipPlans from '../../components/admin/plans/MembershipPlans'
+import React from "react";
+import AdminSidebar from "../../components/admin/sidebar/AdminSidebar";
+import MembershipPlans from "../../components/admin/plans/MembershipPlans";
 
 const AdminPlans = () => {
   return (
     <>
-     <div className="flex h-screen  text-white overflow-hidden">
-
+      <div className="flex h-screen  text-white overflow-hidden">
         <AdminSidebar />
-        <MembershipPlans/>
-       
+        <MembershipPlans />
       </div>
     </>
-  )
-}
+  );
+};
 
-export default AdminPlans
+export default AdminPlans;

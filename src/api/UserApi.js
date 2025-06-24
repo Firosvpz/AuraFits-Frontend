@@ -19,11 +19,11 @@ export const userLogin = async (email, password) => {
   }
 };
 
-export const userRegister = async (name, email, password,phoneNumber) => {
+export const userRegister = async (name, email, password, phoneNumber) => {
   try {
     const result = await axios.post(
       `${BASE_URL}/signup`,
-      { name, email, password,phoneNumber },
+      { name, email, password, phoneNumber },
       {
         headers: {
           "Content-Type": "application/json",
@@ -37,7 +37,6 @@ export const userRegister = async (name, email, password,phoneNumber) => {
   }
 };
 
-
 export const getMembershipPlans = async () => {
   try {
     const result = await axios.get(`${BASE_URL}/getMemberships`);
@@ -46,7 +45,7 @@ export const getMembershipPlans = async () => {
     console.log(error);
     throw error;
   }
-}
+};
 
 export const bookingPlan = async (planId, userId) => {
   try {
@@ -60,7 +59,7 @@ export const bookingPlan = async (planId, userId) => {
       },
     );
     // console.log('result', result);
-    
+
     return result;
   } catch (error) {
     console.log(error);
@@ -68,15 +67,15 @@ export const bookingPlan = async (planId, userId) => {
   }
 };
 
-export const getBookings = async (userId) => {  
+export const getBookings = async (userId) => {
   try {
     const result = await axios.get(`${BASE_URL}/getBookings/${userId}`);
-    return result
+    return result;
   } catch (error) {
     console.log(error);
     throw error;
   }
-}
+};
 
 export const getUserProfile = async (userId) => {
   try {
@@ -86,4 +85,4 @@ export const getUserProfile = async (userId) => {
     console.log(error);
     throw error;
   }
-}
+};
