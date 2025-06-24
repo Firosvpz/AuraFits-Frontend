@@ -47,3 +47,43 @@ export const getPlans = async () => {
     console.log(error);
   }
 }
+
+export const getUsers = async () => {
+  try {
+    const result = await axios.get(`${BASE_URL}/admin/getUsers`);
+    return result;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+export const getBookings = async () => {
+  try {
+    const result = await axios.get(`${BASE_URL}/admin/getBookings`);
+    console.log('result', result);
+    
+    return result;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
+export const updateBookingStatus = async (bookingId, status) => {
+  try {
+    const result = await axios.post(
+      `${BASE_URL}/admin/updateBookingStatus`,
+      { bookingId, status },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      },
+    );
+    return result;
+  } catch (error) {
+    console.error("Error updating booking status:", error);
+    throw error;
+  }
+}

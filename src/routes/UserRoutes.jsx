@@ -6,7 +6,7 @@ import TrainersPage from "../pages/users/TrainersPage";
 import MembershipsPage from "../pages/users/MembershipsPage";
 import FacilitiesPage from "../pages/users/FacilitiesPage";
 import ContactsPage from "../pages/users/ContactsPage";
-import LoginPage from "../pages/users/LoginPage";
+import ProfilePage from "../pages/users/ProfilePage";
 
 const UserRoutes = () => {
   return (
@@ -18,7 +18,8 @@ const UserRoutes = () => {
         <Route path="/memberships" element={<MembershipsPage />} />
         <Route path="/facilities" element={<FacilitiesPage />} />
         <Route path="/contacts" element={<ContactsPage />} />
-        {/* <Route path="/login" element={<LoginPage />} /> */}
+        <Route path="/profile" element={<ProfilePage/>} />
+       
       </Routes>
     </>
   );

@@ -23,12 +23,10 @@ const AdminSidebar = () => {
 
   const navigationItems = [
     { id: "dashboard", name: "Dashboard", icon: Grid, badge: null, route: "/admin/dashboard" },
-    { id: "users", name: "Users", icon: Users, badge: "2.8K", route: "/admin/users" },
-    { id: "bookings", name: "Bookings", icon: Calendar, badge: "234", route: "/admin/bookings" },
+    { id: "users", name: "Users", icon: Users, badge: null, route: "/admin/users" },
+    { id: "bookings", name: "Bookings", icon: Calendar, badge: null, route: "/admin/bookings" },
     { id: "plans", name: "Plans", icon: Activity, badge: null, route: "/admin/plans" },
-    { id: "analytics", name: "Analytics", icon: BarChart2, badge: "New", route: "/admin/analytics" },
-    { id: "reports", name: "Reports", icon: TrendingUp, badge: null, route: "/admin/reports" },
-    { id: "settings", name: "Settings", icon: Settings, badge: null, route: "/admin/settings" },
+    
   ];
 
   // Sync active tab with current route

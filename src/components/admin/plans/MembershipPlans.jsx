@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react"
 import { Plus, Search, MoreHorizontal } from "lucide-react"
 import { AddPlanModal } from "./AddPlanModal"
-import { mockPlans } from "../../../constants/admin/plans/mockPlans"
 import { getPlans } from "../../../api/AdminApi"
 
 
@@ -14,20 +13,20 @@ export default function MembershipPlans() {
     const [filterStatus, setFilterStatus] = useState("all")
     const [isAddModalOpen, setIsAddModalOpen] = useState(false)
     const [sidebarOpen, setSidebarOpen] = useState(true);
-    useEffect(()=>{
+    useEffect(() => {
         const fetchPlans = async () => {
             try {
                 const response = await getPlans()
                 setPlans(response.data.plans || [])
             } catch (error) {
                 console.error("Error fetching plans:", error)
-            }   
+            }
         }
         fetchPlans()
-    },[])
+    }, [])
 
-    console.log('plans:',plans);
-    
+    // console.log('plans:', plans);
+
 
     // Filter plans based on search and filters
     const filteredPlans = plans.filter((plan) => {
@@ -191,7 +190,10 @@ export default function MembershipPlans() {
                                                     </span>
                                                 </td>
                                                 <td className="p-4 text-gray-300">{plan.subscribers}</td>
-                                                <td className="p-4 text-gray-400">{plan.createdAt}</td>
+                                                <td className="p-4 text-gray-400">
+                                                    {new Date(plan.createdAt).toISOString().split('T')[0]}
+                                                </td>
+
                                                 <td className="p-4 text-right">
                                                     <div className="relative inline-block">
                                                         <button className="p-2 text-gray-400 hover:text-white hover:bg-gray-800 rounded-md transition-colors">
