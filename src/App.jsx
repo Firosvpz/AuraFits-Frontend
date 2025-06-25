@@ -1,6 +1,6 @@
 import { BrowserRouter } from "react-router-dom";
-import UserRoutes from "./routes/userRoutes";
-import AdminRoutes from "./routes/AdminRoutes";
+import UserRoutes from "./userRoutes";
+import AdminRoutes from "./AdminRoutes";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 export default function App() {
