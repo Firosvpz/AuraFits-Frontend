@@ -1,6 +1,6 @@
 import React from "react";
 import AdminSidebar from "../../components/admin/sidebar/AdminSidebar";
-import Users from "../../components/admin/users/users";
+import Users from "../../components/admin/users/Users";
 
 const AdminUsers = () => {
   return (
