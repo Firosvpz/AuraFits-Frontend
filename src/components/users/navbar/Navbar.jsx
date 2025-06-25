@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import "./Navbar.css";
-import Logo from "../logo/LOgo";
+import Logo from "../logo/Logo";
 import Login from "../login/Login";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../../redux/slices/authSlice";

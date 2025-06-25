@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Logo from "../../users/logo/LOgo";
+import Logo from "../../users/logo/Logo";
 import {
   Users,
   Calendar,
