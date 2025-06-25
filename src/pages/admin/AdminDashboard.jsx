@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import AdminSidebar from "../../components/admin/sidebar/AdminSidebar";
-import Dashboard from "../../components/admin/dashboard/dashboard";
+import Dashboard from "../../components/admin/dashboard/Dashboard";
 
 const FloatingParticles = () => {
   return (
