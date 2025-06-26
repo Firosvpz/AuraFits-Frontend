@@ -7,6 +7,7 @@ import MembershipsPage from "../pages/users/MembershipsPage";
 import FacilitiesPage from "../pages/users/FacilitiesPage";
 import ContactsPage from "../pages/users/ContactsPage";
 import ProfilePage from "../pages/users/ProfilePage";
+import { ProtectedRoutes } from "./ProtectedRoutes";
 
 const UserRoutes = () => {
   return (
@@ -18,7 +19,9 @@ const UserRoutes = () => {
         <Route path="/memberships" element={<MembershipsPage />} />
         <Route path="/facilities" element={<FacilitiesPage />} />
         <Route path="/contacts" element={<ContactsPage />} />
-        <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/profile" element={<ProtectedRoutes>
+            <ProfilePage />
+          </ProtectedRoutes>} />
       </Routes>
     </>
   );

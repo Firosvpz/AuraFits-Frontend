@@ -334,9 +334,11 @@ const Login = ({ onClose, onLoginSuccess }) => {
         "Network error. Please check your connection and try again.";
 
       if (error.response) {
+        console.log('error.response:', error.response);
+        
         // Server responded with error status
         errorMessage =
-          error.response.data?.message ||
+          error.response.data?.msg ||
           error.response.data?.error ||
           `Server error: ${error.response.status}`;
       } else if (error.request) {
