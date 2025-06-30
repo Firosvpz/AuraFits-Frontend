@@ -282,7 +282,7 @@ function Navbar() {
     { name: "Trainers", path: "/trainers" },
     { name: "Memberships", path: "/memberships" },
     { name: "Facilities", path: "/facilities" },
-    { name: "Contact", path: "/contacts" },
+    { name: "Contacts", path: "/contacts" },
   ];
 
   // Add this useEffect to reset dropdown when user changes

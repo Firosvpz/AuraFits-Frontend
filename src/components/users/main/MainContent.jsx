@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import MainButton from "../buttons/MainButton";
 import { useNavigate } from "react-router-dom";
+import { Users,Award,Star } from "lucide-react";
 
 const MainContent = () => {
   const navigate = useNavigate();
@@ -177,9 +178,15 @@ const MainContent = () => {
                   ))}
                 </div>
               </div>
+              
             </div>
+             
           </div>
+          
         </div>
+        
+
+        
 
         {/* Minimal Floating Elements */}
         {/* <div className="absolute top-20 left-20 w-2 h-2 bg-[#FFD700] rounded-full opacity-40 animate-pulse"></div> */}

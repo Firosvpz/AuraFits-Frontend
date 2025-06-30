@@ -22,9 +22,9 @@ const About = () => {
     setIsVisible(true);
   }, []);
 
-  if (location.pathname !== "/about") {
-    return null; // Prevent rendering if not on the About page
-  }
+  // if (location.pathname !== "/about") {
+  //   return null;
+  // }
 
   const cards = [
     {

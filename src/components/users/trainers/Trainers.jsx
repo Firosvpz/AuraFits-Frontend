@@ -68,12 +68,7 @@ const Trainers = () => {
                       ))}
                     </div>
 
-                    {/* Gradient Waves */}
-                    {/* <div className="gradient-waves">
-                      <div className="wave wave-1"></div>
-                      <div className="wave wave-2"></div>
-                      <div className="wave wave-3"></div>
-                    </div> */}
+                    
                   </div>
 
                   {/* Content Container */}

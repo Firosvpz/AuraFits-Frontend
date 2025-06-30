@@ -5,9 +5,9 @@ import AboutPage from "../pages/users/AboutPage";
 import TrainersPage from "../pages/users/TrainersPage";
 import MembershipsPage from "../pages/users/MembershipsPage";
 import FacilitiesPage from "../pages/users/FacilitiesPage";
-import ContactsPage from "../pages/users/ContactsPage";
 import ProfilePage from "../pages/users/ProfilePage";
 import { ProtectedRoutes } from "./ProtectedRoutes";
+import ContactPage from "../pages/users/ContactPage";
 
 const UserRoutes = () => {
   return (
@@ -18,10 +18,15 @@ const UserRoutes = () => {
         <Route path="/trainers" element={<TrainersPage />} />
         <Route path="/memberships" element={<MembershipsPage />} />
         <Route path="/facilities" element={<FacilitiesPage />} />
-        <Route path="/contacts" element={<ContactsPage />} />
-        <Route path="/profile" element={<ProtectedRoutes>
-            <ProfilePage />
-          </ProtectedRoutes>} />
+        <Route path="/contacts" element={<ContactPage />} />
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoutes>
+              <ProfilePage />
+            </ProtectedRoutes>
+          }
+        />
       </Routes>
     </>
   );
