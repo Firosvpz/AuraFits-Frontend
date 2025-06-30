@@ -16,10 +16,10 @@ import {
 export default function Contacts() {
   return (
     <div className="min-h-screen bg-black text-white">
-      <div className="container mx-auto px-4 py-20">
+      <div className="container mx-auto px-4 py-20 ">
       
 
-        <div className="grid lg:grid-cols-2 gap-16">
+        <div className="grid lg:grid-cols-2 gap-16 mt-[30px]">
           {/* Contact Form */}
           <div className="bg-black border border-gray-800 rounded-2xl overflow-hidden shadow-2xl">
             <div className="bg-gradient-to-r from-red-500/10 to-orange-500/10 p-8 border-b border-gray-800">
