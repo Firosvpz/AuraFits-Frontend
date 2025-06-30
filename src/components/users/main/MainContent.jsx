@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import MainButton from "../buttons/MainButton";
 import { useNavigate } from "react-router-dom";
 import { Users,Award,Star } from "lucide-react";
+import { toast } from "react-toastify";
 
 const MainContent = () => {
   const navigate = useNavigate();
@@ -12,6 +13,13 @@ const MainContent = () => {
   useEffect(() => {
     setIsLoaded(true);
   }, []);
+const token = localStorage.getItem("authToken");
+const handleButtonClick = () => {
+  if(!token){
+    navigate('/')
+    toast.error("Please login to access this feature");
+  }
+}
 
   return (
     <main className="min-h-screen pt-5">
@@ -80,9 +88,7 @@ const MainContent = () => {
 
                   {/* Clean Button */}
                   <div
-                    onClick={() => {
-                      navigate("/memberships");
-                    }}
+                    onClick={() => handleButtonClick()}
                     className="mt-8 transition-all duration-800 ease-out"
                     style={{
                       transform: isLoaded
