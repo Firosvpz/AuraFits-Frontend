@@ -115,13 +115,13 @@ const About = () => {
       <div className="relative text-center mb-20">
         {/* Background Text */}
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-          <h1 className="text-[3rem] md:text-[7rem] lg:text-[8rem] font-black text-gray-800/20 leading-none select-none whitespace-nowrap">
+          <h1 className="text-[2.5rem] md:text-[7rem] lg:text-[8rem] font-black text-gray-800/20 leading-none select-none whitespace-nowrap">
             WHO WE ARE
           </h1>
         </div>
         {/* Foreground Text */}
-        <div className="relative top-10 z-10 pt-16">
-          <h2 className="text-5xl md:text-7xl lg:text-8xl font-black text-white mb-8 tracking-tight josefin-sans-title">
+        <div className="relative md:top-10 top-8 z-10 md:pt-16">
+          <h2 className="text-3xl md:text-7xl lg:text-8xl font-black text-white mb-8 tracking-tight josefin-sans-title">
             WHO <span className="text-[#FFD700]">WE</span> ARE
           </h2>
         </div>
@@ -130,7 +130,7 @@ const About = () => {
       {/* Ultra Modern Cards Section */}
       <motion.div
         style={{ y }}
-        className="relative z-10 px-4 md:px-8 lg:px-16 pb-20 pt-12"
+        className="relative z-10 px-8 md:px-8 lg:px-16 pb-20 pt-12"
       >
         <motion.div
           variants={containerVariants}
@@ -247,7 +247,7 @@ const About = () => {
           initial={{ opacity: 0, y: 80 }}
           animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 80 }}
           transition={{ delay: 1.5, duration: 1 }}
-          className="mt-32 text-center max-w-5xl mx-auto"
+          className="mt-32 text-center max-w-5xl mx-auto md:block hidden"
         >
           <div className="relative">
             {/* Enhanced Background Effects */}

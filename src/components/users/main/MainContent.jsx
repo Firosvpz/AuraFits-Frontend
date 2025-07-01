@@ -19,6 +19,7 @@ const handleButtonClick = () => {
     navigate('/')
     toast.error("Please login to access this feature");
   }
+  navigate('/memberships')
 }
 
   return (
@@ -45,7 +46,7 @@ const handleButtonClick = () => {
               <div className="relative   shadow-xl rounded-2xl p-8 sm:p-10 lg:p-12 transition-all duration-500 ">
                 {/* Content */}
                 <div className="relative ">
-                  <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold text-white leading-tight uppercase josefin-sans-title">
+                  <h1 className="text-4xl sm:text-xl lg:text-6xl xl:text-7xl font-bold text-white leading-tight uppercase josefin-sans-title md:block hidden">
                     {[
                       { text: "The journey", delay: "0ms" },
                       { text: "of a", delay: "200ms", highlight: true },
@@ -73,7 +74,7 @@ const handleButtonClick = () => {
 
                   {/* Professional Subtitle */}
                   <p
-                    className="mt-6 text-lg text-gray-300 leading-relaxed transition-all duration-800 josefin-sans-title ease-out"
+                    className="mt-6 text-lg text-gray-300 leading-relaxed transition-all duration-800 josefin-sans-title ease-out md:block hidden"
                     style={{
                       transform: isLoaded
                         ? "translateY(0)"
@@ -89,13 +90,13 @@ const handleButtonClick = () => {
                   {/* Clean Button */}
                   <div
                     onClick={() => handleButtonClick()}
-                    className="mt-8 transition-all duration-800 ease-out"
+                    className="md:mt-8 transition-all duration-800 ease-out md:relative absolute z-50 mt-[250px]"
                     style={{
                       transform: isLoaded
                         ? "translateY(0)"
                         : "translateY(20px)",
                       opacity: isLoaded ? 1 : 0,
-                      transitionDelay: "1200ms",
+                      transitionDelay: "md:1200ms",
                     }}
                   >
                     <MainButton text={"Start Your Journey with us"} />
@@ -103,14 +104,14 @@ const handleButtonClick = () => {
                 </div>
 
                 {/* Subtle Accent Lines */}
-                <div className="absolute top-0 left-8 w-16 h-px bg-gradient-to-r from-[#FFD700] to-transparent"></div>
-                <div className="absolute bottom-0 right-8 w-16 h-px bg-gradient-to-l from-[#FFD700] to-transparent"></div>
+                <div className="absolute top-0 left-8 w-16 h-px bg-gradient-to-r from-[#FFD700] to-transparent md:block hidden"></div>
+                <div className="absolute bottom-0 right-8 w-16 h-px bg-gradient-to-l from-[#FFD700] to-transparent md:block hidden"></div>
               </div>
             </div>
           </div>
 
           {/* Right Side - Video Container */}
-          <div className="flex justify-center ">
+          <div className="flex justify-center mt-[-300px] md:mt-0">
             <div className="relative w-full max-w-sm lg:max-w-md ">
               {/* Cyber Frame */}
               <div className="relative p-4 border-2 border-[#FFD700] rounded-2xl shadow-[0_0_50px_rgba(255,215,0,0.6)] overflow-hidden">
@@ -129,14 +130,14 @@ const handleButtonClick = () => {
                 </div>
 
                 {/* Video Container */}
-                <div className="relative overflow-hidden rounded-xl group">
+                <div className="relative overflow-hidden rounded-xl group ">
                   <video
                     src="/assets/main-vid.mp4"
                     autoPlay
                     muted
                     loop
                     playsInline
-                    className="w-full h-auto aspect-[3/4] object-cover rounded-xl transform transition-all duration-700 hover:scale-110 hover:brightness-125"
+                    className="w-full h-auto aspect-[3/4] object-cover rounded-xl transform transition-all duration-700 hover:scale-110 hover:brightness-125 "
                     style={{
                       filter:
                         "contrast(1.3) brightness(1.2) saturate(1.4) hue-rotate(10deg)",

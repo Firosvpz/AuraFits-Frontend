@@ -22,16 +22,16 @@ const Trainers = () => {
       </div>
 
       {/* Layered Title - UNCHANGED */}
-      <div className="relative text-center mb-20">
+      <div className="relative text-center md:mb-20">
         {/* Background Text */}
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-          <h1 className="text-[3rem] md:text-[7rem] lg:text-[8rem] font-black text-gray-800/20 leading-none select-none whitespace-nowrap">
+          <h1 className="text-[2.5rem] md:text-[7rem] lg:text-[8rem] font-black text-gray-800/20 leading-none select-none whitespace-nowrap">
             MEET THE TEAM
           </h1>
         </div>
         {/* Foreground Text */}
-        <div className="relative top-10 z-10 pt-16">
-          <h2 className="text-5xl md:text-7xl lg:text-8xl font-black text-white mb-8 tracking-tight josefin-sans-title">
+        <div className="relative md:top-10 top-8 z-10 md:pt-16">
+          <h2 className="text-3xl md:text-7xl lg:text-8xl font-black text-white mb-8 tracking-tight josefin-sans-title">
             MEET <span className="text-[#FFD700]">THE</span> TEAM
           </h2>
         </div>

@@ -14,9 +14,9 @@ const HomePage = () => {
       <Navbar />
       <MainContent />
       <Achievements/>
-      <About />
+      <About /> 
       <Trainers />
-      <Facilities />
+      <Facilities/>
       <Membership />
       <Footer />
     </>
