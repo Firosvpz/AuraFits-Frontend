@@ -90,7 +90,7 @@ const handleButtonClick = () => {
                   {/* Clean Button */}
                   <div
                     onClick={() => handleButtonClick()}
-                    className="md:mt-8 transition-all duration-800 ease-out md:relative absolute z-50 mt-[250px]"
+                    className="md:mt-8 transition-all duration-800 ease-out md:relative absolute z-50 mt-[300px]"
                     style={{
                       transform: isLoaded
                         ? "translateY(0)"

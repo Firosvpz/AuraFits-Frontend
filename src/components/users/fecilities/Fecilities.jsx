@@ -56,7 +56,7 @@ const Facilities = () => {
   const navigate = useNavigate()
   const [activeItem, setActiveItem] = useState(0)
   const location =useLocation()
-  if (location.pathname !== "/fecilities") {
+  if (location.pathname !== "/facilities") {
     return null;
   }
   return (
