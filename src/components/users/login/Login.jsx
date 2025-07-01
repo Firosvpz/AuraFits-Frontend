@@ -502,7 +502,7 @@ const Login = ({ onClose, onLoginSuccess }) => {
                   className={`relative group ${errors.name ? "animate-shake" : ""}`}
                 >
                   <User
-                    className={`absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 transition-all duration-300 ${
+                    className={`absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 z-50 transition-all duration-300 ${
                       focusedField === "name"
                         ? "text-yellow-400"
                         : "text-gray-400"
@@ -548,7 +548,7 @@ const Login = ({ onClose, onLoginSuccess }) => {
                 className={`relative group ${errors.email ? "animate-shake" : ""}`}
               >
                 <Mail
-                  className={`absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 transition-all duration-300 ${
+                  className={`absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 z-50 transition-all duration-300 ${
                     focusedField === "email"
                       ? "text-yellow-400"
                       : "text-gray-400"
@@ -594,7 +594,7 @@ const Login = ({ onClose, onLoginSuccess }) => {
                   className={`relative group ${errors.phoneNumber ? "animate-shake" : ""}`}
                 >
                   <div
-                    className={`absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 transition-all duration-300 ${
+                    className={`absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 transition-all duration-300 z-50 ${
                       focusedField === "phoneNumber"
                         ? "text-yellow-400"
                         : "text-gray-400"
@@ -604,7 +604,7 @@ const Login = ({ onClose, onLoginSuccess }) => {
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
-                      className="w-4 h-4"
+                      className="w-4 h-4 "
                     >
                       <path
                         strokeLinecap="round"
@@ -659,7 +659,7 @@ const Login = ({ onClose, onLoginSuccess }) => {
                 className={`relative group ${errors.password ? "animate-shake" : ""}`}
               >
                 <Lock
-                  className={`absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 transition-all duration-300 ${
+                  className={`absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 z-50 transition-all duration-300 ${
                     focusedField === "password"
                       ? "text-yellow-400"
                       : "text-gray-400"
@@ -739,7 +739,7 @@ const Login = ({ onClose, onLoginSuccess }) => {
                   className={`relative group ${errors.confirmPassword ? "animate-shake" : ""}`}
                 >
                   <Lock
-                    className={`absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 transition-all duration-300 ${
+                    className={`absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 z-50 transition-all duration-300 ${
                       focusedField === "confirmPassword"
                         ? "text-yellow-400"
                         : "text-gray-400"
@@ -821,13 +821,7 @@ const Login = ({ onClose, onLoginSuccess }) => {
                     Remember me
                   </span>
                 </label>
-                <button
-                  type="button"
-                  disabled={isLoading}
-                  className="text-xs text-yellow-400 hover:text-yellow-300 transition-all duration-300"
-                >
-                  Forgot Password?
-                </button>
+               
               </div>
             )}
 
@@ -839,7 +833,7 @@ const Login = ({ onClose, onLoginSuccess }) => {
             >
               {isLoading ? (
                 <div className="flex items-center justify-center gap-2">
-                  <Loader2 className="w-4 h-4 animate-spin" />
+                  <Loader2 className="w-4 h-4 z-50 animate-spin" />
                   <span className="text-sm">Please wait...</span>
                 </div>
               ) : (
