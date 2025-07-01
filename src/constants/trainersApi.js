@@ -24,7 +24,7 @@ export const trainersData = [
     title: "YOGA INSTRUCTOR",
     speciality: "MINDFULNESS & FLEXIBILITY",
     experience: "6+ YEARS",
-    image: "/assets/trainers/trainer-1.jpg",
+    image: "/assets/trainers/trainer-2.jpg",
     bio: "Certified yoga instructor with expertise in Vinyasa, Hatha, and therapeutic yoga practices. Passionate about mind-body wellness.",
     skills: ["Vinyasa Flow", "Meditation", "Breathwork", "Therapeutic Yoga"],
     certifications: ["RYT-500", "Yin Yoga", "Meditation Teacher"],
@@ -38,7 +38,7 @@ export const trainersData = [
     title: "BOXING COACH",
     speciality: "COMBAT SPORTS",
     experience: "7+ YEARS",
-    image: "/assets/trainers/trainer-1.jpg",
+    image: "/assets/trainers/trainee-4.jpg",
     bio: "Professional boxing coach with championship experience in amateur and professional circuits. Expert in technique and mental conditioning.",
     skills: [
       "Boxing Technique",

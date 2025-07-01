@@ -72,12 +72,7 @@ const Membership = () => {
   }, []);
 
   useEffect(() => {
-    if (!token) {
-      
-      navigate("/");
-      return;
-    }
-
+    
     try {
       setUserData(user);
       // setUser(parsedUser);

@@ -4,7 +4,9 @@ import { useState } from "react";
 import "./Trainers.css";
 import { trainersData } from "../../../constants/trainersApi";
 
+
 const Trainers = () => {
+
   return (
     <div className="min-h-screen pt-20  text-yellow-300 overflow-hidden relative">
       {/* Animated Background Grid */}
@@ -38,8 +40,8 @@ const Trainers = () => {
       </div>
 
       {/* Trainers Grid */}
-      <div className="relative z-10 max-w-7xl mx-auto px-6 pb-20 pt-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div className="relative z-10 max-w-7xl mx-auto px-6 pb-20 pt-12 ">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 ">
           {trainersData.map((trainer, index) => (
             <motion.div
               key={trainer.id}
@@ -51,9 +53,9 @@ const Trainers = () => {
                 ease: [0.25, 0.46, 0.45, 0.94],
               }}
               viewport={{ once: true }}
-              className="trainer-card group"
+              className="trainer-card group  "
             >
-              <div className="card-content">
+              <div className="card-content ">
                 {/* Front Side - Image and Name Only */}
                 <div className="card-front">
                   {/* 3D Background Effects */}
@@ -78,7 +80,7 @@ const Trainers = () => {
                     {/* Create a full-height image container */}
                     <motion.div
                       className="trainer-image-container"
-                      initial={{ scale: 0, rotate: -180 }}
+                      // initial={{ scale: 0, rotate: -20 }}
                       animate={{ scale: 1, rotate: 0 }}
                       transition={{
                         delay: 0.3 + index * 0.1,

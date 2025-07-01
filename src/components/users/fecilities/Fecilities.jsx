@@ -152,14 +152,14 @@ const Facilities = () => {
                       ))}
                     </div>
 
-                    <button
+                    {/* <button
                       onClick={() => {
                         navigate("/facilities")
                       }}
                       className="w-full py-2 px-4 rounded-lg josefin-sans-title text-white font-semibold hover:scale-105 transition-transform duration-200"
                     >
                       <SubButton text={"Explore More"} />
-                    </button>
+                    </button> */}
                   </div>
                 </div>
 
