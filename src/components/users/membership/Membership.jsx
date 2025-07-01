@@ -23,7 +23,9 @@ const Membership = () => {
   // console.log('user', user);
 
   const token = localStorage.getItem("authToken");
-
+  // console.log(bookingStatuses, "bookingStatuses");
+  
+  
   useEffect(() => {
     const fetchMembershipPlans = async () => {
       try {
@@ -55,8 +57,8 @@ const Membership = () => {
             popular: plan.planName.toLowerCase() === "standard",
             description: Array.isArray(plan.description)
               ? plan.description.flatMap((desc) =>
-                  desc.split("\n").map((item) => item.trim()),
-                )
+                desc.split("\n").map((item) => item.trim()),
+              )
               : plan.description.split("\n").map((item) => item.trim()),
           };
         });
@@ -71,6 +73,7 @@ const Membership = () => {
 
   useEffect(() => {
     if (!token) {
+      
       navigate("/");
       return;
     }
@@ -346,34 +349,56 @@ const Membership = () => {
                     </div>
 
                     {/* Call to Action */}
-                    <div className="mt-6 text-center">
-                      <div
-                        onClick={() => {
-                          if (!isButtonDisabled(plan)) {
-                            handleBookingClick(plan);
-                          }
-                        }}
-                        className={`inline-block px-6 py-3 rounded-xl font-semibold uppercase tracking-wide transition-all duration-500 group-hover:scale-105 group-hover:shadow-lg ${
-                          isButtonDisabled(plan)
-                            ? "cursor-not-allowed"
-                            : "cursor-pointer"
-                        }`}
-                        style={getButtonStyle(plan)}
-                        onMouseEnter={(e) => {
-                          if (!isButtonDisabled(plan)) {
-                            e.currentTarget.style.background = `linear-gradient(135deg, rgba(${plan.color}, 0.25) 0%, rgba(${plan.color}, 0.35) 100%)`;
-                            e.currentTarget.style.boxShadow = `0 6px 20px rgba(${plan.color}, 0.25)`;
-                          }
-                        }}
-                        onMouseLeave={(e) => {
-                          if (!isButtonDisabled(plan)) {
-                            e.currentTarget.style.background = `linear-gradient(135deg, rgba(${plan.color}, 0.15) 0%, rgba(${plan.color}, 0.25) 100%)`;
-                            e.currentTarget.style.boxShadow = `0 4px 12px rgba(${plan.color}, 0.15)`;
-                          }
-                        }}
-                      >
-                        {getButtonText(plan)}
-                      </div>
+                    <div
+                      onClick={() => {
+                        if (isButtonDisabled(plan)) {
+                          // Show toast with custom message based on the reason for being disabled
+                          const toastMessage = !user || !token
+                            ? "Kindly login for book this plan"
+                            : `This plan is currently booked or pending for approval, Please try again later.`;
+
+                          toast.warning(toastMessage, {
+                            hideProgressBar: false,
+                            closeOnClick: true,
+                            pauseOnHover: true,
+                            draggable: true,
+                            progressStyle: {
+                              background: 'linear-gradient(90deg, #ff6b6b, #ff8e53)', // Gradient progress bar
+                            },
+                            style: {
+                              background: 'transparent', // Black background
+                              backdropFilter: 'blur(10px)', // Frosted glass effect
+                              color: '#ffffff', // White text
+                              borderRadius: '12px', // Rounded corners
+                              padding: '16px', // Comfortable padding
+                              boxShadow: '0 8px 32px rgba(0, 0, 0, 0.4)', // Subtle shadow for depth
+                              fontFamily: "'Inter', sans-serif", // Modern font
+                              fontSize: '16px',
+                              fontWeight: 500,
+                              border: '1px solid #333333', // Subtle border
+                            },
+                            icon: '⚠️', // Custom emoji icon for warning
+                          });
+                        } else {
+                          handleBookingClick(plan);
+                        }
+                      }}
+                      className={`inline-block px-6 py-3 rounded-xl font-semibold uppercase tracking-wide transition-all duration-500 group-hover:scale-105 group-hover:shadow-lg cursor-pointer`} // Always cursor-pointer since toast handles disabled state
+                      style={getButtonStyle(plan)}
+                      onMouseEnter={(e) => {
+                        if (!isButtonDisabled(plan)) {
+                          e.currentTarget.style.background = `linear-gradient(135deg, rgba(${plan.color}, 0.25) 0%, rgba(${plan.color}, 0.35) 100%)`;
+                          e.currentTarget.style.boxShadow = `0 6px 20px rgba(${plan.color}, 0.25)`;
+                        }
+                      }}
+                      onMouseLeave={(e) => {
+                        if (!isButtonDisabled(plan)) {
+                          e.currentTarget.style.background = `linear-gradient(135deg, rgba(${plan.color}, 0.15) 0%, rgba(${plan.color}, 0.25) 100%)`;
+                          e.currentTarget.style.boxShadow = `0 4px 12px rgba(${plan.color}, 0.15)`;
+                        }
+                      }}
+                    >
+                      {getButtonText(plan)}
                     </div>
                   </div>
 

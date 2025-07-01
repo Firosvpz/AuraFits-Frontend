@@ -189,15 +189,6 @@ function Navbar() {
     setShowLoginModal(false);
     setShowDropdown(false); // Close dropdown after login
 
-    // Optional: Show success message
-    const successMsg = document.createElement("div");
-    successMsg.className = "login-success-toast";
-    successMsg.textContent = `Welcome back, ${userData.name}!`;
-    document.body.appendChild(successMsg);
-
-    setTimeout(() => {
-      successMsg.remove();
-    }, 3000);
   };
 
   // Handle logout with animation

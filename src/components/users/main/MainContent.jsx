@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import MainButton from "../buttons/MainButton";
 import { useNavigate } from "react-router-dom";
-import { Users,Award,Star } from "lucide-react";
+import { Users, Award, Star } from "lucide-react";
 import { toast } from "react-toastify";
 
 const MainContent = () => {
@@ -13,14 +13,35 @@ const MainContent = () => {
   useEffect(() => {
     setIsLoaded(true);
   }, []);
-const token = localStorage.getItem("authToken");
-const handleButtonClick = () => {
-  if(!token){
-    navigate('/')
-    toast.error("Please login to access this feature");
+  const token = localStorage.getItem("authToken");
+  const handleButtonClick = () => {
+    if (!token) {
+      navigate('/')
+      toast.warning('Kindly login for access plans ', {
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progressStyle: {
+          background: 'linear-gradient(90deg, #ff6b6b, #ff8e53)', // Gradient progress bar
+        },
+        style: {
+          background: 'transparent', // Black background
+          backdropFilter: 'blur(10px)', // Frosted glass effect
+          color: '#ffffff', // White text
+          borderRadius: '12px', // Rounded corners
+          padding: '16px', // Comfortable padding
+          boxShadow: '0 8px 32px rgba(0, 0, 0, 0.4)', // Subtle shadow for depth
+          fontFamily: "'Inter', sans-serif", // Modern font
+          fontSize: '16px',
+          fontWeight: 500,
+          border: '1px solid #333333', // Subtle border
+        },
+        icon: '⚠️', // Custom emoji icon for warning
+      });
+    }
+    navigate('/memberships')
   }
-  navigate('/memberships')
-}
 
   return (
     <main className="min-h-screen pt-5">
@@ -56,9 +77,8 @@ const handleButtonClick = () => {
                     ].map((line, index) => (
                       <span
                         key={index}
-                        className={`block transition-all duration-800 ease-out ${
-                          line.highlight ? "text-[#FFD700]" : ""
-                        }`}
+                        className={`block transition-all duration-800 ease-out ${line.highlight ? "text-[#FFD700]" : ""
+                          }`}
                         style={{
                           transform: isLoaded
                             ? "translateY(0)"
@@ -74,7 +94,7 @@ const handleButtonClick = () => {
 
                   {/* Professional Subtitle */}
                   <p
-                    className="mt-6 text-lg text-gray-300 leading-relaxed transition-all duration-800 josefin-sans-title ease-out md:block hidden"
+                    className="mt-6 text-lg text-gray-300 leading-relaxed transition-all duration-800 Poppins ease-out md:block hidden"
                     style={{
                       transform: isLoaded
                         ? "translateY(0)"
@@ -185,15 +205,15 @@ const handleButtonClick = () => {
                   ))}
                 </div>
               </div>
-              
-            </div>
-             
-          </div>
-          
-        </div>
-        
 
-        
+            </div>
+
+          </div>
+
+        </div>
+
+
+
 
         {/* Minimal Floating Elements */}
         {/* <div className="absolute top-20 left-20 w-2 h-2 bg-[#FFD700] rounded-full opacity-40 animate-pulse"></div> */}
