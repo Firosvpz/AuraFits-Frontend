@@ -15,7 +15,7 @@ const Logo = () => {
           color: "#FFD700",
         }}
       >
-        <img src="/assets/c.png" className="md:h-[130px] md:w-auto h-20 w-20"/>
+        <img src="/assets/c.png" className="md:h-[160px] md:w-auto h-[100px] w-[100px]"/>
         
       </div>
     </>
