@@ -15,31 +15,6 @@ const MainContent = () => {
   }, []);
   const token = localStorage.getItem("authToken");
   const handleButtonClick = () => {
-    if (!token) {
-      navigate('/')
-      toast.warning('Kindly login for access plans ', {
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progressStyle: {
-          background: 'linear-gradient(90deg, #ff6b6b, #ff8e53)', // Gradient progress bar
-        },
-        style: {
-          background: 'transparent', // Black background
-          backdropFilter: 'blur(10px)', // Frosted glass effect
-          color: '#ffffff', // White text
-          borderRadius: '12px', // Rounded corners
-          padding: '16px', // Comfortable padding
-          boxShadow: '0 8px 32px rgba(0, 0, 0, 0.4)', // Subtle shadow for depth
-          fontFamily: "'Inter', sans-serif", // Modern font
-          fontSize: '16px',
-          fontWeight: 500,
-          border: '1px solid #333333', // Subtle border
-        },
-        icon: '⚠️', // Custom emoji icon for warning
-      });
-    }
     navigate('/memberships')
   }
 
