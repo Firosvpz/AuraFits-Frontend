@@ -70,7 +70,7 @@ const Trainers = () => {
                       ))}
                     </div>
 
-                    
+
                   </div>
 
                   {/* Content Container */}
@@ -140,35 +140,49 @@ const Trainers = () => {
 
                 {/* Back Side - Details View */}
                 <div className="card-back">
-                  {/* Animated Background Elements */}
-
-                  <div className="back-content">
+                  <div className="back-content p-6 h-full flex flex-col">
                     {/* Header */}
-                    <div className="text-center mb-4">
-                      <h3 className="text-xl  text-[#FFD700] mb-1 tracking-wide">
-                        {trainer.name}
-                      </h3>
-                      <div className="w-16 h-0.5 bg-gradient-to-r from-transparent via-yellow-400 to-transparent mx-auto mb-2"></div>
-                      <p className="text-yellow-400 text-sm font-bold">
-                        {trainer.title}
+                    <div className="text-center mb-6">
+                      <h3 className="text-2xl font-bold text-[#FFD700] mb-2 tracking-tight">{trainer.name}</h3>
+                      <div className="w-12 h-px bg-gradient-to-r from-transparent via-slate-400 to-transparent mx-auto mb-3"></div>
+                      <p className="text-white text-sm font-medium uppercase tracking-wider">{trainer.title}</p>
+                    </div>
+
+                    {/* Bio Section */}
+                    <div className="mb-6 flex-grow">
+                      <p className="text-white text-sm leading-relaxed text-center">
+                        {trainer.name} is a certified fitness professional with over {trainer.experience} of experience.
+                        Specializing in strength training, mobility, and personalized coaching approaches.
                       </p>
                     </div>
 
-                    {/* Session Info */}
-                    <div className="mb-3 space-y-1">
-                      <div className="flex justify-between items-center text-xs">
-                        <span className="text-gray-400">Price:</span>
-                        <span className="text-yellow-400 font-black text-lg">
-                          {trainer.price}
-                        </span>
-                      </div>
+                    {/* Skills Tags */}
+                    <div className="flex flex-wrap gap-2 mb-6 justify-center">
+                      <span className=" text-[#FFD700] text-xs px-3 py-1.5 rounded-lg border border-slate-700/50">
+                        Weight Training
+                      </span>
+                      <span className=" text-[#FFD700] text-xs px-3 py-1.5 rounded-lg border border-slate-700/50">
+                        Cardio
+                      </span>
+                      <span className=" text-[#FFD700] text-xs px-3 py-1.5 rounded-lg border border-slate-700/50">
+                        HIIT
+                      </span>
+                      <span className=" text-[#FFD700] text-xs px-3 py-1.5 rounded-lg border border-slate-700/50">
+                        Flexibility
+                      </span>
                     </div>
 
-                    {/* Booking Button */}
-                    <button className="w-full bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-400 text-black font-black py-2 px-4 rounded-xl transition-all duration-500 hover:from-yellow-300 hover:via-yellow-400 hover:to-yellow-300 hover:shadow-xl hover:shadow-yellow-400/30 transform hover:scale-105 relative overflow-hidden text-sm">
-                      <span className="relative z-10">BOOK SESSION</span>
-                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -skew-x-12 transform -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
-                    </button>
+                    {/* Session Info */}
+                    <div className="space-y-3 pt-4 border-t border-slate-700/50">
+                      <div className="flex justify-between items-center">
+                        <span className="text-white text-sm">Session Duration</span>
+                        <span className="text-[#FFD700] font-semibold">45 minutes</span>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span className="text-white text-sm">Starting at</span>
+                        <span className="text-[#FFD700] font-bold text-xl">{trainer.price}</span>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
