@@ -459,7 +459,11 @@ function Navbar() {
             {!user ? (
                <div className="mobile-auth-buttons">
                 <button
-                  onClick={() => setShowLoginModal(true)}
+                  onClick={() =>{ 
+                    setShowLoginModal(true)
+                    setIsOpen(false)
+                      } 
+                  }
                   className="mobile-login-btn"
                 >
                   Login
