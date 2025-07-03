@@ -93,3 +93,13 @@ export const dashboardStats = async () => {
     throw error;
   }
 }
+
+export const editPlan = async(planId)=> {
+  try {
+    const result = await axios.patch(`${BASE_URL}/admin/editPlan`,{planId})
+    return result
+  } catch (error) {
+    console.error('Error while updating plan',error);
+    throw error
+  }
+}

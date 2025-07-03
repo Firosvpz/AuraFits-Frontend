@@ -580,7 +580,7 @@ const Bookings = () => {
               )}
 
               {/* Enhanced Bulk Actions with Status Updates */}
-              {selectedBookings.length > 0 && (
+              {/* {selectedBookings.length > 0 && (
                 <div className="mb-4 p-3 bg-blue-900/20 border border-blue-500/30 rounded-lg flex items-center justify-between">
                   <span className="text-blue-400">
                     {selectedBookings.length} booking
@@ -616,14 +616,14 @@ const Bookings = () => {
                     </button>
                   </div>
                 </div>
-              )}
+              )} */}
 
               {/* Enhanced Table */}
               <div className="rounded-md border border-gray-800 overflow-hidden">
                 <table className="w-full">
                   <thead>
                     <tr className="border-b border-gray-800 bg-gray-800/30">
-                      <th className="text-left p-4">
+                      {/* <th className="text-left p-4">
                         <input
                           type="checkbox"
                           checked={
@@ -634,7 +634,7 @@ const Bookings = () => {
                           onChange={handleSelectAll}
                           className="rounded border-gray-600 bg-gray-800 text-white focus:ring-white/20"
                         />
-                      </th>
+                      </th> */}
                       <th
                         className="text-left p-4 text-gray-300 font-medium cursor-pointer hover:text-white transition-colors"
                         onClick={() => handleSort("userName")}
@@ -676,14 +676,14 @@ const Bookings = () => {
                         key={booking.id}
                         className="border-b border-gray-800 hover:bg-gray-800/30 transition-colors"
                       >
-                        <td className="p-4">
+                        {/* <td className="p-4">
                           <input
                             type="checkbox"
                             checked={selectedBookings.includes(booking.id)}
                             onChange={() => handleSelectBooking(booking.id)}
                             className="rounded border-gray-600 bg-gray-800 text-white focus:ring-white/20"
                           />
-                        </td>
+                        </td> */}
                         <td className="p-4">
                           <div className="space-y-1">
                             <div className="font-medium text-white flex items-center gap-2">

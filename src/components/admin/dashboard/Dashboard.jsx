@@ -124,7 +124,7 @@ const GlowingButton = ({ children, onClick, variant = "primary", className = "",
 }
 
 const Dashboard = () => {
-  const [dashboardData, setDashboardData] = useState(null)
+  const [dashboardData, setDashboardData] = useState()
   const [processedData, setProcessedData] = useState(null)
   const [isLoading, setIsLoading] = useState(true)
   const [timeRange, setTimeRange] = useState("month")

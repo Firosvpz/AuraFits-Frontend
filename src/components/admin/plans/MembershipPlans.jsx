@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { Plus, Search, MoreHorizontal } from "lucide-react";
 import { AddPlanModal } from "./AddPlanModal";
-import { getPlans } from "../../../api/AdminApi";
+import { editPlan, getPlans } from "../../../api/AdminApi";
 
 export default function MembershipPlans() {
   const [plans, setPlans] = useState([]);
@@ -24,7 +24,9 @@ export default function MembershipPlans() {
     fetchPlans();
   }, []);
 
-  // console.log('plans:', plans);
+  console.log('plans:', plans);
+
+  
 
   // Filter plans based on search and filters
   const filteredPlans = plans.filter((plan) => {
@@ -83,7 +85,7 @@ export default function MembershipPlans() {
             </div>
             <button
               onClick={() => setIsAddModalOpen(true)}
-              className="bg-white text-black hover:bg-gray-200 font-medium px-4 py-2 rounded-md flex items-center gap-2 transition-colors"
+              className=" text-white border border-gray-200 hover:bg-gray-200 hover:text-black font-medium px-4 py-2 rounded-md flex items-center gap-2 transition-colors"
             >
               <Plus className="w-4 h-4" />
               Add New Plan
@@ -100,23 +102,23 @@ export default function MembershipPlans() {
                 {plans.length}
               </div>
             </div>
-            <div className=" border border-gray-800 rounded-lg p-4">
+            {/* <div className=" border border-gray-800 rounded-lg p-4">
               <div className="text-sm font-medium text-gray-400 mb-2">
                 Active Plans
               </div>
               <div className="text-2xl font-bold text-green-400">
                 {plans.filter((p) => p.status === "active").length}
               </div>
-            </div>
-            <div className=" border border-gray-800 rounded-lg p-4">
+            </div> */}
+            {/* <div className=" border border-gray-800 rounded-lg p-4">
               <div className="text-sm font-medium text-gray-400 mb-2">
                 Total Subscribers
               </div>
               <div className="text-2xl font-bold text-blue-400">
                 {plans.reduce((sum, plan) => sum + plan.subscribers, 1)}
               </div>
-            </div>
-            <div className=" border border-gray-800 rounded-lg p-4">
+            </div> */}
+            {/* <div className=" border border-gray-800 rounded-lg p-4">
               <div className="text-sm font-medium text-gray-400 mb-2">
                 Monthly Revenue
               </div>
@@ -127,7 +129,7 @@ export default function MembershipPlans() {
                   .reduce((sum, plan) => sum + plan.price * plan.subscribers, 0)
                   .toFixed(2)}
               </div>
-            </div>
+            </div> */}
           </div>
 
           {/* Filters and Search */}
@@ -153,7 +155,7 @@ export default function MembershipPlans() {
                   <option value="monthly">Monthly</option>
                   <option value="yearly">Yearly</option>
                 </select>
-                <select
+                {/* <select
                   value={filterStatus}
                   onChange={(e) => setFilterStatus(e.target.value)}
                   className="px-3 py-2 bg-gray-800 border border-gray-700 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-white/20"
@@ -161,7 +163,7 @@ export default function MembershipPlans() {
                   <option value="all">All Status</option>
                   <option value="active">Active</option>
                   <option value="pending">Pending</option>
-                </select>
+                </select> */}
               </div>
 
               {/* Table */}
@@ -178,12 +180,12 @@ export default function MembershipPlans() {
                       <th className="text-left p-4 text-gray-300 font-medium">
                         Price
                       </th>
-                      <th className="text-left p-4 text-gray-300 font-medium">
+                      {/* <th className="text-left p-4 text-gray-300 font-medium">
                         Status
-                      </th>
-                      <th className="text-left p-4 text-gray-300 font-medium">
+                      </th> */}
+                      {/* <th className="text-left p-4 text-gray-300 font-medium">
                         Subscribers
-                      </th>
+                      </th> */}
                       <th className="text-left p-4 text-gray-300 font-medium">
                         Created
                       </th>
@@ -218,16 +220,16 @@ export default function MembershipPlans() {
                         <td className="p-4 text-white font-medium">
                           ${plan.price}
                         </td>
-                        <td className="p-4">
+                        {/* <td className="p-4">
                           <span
                             className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${getStatusColor(plan.status)}`}
                           >
                             {plan.status || "pending"}
                           </span>
-                        </td>
-                        <td className="p-4 text-gray-300">
+                        </td> */}
+                        {/* <td className="p-4 text-gray-300">
                           {plan.subscribers}
-                        </td>
+                        </td> */}
                         <td className="p-4 text-gray-400">
                           {new Date(plan.createdAt).toISOString().split("T")[0]}
                         </td>
