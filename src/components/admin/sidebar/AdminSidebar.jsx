@@ -88,7 +88,7 @@ const AdminSidebar = () => {
             {sidebarOpen && (
               <div className="animate-slideInRight">
                 <Logo />
-                <p className="text-xs text-gray-400 ">Admin Dashboard</p>
+                {/* <p className="text-xs text-gray-400 ">Admin Dashboard</p> */}
               </div>
             )}
           </div>

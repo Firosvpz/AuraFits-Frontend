@@ -83,3 +83,13 @@ export const updateBookingStatus = async (bookingId, status) => {
     throw error;
   }
 };
+
+export const dashboardStats = async () => {
+  try {
+    const result = await axios.get(`${BASE_URL}/admin/dashboard`);
+    return result;
+  } catch (error) {
+    console.error("Error fetching dashboard stats:", error);
+    throw error;
+  }
+}

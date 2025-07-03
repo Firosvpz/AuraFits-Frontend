@@ -73,7 +73,7 @@ const Facilities = () => {
         {/* Foreground Text */}
         <div className="relative md:top-10 top-8 z-10 md:pt-16">
           <h2 className="text-3xl md:text-7xl lg:text-8xl font-black text-white mb-8 tracking-tight josefin-sans-title">
-            FEC<span className="text-[#FFD700]">ILI</span>TIES
+            FAC<span className="text-[#FFD700]">ILI</span>TIES
           </h2>
         </div>
       </div>
