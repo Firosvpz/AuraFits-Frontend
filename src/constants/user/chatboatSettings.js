@@ -15,8 +15,8 @@ export const settings = {
     avatar: "https://cdn-icons-png.flaticon.com/512/3048/3048122.png",
   },
   tooltip: {
-    mode: "NEVER", // or "NEVER" to hide tooltip completely
-    text: "", // Tooltip text on hover
+    mode: "CLOSE", // or "NEVER" to hide tooltip completely
+    text: "Chat Us", // Tooltip text on hover
   },
   
   notification: {
