@@ -14,17 +14,18 @@ const HomePage = () => {
   return (
     <>
       <Navbar />
+       <ChatBot
+        flow={flow}
+        settings={settings}
+        className="chatbot-container"
+      />
       <MainContent />
       <Achievements />
       <About />
       <Trainers />
       <Facilities />
       <Membership />
-      <ChatBot
-        flow={flow}
-        settings={settings}
-        className="chatbot-container"
-      />
+     
       <Footer />
     </>
   )
