@@ -3,7 +3,7 @@ export const settings = {
     primaryColor: "#000",
     secondaryColor: "#1f1f1f",
     fontFamily: "Poppins, sans-serif",
-    showFooter: false,
+    showFooter: true,
     embedded: false,
   },
   chatHistory: {
@@ -36,8 +36,8 @@ export const settings = {
     text: "Powered by AuraFits",
   },
   chatInput: {
-    placeholder: "", // Change input placeholder
-    disabled: true,
+    placeholder: "Type your message here...", // Change input placeholder
+    disabled: false,
     allowNewline: false,
   },
 }
