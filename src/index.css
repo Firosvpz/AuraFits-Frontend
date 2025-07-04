@@ -87,3 +87,56 @@ body {
 .scroll-hidden::-webkit-scrollbar {
   display: none;
 }
+
+/* Add this CSS file and import it in your component or globally */
+
+/* Force black background for react-chatbotify */
+.chatbotify-container {
+  background-color: #000000 !important
+}
+
+.chatbotify-container * {
+  background-color: inherit;
+}
+
+/* Target specific chatbot elements */
+.rcb-chat-window {
+  background-color: #0c0c0cf4 !important;
+  opacity: 0.9 !important;
+}
+
+.rcb-chat-body {
+  background-color: #000000 !important;
+}
+
+.rcb-chat-message-container {
+  background-color: #000000 !important;
+}
+
+.rcb-chat-input-container {
+  background-color: #1f1f1f !important;
+}
+
+/* Bot messages */
+.rcb-bot-message {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+}
+
+/* User messages */
+.rcb-user-message {
+  background-color: #f0f408f4 !important;
+  color: #070707 !important;
+}
+
+/* Options */
+.rcb-options-container button {
+  background-color: #1f1f1f !important;
+  color: #000000 !important;
+  border: 1px solid #000000 !important;
+}
+
+.rcb-options-container button:hover {
+  background-color: #000000 !important;
+  color: #000000 !important;
+}

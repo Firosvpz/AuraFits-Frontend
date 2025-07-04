@@ -94,9 +94,9 @@ export const dashboardStats = async () => {
   }
 }
 
-export const editPlan = async(planId)=> {
+export const editPlan = async(planId,updatedData)=> {
   try {
-    const result = await axios.patch(`${BASE_URL}/admin/editPlan`,{planId})
+    const result = await axios.patch(`${BASE_URL}/admin/editPlan`,{planId,...updatedData})
     return result
   } catch (error) {
     console.error('Error while updating plan',error);

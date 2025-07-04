@@ -599,8 +599,8 @@ const Dashboard = () => {
           </div>
 
           {/* Charts Section */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-            {/* Revenue Chart */}
+          {/* <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+          
             <AnimatedCard delay={500} className="lg:col-span-2 card-hover">
               <div className="p-6  bg-opacity-50 backdrop-blur-sm rounded-2xl border border-gray-700">
                 <div className="flex items-center justify-between mb-6">
@@ -621,7 +621,7 @@ const Dashboard = () => {
               </div>
             </AnimatedCard>
 
-            {/* Membership Distribution */}
+           
             <AnimatedCard delay={600} className="card-hover">
               <div className="p-6  bg-opacity-50 backdrop-blur-sm rounded-2xl border border-gray-700">
                 <div className="flex items-center justify-between mb-6">
@@ -659,7 +659,7 @@ const Dashboard = () => {
                 </div>
               </div>
             </AnimatedCard>
-          </div>
+          </div> */}
 
           {/* Bottom Section */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -668,7 +668,7 @@ const Dashboard = () => {
               <div className="p-6  bg-opacity-50 backdrop-blur-sm rounded-2xl border border-gray-700">
                 <div className="flex items-center justify-between mb-6">
                   <div>
-                    <h3 className="text-xl font-bold">Recent Bookings</h3>
+                    <h3 className="text-2xl text-yellow-400 font-bold">Recent Bookings</h3>
                     <p className="text-gray-400">Latest customer activities</p>
                   </div>
                   <div className="flex items-center space-x-2">
@@ -695,8 +695,8 @@ const Dashboard = () => {
                         <tr key={booking.id} className="text-sm hover: transition-colors duration-200">
                           <td className="py-4">
                             <div className="flex items-center">
-                              <div className="w-8 h-8 bg-gradient-to-r from-blue-400 to-purple-500 rounded-full flex items-center justify-center mr-3">
-                                <span className="text-xs font-bold text-white">
+                              <div className="w-8 h-8 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full flex items-center justify-center mr-3">
+                                <span className="text-xs font-bold text-black">
                                   {booking.user
                                     .split(" ")
                                     .map((n) => n[0])
@@ -735,7 +735,7 @@ const Dashboard = () => {
               <div className="p-6  bg-opacity-50 backdrop-blur-sm rounded-2xl border border-gray-700">
                 <div className="flex items-center justify-between mb-6">
                   <div>
-                    <h3 className="text-xl font-bold">Booking Status</h3>
+                    <h3 className="text-xl text-yellow-400 font-bold">Booking Status</h3>
                     <p className="text-gray-400">Status breakdown</p>
                   </div>
                 </div>
@@ -767,12 +767,8 @@ const Dashboard = () => {
                       <CountUpNumber end={processedData.cancelledBookings} />
                     </span>
                   </div>
-                  <div className="mt-6 p-4 bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-lg border border-blue-500/20">
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm text-gray-300">Conversion Rate</span>
-                      <span className="text-lg font-bold text-blue-400">{processedData.conversionRate}%</span>
-                    </div>
-                    <ProgressBar percentage={processedData.conversionRate} color="#3B82F6" animated={true} />
+                  <div className="mt-6 p-4 ">
+                   
                   </div>
                 </div>
               </div>

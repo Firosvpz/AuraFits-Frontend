@@ -115,7 +115,7 @@ const AdminSidebar = () => {
                   flex items-center w-full px-4 py-3 rounded-xl transition-all duration-300 group
                   ${
                     activeTab === item.id
-                      ? "bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg"
+                      ? "bg-gradient-to-r from-yellow-400 to-yellow-600 text-black shadow-lg"
                       : "text-gray-300 hover:bg-gray-700 hover:text-white"
                   }
                   ${!sidebarOpen && "justify-center"}
@@ -142,14 +142,14 @@ const AdminSidebar = () => {
           </nav>
 
           {/* User Profile */}
-          <div className="mt-8 pt-6 border-t border-gray-700">
+          <div className="mt-8 pt-6 border-t ">
             <div
               className={`flex items-center ${
                 sidebarOpen ? "space-x-3" : "justify-center"
-              } p-3 rounded-xl bg-gray-800 hover:bg-gray-700 transition-colors duration-200 cursor-pointer`}
+              } p-3 rounded-xl  hover:bg-gray-700 transition-colors duration-200 cursor-pointer`}
             >
               <div className="relative">
-                <div className="w-10 h-10 bg-gradient-to-r from-green-400 to-blue-500 rounded-full flex items-center justify-center">
+                <div className="w-10 h-10 bg-gradient-to-r from-yellow-400 to-yellow-700 rounded-full flex items-center justify-center">
                   <User className="w-5 h-5 text-white" />
                 </div>
                 <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-400 rounded-full border-2 border-gray-800"></div>
@@ -157,7 +157,7 @@ const AdminSidebar = () => {
               {sidebarOpen && (
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-medium text-white truncate">
-                    Admin User
+                    Admin
                   </p>
                   <p className="text-xs text-gray-400 truncate">
                     admin@aurafits.com

@@ -1,9 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Plus, Search, MoreHorizontal } from "lucide-react";
+import { Plus, Search, MoreHorizontal, Edit, Trash2 } from "lucide-react";
 import { AddPlanModal } from "./AddPlanModal";
 import { editPlan, getPlans } from "../../../api/AdminApi";
+import { EditPlanModal } from "./EditPlanModal";
+
 
 export default function MembershipPlans() {
   const [plans, setPlans] = useState([]);
@@ -12,6 +14,8 @@ export default function MembershipPlans() {
   const [filterStatus, setFilterStatus] = useState("all");
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [editPlan, setEditPlan] = useState(null)
+  const [editModalOpen, setEditModalOpen] = useState(false);
   useEffect(() => {
     const fetchPlans = async () => {
       try {
@@ -24,9 +28,29 @@ export default function MembershipPlans() {
     fetchPlans();
   }, []);
 
-  console.log('plans:', plans);
+  // console.log('plans:', plans);
 
-  
+  const handleEditClick = (plan) => {
+    setEditPlan(plan);
+    setEditModalOpen(true);
+  };
+
+  const handleUpdatePlan = async (planId, updatedData) => {
+    try {
+      const response = await editPlan(planId, updatedData);
+      if (response.status === 200) {
+        setPlans((prevPlans) =>
+          prevPlans.map((p) => (p.id === planId ? { ...p, ...updatedData } : p))
+        );
+        setEditModalOpen(false);
+        setEditPlan(null);
+      }
+    } catch (error) {
+      console.error(error);
+
+    }
+  }
+
 
   // Filter plans based on search and filters
   const filteredPlans = plans.filter((plan) => {
@@ -189,7 +213,7 @@ export default function MembershipPlans() {
                       <th className="text-left p-4 text-gray-300 font-medium">
                         Created
                       </th>
-                      <th className="text-right p-4 text-gray-300 font-medium">
+                      <th className="text-center p-4 text-gray-300 font-medium">
                         Actions
                       </th>
                     </tr>
@@ -234,12 +258,28 @@ export default function MembershipPlans() {
                           {new Date(plan.createdAt).toISOString().split("T")[0]}
                         </td>
 
-                        <td className="p-4 text-right">
+                        <td className="p-4 text-center">
                           <div className="relative inline-block">
-                            <button className="p-2 text-gray-400 hover:text-white hover:bg-gray-800 rounded-md transition-colors">
-                              <MoreHorizontal className="h-4 w-4" />
+                            <button
+                              onClick={() => handleEditClick(plan)}
+                              className="p-2 hover:bg-gray-800 rounded-md transition-colors"
+                            >
+                              <Edit className="w-4 h-4 text-yellow-500 mr-2" />
                             </button>
-                            {/* You can implement dropdown menu here */}
+                            <button
+                              // onClick={() => handleDeletePlan(plan.id)}
+                              className="p-2 hover:bg-gray-800 rounded-md transition-colors"
+                            >
+                              <Trash2 className="w-4 h-4 text-red-700 mr-2" />
+                            </button>
+
+
+                            {/* Dropdown Menu */}
+                            {/* <div className="absolute right-0 mt-2 w-48 bg-gray-800 border border-gray-700 rounded-md shadow-lg z-10 hidden group-hover:block">
+                              <div className="py-1">
+                              
+                              </div>
+                            </div> */}
                           </div>
                         </td>
                       </tr>
