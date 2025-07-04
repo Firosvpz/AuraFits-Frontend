@@ -16,7 +16,7 @@ export const settings = {
   },
   tooltip: {
     mode: "CLOSE", // or "NEVER" to hide tooltip completely
-    text: "Chat Us", // Tooltip text on hover
+    text: "chat with us", // Tooltip text on hover
   },
   
   notification: {
