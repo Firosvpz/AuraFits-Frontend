@@ -1,6 +1,6 @@
 export const settings = {
    general: {
-   primaryColor: "#000000",
+   primaryColor: "#05023b", 
     secondaryColor: "#facc15",
     fontFamily: "Poppins, sans-serif",
     showFooter: true,
@@ -20,7 +20,7 @@ export const settings = {
     text: "💬 chat",
   },
   chatButton: {
-    icon: "/public/assets/whatsapp.png", // WhatsApp icon
+    icon: "https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/whatsapp.svg", // WhatsApp icon
   },
   notification: {
     disabled: true,
