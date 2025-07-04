@@ -1,7 +1,7 @@
 export const settings = {
    general: {
-   primaryColor: "#05023b", 
-    secondaryColor: "#facc15",
+   primaryColor: "black", 
+    secondaryColor: "yellow",
     fontFamily: "Poppins, sans-serif",
     showFooter: true,
     embedded: false,
