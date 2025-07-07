@@ -96,10 +96,22 @@ export const dashboardStats = async () => {
 
 export const editPlan = async(planId,updatedData)=> {
   try {
-    const result = await axios.patch(`${BASE_URL}/admin/editPlan`,{planId,...updatedData})
+    // console.log('Updating plan with ID:', planId, 'and data:', updatedData);
+    
+    const result = await axios.patch(`${BASE_URL}/admin/editPlan/${planId}`,updatedData)
     return result
   } catch (error) {
     console.error('Error while updating plan',error);
     throw error
   }
 }
+
+export const deletePlan = async (planId) => {
+  try {
+    const result = await axios.delete(`${BASE_URL}/admin/deletePlan/${planId}`);
+    return result;
+  } catch (error) {
+    console.error("Error deleting plan:", error);
+    throw error;
+  }
+};

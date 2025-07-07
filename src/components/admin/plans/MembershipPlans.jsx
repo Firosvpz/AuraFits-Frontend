@@ -3,8 +3,9 @@
 import { useEffect, useState } from "react";
 import { Plus, Search, MoreHorizontal, Edit, Trash2 } from "lucide-react";
 import { AddPlanModal } from "./AddPlanModal";
-import { editPlan, getPlans } from "../../../api/AdminApi";
+import { getPlans,editPlan,deletePlan } from "../../../api/AdminApi";
 import { EditPlanModal } from "./EditPlanModal";
+import { toast } from "react-toastify";
 
 
 export default function MembershipPlans() {
@@ -14,7 +15,7 @@ export default function MembershipPlans() {
   const [filterStatus, setFilterStatus] = useState("all");
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(true);
-  const [editPlan, setEditPlan] = useState(null)
+  const [editPlans, setEditPlans] = useState(null)
   const [editModalOpen, setEditModalOpen] = useState(false);
   useEffect(() => {
     const fetchPlans = async () => {
@@ -31,25 +32,42 @@ export default function MembershipPlans() {
   // console.log('plans:', plans);
 
   const handleEditClick = (plan) => {
-    setEditPlan(plan);
+    setEditPlans(plan);
     setEditModalOpen(true);
   };
 
   const handleUpdatePlan = async (planId, updatedData) => {
     try {
-      const response = await editPlan(planId, updatedData);
+
+      const response = await editPlan(planId, updatedData); 
       if (response.status === 200) {
         setPlans((prevPlans) =>
           prevPlans.map((p) => (p.id === planId ? { ...p, ...updatedData } : p))
         );
         setEditModalOpen(false);
-        setEditPlan(null);
+        setEditPlans(null);
       }
     } catch (error) {
-      console.error(error);
-
+      console.error("Failed to update plan:", error);
     }
-  }
+  };
+
+  
+
+  const handleDeletePlan = async (planId) => {
+    try {
+      const response = await deletePlan(planId);
+      if (response.status === 200) {
+        setPlans((prevPlans) => prevPlans.filter((p) => p.id !== planId));
+      }
+      toast.success(`Plan deleted successfully!`)
+    } catch (error) {
+      console.error("Failed to delete plan:", error);
+    }
+  };
+
+  // console.log('editPlans:', editPlans);
+  
 
 
   // Filter plans based on search and filters
@@ -64,6 +82,10 @@ export default function MembershipPlans() {
     return matchesSearch && matchesType && matchesStatus;
   });
 
+
+ 
+  
+
   const handleAddPlan = (newPlan) => {
     const plan = {
       id: plans.length + 1,
@@ -75,9 +97,7 @@ export default function MembershipPlans() {
     setPlans([...plans, plan]);
   };
 
-  const handleDeletePlan = (id) => {
-    setPlans(plans.filter((plan) => plan.id !== id));
-  };
+  
 
   const getPlanTypeColor = (type) => {
     return type === "monthly"
@@ -267,7 +287,7 @@ export default function MembershipPlans() {
                               <Edit className="w-4 h-4 text-yellow-500 mr-2" />
                             </button>
                             <button
-                              // onClick={() => handleDeletePlan(plan.id)}
+                              onClick={() => handleDeletePlan(plan.id)}
                               className="p-2 hover:bg-gray-800 rounded-md transition-colors"
                             >
                               <Trash2 className="w-4 h-4 text-red-700 mr-2" />
@@ -301,6 +321,17 @@ export default function MembershipPlans() {
           onClose={() => setIsAddModalOpen(false)}
           onAddPlan={handleAddPlan}
         />
+
+        <EditPlanModal
+          isOpen={editModalOpen}
+          onClose={() => {
+            setEditModalOpen(false);
+            setEditPlans(null);
+          }}
+          plan={editPlans}
+          onSave={(updatedData) => handleUpdatePlan(editPlans.id, updatedData)} // Pass updated data
+        />
+
       </div>
     </div>
   );

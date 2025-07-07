@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { DollarSign, FileText, Tag, Calendar, X } from "lucide-react";
 import { addPlan } from "../../../api/AdminApi";
+import { toast } from "react-toastify";
 
 export function AddPlanModal({ isOpen, onClose, onAddPlan }) {
   const [formData, setFormData] = useState({
@@ -75,7 +76,28 @@ export function AddPlanModal({ isOpen, onClose, onAddPlan }) {
         "Error adding plan:",
         error.response?.data || error.message,
       );
-      alert("Failed to add plan. Please try again.");
+      toast.error(error?.response?.data?.msg, {
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progressStyle: {
+          background: 'linear-gradient(90deg, #ff6b6b, #ff8e53)', // Gradient progress bar
+        },
+        style: {
+          background: 'transparent', // Black background
+          backdropFilter: 'blur(10px)', // Frosted glass effect
+          color: '#ffffff', // White text
+          borderRadius: '12px', // Rounded corners
+          padding: '16px', // Comfortable padding
+          boxShadow: '0 8px 32px rgba(0, 0, 0, 0.4)', // Subtle shadow for depth
+          fontFamily: "'Inter', sans-serif", // Modern font
+          fontSize: '16px',
+          fontWeight: 500,
+          border: '1px solid #333333', // Subtle border
+        },
+        icon: '⚠️', // Custom emoji icon for warning
+      });
     } finally {
       setIsSubmitting(false);
     }
@@ -102,7 +124,7 @@ export function AddPlanModal({ isOpen, onClose, onAddPlan }) {
         className="absolute inset-0 bg-black/50 backdrop-blur-sm"
         onClick={handleClose}
       />
-      <div className="relative bg-gray-900 border border-gray-800 rounded-lg shadow-xl w-full max-w-md mx-4 max-h-[90vh] overflow-y-auto">
+      <div className="relative  border border-gray-800 rounded-lg shadow-xl w-full max-w-md mx-4 max-h-[90vh] overflow-y-auto">
         <div className="flex items-center justify-between p-6 border-b border-gray-800">
           <div className="flex items-center gap-3">
             <div className="w-8 h-8 bg-white/10 rounded-lg flex items-center justify-center">
@@ -140,9 +162,8 @@ export function AddPlanModal({ isOpen, onClose, onAddPlan }) {
                 placeholder="e.g., Premium Plan"
                 value={formData.planName}
                 onChange={(e) => handleInputChange("planName", e.target.value)}
-                className={`w-full pl-10 pr-4 py-2 bg-gray-800 border rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-white/20 ${
-                  errors.planName ? "border-red-500" : "border-gray-700"
-                }`}
+                className={`w-full pl-10 pr-4 py-2 bg-gray-800 border rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-white/20 ${errors.planName ? "border-red-500" : "border-gray-700"
+                  }`}
               />
             </div>
             {errors.planName && (
@@ -166,9 +187,8 @@ export function AddPlanModal({ isOpen, onClose, onAddPlan }) {
                   onChange={(e) =>
                     handleInputChange("planType", e.target.value)
                   }
-                  className={`w-full pl-10 pr-4 py-2 bg-gray-800 border rounded-md text-white focus:outline-none focus:ring-2 focus:ring-white/20 ${
-                    errors.planType ? "border-red-500" : "border-gray-700"
-                  }`}
+                  className={`w-full pl-10 pr-4 py-2 bg-gray-800 border rounded-md text-white focus:outline-none focus:ring-2 focus:ring-white/20 ${errors.planType ? "border-red-500" : "border-gray-700"
+                    }`}
                 >
                   <option value="">Select type</option>
                   <option value="monthly">Monthly</option>
@@ -196,9 +216,8 @@ export function AddPlanModal({ isOpen, onClose, onAddPlan }) {
                   placeholder="29.99"
                   value={formData.price}
                   onChange={(e) => handleInputChange("price", e.target.value)}
-                  className={`w-full pl-10 pr-4 py-2 bg-gray-800 border rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-white/20 ${
-                    errors.price ? "border-red-500" : "border-gray-700"
-                  }`}
+                  className={`w-full pl-10 pr-4 py-2 bg-gray-800 border rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-white/20 ${errors.price ? "border-red-500" : "border-gray-700"
+                    }`}
                 />
               </div>
               {errors.price && (
@@ -228,9 +247,8 @@ export function AddPlanModal({ isOpen, onClose, onAddPlan }) {
                   handleInputChange("description", e.target.value)
                 }
                 rows={4}
-                className={`w-full pl-10 pr-4 py-2 bg-gray-800 border rounded-md text-white placeholder-gray-400 resize-none focus:outline-none focus:ring-2 focus:ring-white/20 ${
-                  errors.description ? "border-red-500" : "border-gray-700"
-                }`}
+                className={`w-full pl-10 pr-4 py-2 bg-gray-800 border rounded-md text-white placeholder-gray-400 resize-none focus:outline-none focus:ring-2 focus:ring-white/20 ${errors.description ? "border-red-500" : "border-gray-700"
+                  }`}
               />
             </div>
             {errors.description && (

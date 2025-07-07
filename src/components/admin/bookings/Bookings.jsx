@@ -665,9 +665,9 @@ const Bookings = () => {
                       >
                         Status
                       </th>
-                      <th className="text-right p-4 text-gray-300 font-medium">
+                      {/* <th className="text-right p-4 text-gray-300 font-medium">
                         Actions
-                      </th>
+                      </th> */}
                     </tr>
                   </thead>
                   <tbody>
@@ -757,7 +757,7 @@ const Bookings = () => {
                             )}
                           </div>
                         </td>
-                        <td className="p-4 text-right">
+                        {/* <td className="p-4 text-right">
                           <div className="flex items-center justify-end gap-2">
                             <button className="p-1 hover:bg-gray-700 rounded transition-colors">
                               <Eye className="w-4 h-4 text-gray-400 hover:text-white" />
@@ -772,7 +772,7 @@ const Bookings = () => {
                               <MoreHorizontal className="w-4 h-4 text-gray-400 hover:text-white" />
                             </button>
                           </div>
-                        </td>
+                        </td> */}
                       </tr>
                     ))}
                   </tbody>
